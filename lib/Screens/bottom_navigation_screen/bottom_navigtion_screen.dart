@@ -61,7 +61,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
               BottomNavItems(
                 pageController: pageController,
                 iconData: Icons.person,
-                title: "Help",
+                title: "Profile",
                 currentIndex: 4,
               ),
             ],
@@ -115,42 +115,49 @@ class BottomNavItems extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                    child: Icon(
-                  iconData,
-                  size: 30.sp,
-                  color: state == currentIndex
-                      ? AppColors.greenColor
-                      : Colors.grey,
+                    child: Center(
+                  child: Icon(
+                    iconData,
+                    size: 30.sp,
+                    color: state == currentIndex
+                        ? AppColors.greenColor
+                        : Colors.grey,
+                  ),
                 )),
                 Expanded(
+                    flex: 2,
                     child: Column(
-                  children: [
-                    Expanded(
-                        child: Text(
-                      title,
-                      style: GoogleFonts.raleway(
-                        color: state == currentIndex
-                            ? AppColors.greenColor
-                            : Colors.grey,
-                        fontSize: 14.sp,
-                      ),
-                    )),
-                    Expanded(
-                        child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: state == currentIndex
-                              ? AppColors.greenColor
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(10.sp),
+                      children: [
+                        Expanded(
+                            child: Text(
+                          title,
+                          style: GoogleFonts.cairo(
+                            color: state == currentIndex
+                                ? AppColors.greenColor
+                                : Colors.grey,
+                            fontSize: 14.sp,
+                          ),
+                        )),
+                        SizedBox(
+                          height: 4.sp,
                         ),
-                        width: 15.sp,
-                        height: 5.sp,
-                      ),
-                    )),
-                  ],
-                ))
+                        Expanded(
+                            child: Align(
+                          alignment: Alignment.topCenter,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            decoration: BoxDecoration(
+                              color: state == currentIndex
+                                  ? AppColors.greenColor
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(10.sp),
+                            ),
+                            width: state == currentIndex ? 18.sp : 3.sp,
+                            height: 5.sp,
+                          ),
+                        )),
+                      ],
+                    ))
               ],
             ),
           );
