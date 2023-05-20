@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'Screens/PreferenceScreens/preference_pageview.dart';
+import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
+import 'package:saudi_guide/weather_screen/weather_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         useInheritedMediaQuery: true,
         splitScreenMode: true,
-        builder: (context, child) => const UserPreferenceScreen(),
+        builder: (context, child) => const WeatherScreen(),
       ),
     );
   }
