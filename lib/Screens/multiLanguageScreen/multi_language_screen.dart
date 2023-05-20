@@ -52,7 +52,7 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
       ),
       body: Column(
         children: [
-          Expanded(child: BlocBuilder<ChatListCubit, List<TranslateModel>>(
+          Expanded(child: BlocBuilder<TranslateListCubit, List<TranslateModel>>(
             builder: (context, state) {
               return ListView.builder(
                   reverse: true,
@@ -112,7 +112,7 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
                           ),
                           MyText(
                             text:
-                                "${state[index].data!.translations![index].translatedText}",
+                                "${state[index].data!.translations![0].translatedText}",
                             size: 14.sp,
                             weight: FontWeight.w600,
                           )
@@ -124,7 +124,7 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
           )),
           Container(
             width: 414.sp,
-            height: 180.sp,
+            height: 190.sp,
             padding: EdgeInsets.all(15.sp),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
@@ -239,7 +239,10 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          TranslateTextRepo().translateText();
+                          if (controller.text.isNotEmpty) {
+                            TranslateTextRepo()
+                                .translateText(context, controller.text.trim());
+                          }
                         },
                         child: ButtonContainer(
                             widget: MyText(
