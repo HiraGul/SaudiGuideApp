@@ -116,46 +116,48 @@ class BottomNavItems extends StatelessWidget {
               children: [
                 Expanded(
                     child: Center(
-                      child: Icon(
-                  iconData,
-                  size: 30.sp,
-                  color: state == currentIndex
+                  child: Icon(
+                    iconData,
+                    size: 30.sp,
+                    color: state == currentIndex
                         ? AppColors.greenColor
                         : Colors.grey,
-                ),
-                    )),
+                  ),
+                )),
                 Expanded(
-
+                    flex: 2,
                     child: Column(
-                  children: [
-                    Expanded(
-                        child: Text(
-                      title,
-                      style: GoogleFonts.cairo(
-                        color: state == currentIndex
-                            ? AppColors.greenColor
-                            : Colors.grey,
-                        fontSize: 14.sp,
-                      ),
-                    )),
-                    Expanded(
-
-                        child: Align(
-                      alignment: Alignment.topCenter,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        decoration: BoxDecoration(
-                          color: state == currentIndex
-                              ? AppColors.greenColor
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(10.sp),
+                      children: [
+                        Expanded(
+                            child: Text(
+                          title,
+                          style: GoogleFonts.cairo(
+                            color: state == currentIndex
+                                ? AppColors.greenColor
+                                : Colors.grey,
+                            fontSize: 14.sp,
+                          ),
+                        )),
+                        SizedBox(
+                          height: 4.sp,
                         ),
-                        width: state == currentIndex? 18.sp: 3.sp,
-                        height: 5.sp,
-                      ),
-                    )),
-                  ],
-                ))
+                        Expanded(
+                            child: Align(
+                          alignment: Alignment.topCenter,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            decoration: BoxDecoration(
+                              color: state == currentIndex
+                                  ? AppColors.greenColor
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(10.sp),
+                            ),
+                            width: state == currentIndex ? 18.sp : 3.sp,
+                            height: 5.sp,
+                          ),
+                        )),
+                      ],
+                    ))
               ],
             ),
           );

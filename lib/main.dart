@@ -4,12 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
-import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 
-import 'Screens/PreferenceScreens/preference_pageview.dart';
-import 'Screens/my_recomendation_screen/my_recomendation_screen.dart';
-import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
-import 'package:saudi_guide/weather_screen/weather_screen.dart';
+import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,21 +26,25 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => WeatherForecastCubit(),
+        ),
+        BlocProvider(
           create: (context) => MyRecommendationCubit(),
-        ),      ],
+        ),
+      ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        useInheritedMediaQuery: true,
-        theme: ThemeData(
-            // useMaterial3: true
-            ),
-        home: ScreenUtilInit(
-          designSize: const Size(360, 690),
-          minTextAdapt: true,
+          debugShowCheckedModeBanner: false,
           useInheritedMediaQuery: true,
-          splitScreenMode: true,
-          builder: (context, child) => const BottomNavigationScreen(),
-      )),
+          theme: ThemeData(
+              // useMaterial3: true
+              ),
+          home: ScreenUtilInit(
+            designSize: const Size(360, 690),
+            minTextAdapt: true,
+            useInheritedMediaQuery: true,
+            splitScreenMode: true,
+            builder: (context, child) => const BottomNavigationScreen(),
+          )),
     );
   }
 }

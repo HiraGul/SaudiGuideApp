@@ -38,6 +38,8 @@ dependencies:
   flutter_screenutil: null
   flutter_svg: null
   google_fonts: ^4.0.4
+  geolocator: ^9.0.2
+  loading_animation_widget:
 
   http:
 

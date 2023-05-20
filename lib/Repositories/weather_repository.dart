@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+
+import '../Models/weather_model.dart';
+import '../Models/weather_model_controller.dart';
 
 class WeatherRepository {
   static Future<int> getForecastData({required String city}) async {
@@ -12,17 +16,16 @@ class WeatherRepository {
       var request = http.MultipartRequest(
           'GET',
           Uri.parse(
-              'https://weatherapi-com.p.rapidapi.com/forecast.json?q=$city&days=7'));
+              'https://weatherapi-com.p.rapidapi.com/forecast.json?q=$city&days=10'));
 
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
-      } else {
-        print(response.reasonPhrase);
-      }
+        WeatherModeController.weatherModel = WeatherModel.fromJson(
+            jsonDecode(await response.stream.bytesToString()));
+      } else {}
       return response.statusCode;
     } on SocketException {
       return 501;

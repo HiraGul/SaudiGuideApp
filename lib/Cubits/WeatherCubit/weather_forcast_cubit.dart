@@ -9,17 +9,14 @@ class WeatherForecastCubit extends Cubit<WeatherForecastState> {
   WeatherForecastCubit() : super(WeatherForecastInitial());
 
   getWeatherData({required String city}) async {
-    try {
-      emit(WeatherForecastLoading());
-      final int status = await WeatherRepository.getForecastData(city: city);
-      if (status == 200) {
-        emit(WeatherForecastLoaded());
-      } else if (status == 501) {
-        emit(WeatherForecastSocketException());
-      } else {
-        emit(WeatherForecastException());
-      }
-    } catch (e) {
+    emit(WeatherForecastLoading());
+    final int status = await WeatherRepository.getForecastData(city: city);
+    print(status);
+    if (status == 200) {
+      emit(WeatherForecastLoaded());
+    } else if (status == 501) {
+      emit(WeatherForecastSocketException());
+    } else {
       emit(WeatherForecastException());
     }
   }
