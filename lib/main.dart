@@ -27,18 +27,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
-      theme: ThemeData(
-          // useMaterial3: true
-          ),
-      home: ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        useInheritedMediaQuery: true,
-        splitScreenMode: true,
-        builder: (context, child) => const WeatherScreen(),
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -55,9 +43,8 @@ class _MyAppState extends State<MyApp> {
           minTextAdapt: true,
           useInheritedMediaQuery: true,
           splitScreenMode: true,
-          builder: (context, child) => const ChatScreen(),
-        ),
-      ),
+          builder: (context, child) => const WeatherScreen(),
+      )),
     );
   }
 }
