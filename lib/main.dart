@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
           minTextAdapt: true,
           useInheritedMediaQuery: true,
           splitScreenMode: true,
-          builder: (context, child) => const WeatherScreen(),
+          builder: (context, child) => const BottomNavigationScreen(),
       )),
     );
   }

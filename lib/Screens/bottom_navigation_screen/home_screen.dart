@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Screens/recommendation_screen.dart';
+import 'package:saudi_guide/Screens/safety_security_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+import 'package:saudi_guide/weather_screen/weather_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,16 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": "assets/icons/augmented_reality.png"
     },
     {
-      "page": Container(
-        color: Colors.white,
-      ),
+      "page": const WeatherScreen(),
       "title": "Realtime Weather",
       "icon": "assets/icons/cloudy.png"
     },
     {
-      "page": Container(
-        color: Colors.white,
-      ),
+      "page": const SafeAndSecurityScreen(),
       "title": "Safety & Security",
       "icon": "assets/icons/shield.png"
     },

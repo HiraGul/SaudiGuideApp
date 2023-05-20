@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 class RecomendedArea extends StatefulWidget {
@@ -54,7 +55,12 @@ class _RecomendedAreaState extends State<RecomendedArea> {
         ]),
         height: 70.h,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+
+            Navigator.of(context).push(MaterialPageRoute(builder: (context){
+              return ChatScreen();
+            }));
+          },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
             decoration: BoxDecoration(
