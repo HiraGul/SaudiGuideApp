@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +12,7 @@ import 'package:saudi_guide/Screens/widgets/weekly_weather_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 import '../Utils/no_internet.dart';
+import '../Utils/show_snackbar.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -20,39 +22,56 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  late Future<Position> _currentPosition;
-
+  Position? _currentPosition;
+  String? city;
   @override
   void initState() {
-    _currentPosition = _determinePosition();
+    _determinePosition();
 
     context.read<WeatherForecastCubit>().getWeatherData(city: 'peshawar');
   }
 
-  Future<Position> _determinePosition() async {
+  _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       permission = await Geolocator.requestPermission();
-      return Geolocator.getCurrentPosition();
+      _getCurrentPosition();
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+        return showSnackBar(context, 'Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
+      return showSnackBar(context,
           'Location permissions are permanently denied, we cannot request permissions.');
+    } else {
+      _getCurrentPosition();
     }
+  }
 
-    return Geolocator.getCurrentPosition();
+  Future<void> _getCurrentPosition() async {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      _currentPosition = position;
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      if (placemarks != null && placemarks.isNotEmpty) {
+        Placemark placemark = placemarks[0];
+        city = placemark.locality;
+
+        setState(() {});
+      }
+    }).catchError((e) {
+      debugPrint(e);
+    });
   }
 
   @override
