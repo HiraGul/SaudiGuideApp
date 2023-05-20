@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saudi_guide/Augmented%20Reality/ar.dart';
 import 'package:saudi_guide/Screens/recommendation_screen.dart';
 import 'package:saudi_guide/Screens/safety_security_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
@@ -23,9 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": "assets/icons/guidance.png"
     },
     {
-      "page": Container(
-        color: Colors.white,
-      ),
+      "page": const AugmentedRealityScreen(),
       "title": "Augmented Reality",
       "icon": "assets/icons/augmented_reality.png"
     },
@@ -41,14 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
     },
     {
       "page": Container(
-        color: Colors.white,
-      ),
-      "title": "Multi language",
-      "icon": "assets/icons/language.png"
-    },
-    {
-      "page": Container(
-        color: Colors.white,
+        color: Colors.black,
+        height: 200,
+        width: 200,
       ),
       "title": "To do",
       "icon": "assets/icons/todo.png"

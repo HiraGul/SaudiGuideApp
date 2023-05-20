@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:saudi_guide/Cubits/WeatherCubit/weather_forcast_cubit.dart';
+import 'package:saudi_guide/Models/weather_model_controller.dart';
 import 'package:saudi_guide/Screens/widgets/weekly_weather_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+
+import '../Utils/no_internet.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -12,6 +19,41 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  late Future<Position> _currentPosition;
+
+  @override
+  void initState() {
+    _currentPosition = _determinePosition();
+
+    context.read<WeatherForecastCubit>().getWeatherData(city: 'peshawar');
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      permission = await Geolocator.requestPermission();
+      return Geolocator.getCurrentPosition();
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return Geolocator.getCurrentPosition();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +64,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ]),
         height: 70.h,
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: 100.sp,
             child: Row(
               children: [
@@ -38,7 +80,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Icons.arrow_back_ios_new_rounded,
                       color: AppColors.greenColor,
                     )),
-                SizedBox(width: 10.sp,),
+                SizedBox(
+                  width: 10.sp,
+                ),
                 Container(
                     alignment: const Alignment(0.03, -0.03),
                     width: 37.sp,
@@ -89,97 +133,145 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ),
         ),
       ),
-      body: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 20.sp),
-        children: [
-          SizedBox(
-            height: 20.sp,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Jeddha,KSA',
-              style: GoogleFonts.cairo(
-                fontSize: 24.sp,
-                color: const Color(0xFF082B34),
-                fontWeight: FontWeight.w700,
+      body: BlocBuilder<WeatherForecastCubit, WeatherForecastState>(
+        builder: (context, state) {
+          print("state is $state");
+          if (state is WeatherForecastLoading) {
+            return Align(
+              alignment: Alignment.center,
+              child: LoadingAnimationWidget.twistingDots(
+                leftDotColor: AppColors.greenColor,
+                rightDotColor: Colors.black,
+                size: 40.sp,
               ),
-            ),
-          ),
-          Text(
-            'It\'s raining Now',
-            style: GoogleFonts.cairo(
-              fontSize: 16.sp,
-              color: const Color(0xFF878787),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            '22 C',
-            style: GoogleFonts.cairo(
-              fontSize: 16.sp,
-              color: const Color(0xFF878787),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(
-            height: 180.sp,
-            child: Row(
+            );
+          }
+          if (state is WeatherForecastSocketException) {
+            return NoInternetWidget(
+              onTap: () {
+                context
+                    .read<WeatherForecastCubit>()
+                    .getWeatherData(city: 'peshawar');
+              },
+            );
+          }
+          if (state is WeatherForecastLoaded) {
+            return ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 20.sp),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
-                Expanded(flex: 6, child: Image.asset('assets/icons/rain.png')),
-                Expanded(
-                    flex: 2,
-                    child: Container(
-                      color: Colors.white38,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: weatherWidget(
-                                image: 'assets/icons/humidity.png',
-                                title: '54 % &+'),
-                          ),
-                          Expanded(
-                            child: weatherWidget(
-                                image: 'assets/icons/wind.png', title: '9mph'),
-                          ),
-                          Expanded(
-                            child: weatherWidget(
-                                image: 'assets/icons/sun.png', title: '6:00pm'),
-                          ),
-                        ],
-                      ),
-                    )),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20.sp,
-          ),
-          Container(
-              padding: EdgeInsets.only(left: 14.sp, right: 19.sp),
-              height: 220.sp,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(11.sp),
-                color: const Color(0xFFF4FCFC),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF474747).withOpacity(0.1),
-                    offset: const Offset(0, 3.0),
-                    blurRadius: 12.sp,
+                SizedBox(
+                  height: 20.sp,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '${WeatherModeController.weatherModel!.location!.country.toString()} ${WeatherModeController.weatherModel!.location!.country}',
+                    style: GoogleFonts.cairo(
+                      fontSize: 24.sp,
+                      color: const Color(0xFF082B34),
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ],
-              ),
-              child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 15.sp),
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: 7,
-                  itemBuilder: (context, index) {
-                    return const WeeklyWeatherWidget(
-                        dayName: 'Monday', time: '9mph', percentage: '54 %');
-                  })),
-        ],
+                ),
+                Text(
+                  WeatherModeController.weatherModel!.current!.condition!.text
+                      .toString(),
+                  style: GoogleFonts.cairo(
+                    fontSize: 16.sp,
+                    color: const Color(0xFF878787),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  '${WeatherModeController.weatherModel!.current!.tempC.toString()} C',
+                  style: GoogleFonts.cairo(
+                    fontSize: 16.sp,
+                    color: const Color(0xFF878787),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  '${WeatherModeController.weatherModel!.current!.feelslikeF.toString()} F',
+                  style: GoogleFonts.cairo(
+                    fontSize: 16.sp,
+                    color: const Color(0xFF878787),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 180.sp,
+                  child: Row(
+                    children: [
+                      Expanded(
+                          flex: 6, child: Image.asset('assets/icons/rain.png')),
+                      Expanded(
+                          flex: 2,
+                          child: Container(
+                            color: Colors.white38,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: weatherWidget(
+                                      image: 'assets/icons/humidity.png',
+                                      title: WeatherModeController
+                                          .weatherModel!.current!.humidity
+                                          .toString()),
+                                ),
+                                Expanded(
+                                  child: weatherWidget(
+                                      image: 'assets/icons/wind.png',
+                                      title:
+                                          '${WeatherModeController.weatherModel!.current!.windKph.toString()} kph'),
+                                ),
+                                Expanded(
+                                  child: weatherWidget(
+                                      image: 'assets/icons/sun.png',
+                                      title: '6:00pm'),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.sp,
+                ),
+                Container(
+                    padding: EdgeInsets.only(left: 14.sp, right: 19.sp),
+                    height: 220.sp,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(11.sp),
+                      color: const Color(0xFFF4FCFC),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF474747).withOpacity(0.1),
+                          offset: const Offset(0, 3.0),
+                          blurRadius: 12.sp,
+                        ),
+                      ],
+                    ),
+                    child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: 15.sp),
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: WeatherModeController
+                            .weatherModel!.forecast!.forecastday!.length,
+                        itemBuilder: (context, index) {
+                          return WeeklyWeatherWidget(
+                              dayName: WeatherModeController.weatherModel!
+                                  .forecast!.forecastday![index].date
+                                  .toString(),
+                              time: '9mph',
+                              percentage: '54 %');
+                        })),
+              ],
+            );
+          }
+          return Container();
+        },
       ),
     );
   }

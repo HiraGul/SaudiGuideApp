@@ -32,12 +32,18 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => WeatherForecastCubit(),
+        ),
+        BlocProvider(
           create: (context) => MyRecommendationCubit(),
         ),    BlocProvider(
           create: (context) => ChatBotCubit(),
         ),     BlocProvider(
           create: (context) => ChatListCubit([]),
         ),      ],
+        ),
+        BlocProvider(create: (context) => TranslateListCubit())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         useInheritedMediaQuery: true,
