@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'Screens/PreferenceScreens/preference_pageview.dart';
+import 'package:saudi_guide/Screens/multiLanguageScreen/multi_language_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +30,7 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         useInheritedMediaQuery: true,
         splitScreenMode: true,
-        builder: (context, child) => const UserPreferenceScreen(),
+        builder: (context, child) => const MultiLanguageScreen(),
       ),
     );
   }
