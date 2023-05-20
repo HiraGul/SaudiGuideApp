@@ -8,6 +8,8 @@ import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 
 import 'Screens/PreferenceScreens/preference_pageview.dart';
 import 'Screens/my_recomendation_screen/my_recomendation_screen.dart';
+import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
+import 'package:saudi_guide/weather_screen/weather_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +27,18 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      useInheritedMediaQuery: true,
+      theme: ThemeData(
+          // useMaterial3: true
+          ),
+      home: ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        useInheritedMediaQuery: true,
+        splitScreenMode: true,
+        builder: (context, child) => const WeatherScreen(),
     return MultiBlocProvider(
       providers: [
         BlocProvider(
