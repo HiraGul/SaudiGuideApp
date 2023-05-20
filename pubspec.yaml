@@ -45,6 +45,7 @@ dependencies:
   firebase_messaging: ^14.6.1
   geolocator: ^9.0.2
   loading_animation_widget:
+  image_picker: ^0.8.7+5
 
   http:
 

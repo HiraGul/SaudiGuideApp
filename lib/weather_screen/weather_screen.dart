@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:saudi_guide/Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'package:saudi_guide/Models/weather_model_controller.dart';
@@ -167,7 +168,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '${WeatherModeController.weatherModel!.location!.country.toString()} ${WeatherModeController.weatherModel!.location!.country}',
+                    '${WeatherModeController.weatherModel!.location!.name.toString()} ${WeatherModeController.weatherModel!.location!.country}',
                     style: GoogleFonts.cairo(
                       fontSize: 24.sp,
                       color: const Color(0xFF082B34),
@@ -205,7 +206,18 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   child: Row(
                     children: [
                       Expanded(
-                          flex: 6, child: Image.asset('assets/icons/rain.png')),
+                          flex: 6,
+                          child: FadeInImage(
+                            placeholder: AssetImage("images/icons/bc.png"),
+                            image: NetworkImage(
+                                '${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
+                                headers: {
+                                  'X-RapidAPI-Key':
+                                      ' 4ba134b8e1msh225dac5b0fc4db6p1de760jsn5e94b47909ad',
+                                  // 'X-RapidAPI-Host':
+                                  //     'weatherapi-com.p.rapidapi.com'
+                                }),
+                          )),
                       Expanded(
                           flex: 2,
                           child: Container(
@@ -228,7 +240,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 Expanded(
                                   child: weatherWidget(
                                       image: 'assets/icons/sun.png',
-                                      title: '6:00pm'),
+                                      title: WeatherModeController
+                                          .weatherModel!
+                                          .forecast!
+                                          .forecastday![0]
+                                          .astro!
+                                          .sunset!
+                                          .toString()),
                                 ),
                               ],
                             ),
@@ -260,12 +278,22 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         itemCount: WeatherModeController
                             .weatherModel!.forecast!.forecastday!.length,
                         itemBuilder: (context, index) {
-                          return WeeklyWeatherWidget(
-                              dayName: WeatherModeController.weatherModel!
+                          DateTime date = DateTime.now();
+                          String dateFormat = DateFormat('EEEE').format(
+                              DateTime.parse(WeatherModeController.weatherModel!
                                   .forecast!.forecastday![index].date
-                                  .toString(),
-                              time: '9mph',
-                              percentage: '54 %');
+                                  .toString()));
+                          return WeeklyWeatherWidget(
+                            dayName: dateFormat,
+                            time:
+                                '${WeatherModeController.weatherModel!.forecast!.forecastday![index].day!.maxwindMph.toString()} mph',
+                            percentage:
+                                '${WeatherModeController.weatherModel!.forecast!.forecastday![index].day!.avgtempC} C '
+                                    .toString(),
+                            percentage1:
+                                '${WeatherModeController.weatherModel!.forecast!.forecastday![index].day!.avgtempF} F '
+                                    .toString(),
+                          );
                         })),
               ],
             );
