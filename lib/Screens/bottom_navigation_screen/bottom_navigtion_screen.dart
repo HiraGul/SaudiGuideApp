@@ -61,7 +61,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
               BottomNavItems(
                 pageController: pageController,
                 iconData: Icons.person,
-                title: "Help",
+                title: "Profile",
                 currentIndex: 4,
               ),
             ],
@@ -115,20 +115,23 @@ class BottomNavItems extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                    child: Icon(
+                    child: Center(
+                      child: Icon(
                   iconData,
                   size: 30.sp,
                   color: state == currentIndex
-                      ? AppColors.greenColor
-                      : Colors.grey,
-                )),
+                        ? AppColors.greenColor
+                        : Colors.grey,
+                ),
+                    )),
                 Expanded(
+
                     child: Column(
                   children: [
                     Expanded(
                         child: Text(
                       title,
-                      style: GoogleFonts.raleway(
+                      style: GoogleFonts.cairo(
                         color: state == currentIndex
                             ? AppColors.greenColor
                             : Colors.grey,
@@ -136,16 +139,18 @@ class BottomNavItems extends StatelessWidget {
                       ),
                     )),
                     Expanded(
+
                         child: Align(
                       alignment: Alignment.topCenter,
-                      child: Container(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
                         decoration: BoxDecoration(
                           color: state == currentIndex
                               ? AppColors.greenColor
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(10.sp),
                         ),
-                        width: 15.sp,
+                        width: state == currentIndex? 18.sp: 3.sp,
                         height: 5.sp,
                       ),
                     )),
