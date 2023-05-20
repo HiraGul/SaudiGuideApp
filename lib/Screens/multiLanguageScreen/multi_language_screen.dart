@@ -27,23 +27,28 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
-        leading: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(left: 5.sp),
-          width: 31.sp,
-          height: 31.sp,
-          margin: EdgeInsets.only(left: 15.sp),
-          decoration: const BoxDecoration(
-              color: Color.fromRGBO(41, 158, 151, 1), shape: BoxShape.circle),
-          child: Icon(
-            Icons.arrow_back_ios,
-            size: 15.sp,
+        leading: InkWell(
+          onTap: (){
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(left: 5.sp),
+            width: 31.sp,
+            height: 31.sp,
+            margin: EdgeInsets.only(left: 15.sp),
+            decoration: const BoxDecoration(
+                color: Color.fromRGBO(41, 158, 151, 1), shape: BoxShape.circle),
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 15.sp,
+            ),
           ),
         ),
         elevation: 4,
         centerTitle: true,
         title: Text(
-          'To do',
+          'Multi Language',
           style: GoogleFonts.cairo(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,

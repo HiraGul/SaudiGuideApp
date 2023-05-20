@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Augmented%20Reality/ar.dart';
+import 'package:saudi_guide/Screens/multiLanguageScreen/multi_language_screen.dart';
 import 'package:saudi_guide/Screens/recommendation_screen.dart';
 import 'package:saudi_guide/Screens/safety_security_screen.dart';
+import 'package:saudi_guide/Screens/toDoScreen/todo_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/weather_screen/weather_screen.dart';
 
@@ -39,11 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": "assets/icons/shield.png"
     },
     {
-      "page": Container(
-        color: Colors.black,
-        height: 200,
-        width: 200,
-      ),
+      "page": MultiLanguageScreen(),
+      "title": "Multi Language",
+      "icon": "assets/icons/todo.png"
+    },
+    {
+      "page": TodoScreen(),
       "title": "To do",
       "icon": "assets/icons/todo.png"
     },
@@ -150,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 10.h,
               ),
               GridView.builder(
-                itemCount: 5,
+                itemCount: menuItem.length,
                 shrinkWrap: true,
                 primary: false,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

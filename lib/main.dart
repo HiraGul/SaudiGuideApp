@@ -8,6 +8,8 @@ import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 
+import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
+import 'Cubits/translate_list_cubit.dart';
 import 'Screens/PreferenceScreens/preference_pageview.dart';
 import 'Screens/my_recomendation_screen/my_recomendation_screen.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
@@ -40,8 +42,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ChatBotCubit(),
         ),     BlocProvider(
           create: (context) => ChatListCubit([]),
-        ),      ],
         ),
+
         BlocProvider(create: (context) => TranslateListCubit())
       ],
       child: MaterialApp(
