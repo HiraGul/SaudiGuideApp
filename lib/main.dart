@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
+import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
@@ -31,6 +33,10 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(
           create: (context) => MyRecommendationCubit(),
+        ),    BlocProvider(
+          create: (context) => ChatBotCubit(),
+        ),     BlocProvider(
+          create: (context) => ChatListCubit([]),
         ),      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

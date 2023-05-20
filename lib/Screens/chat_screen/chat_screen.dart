@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
+import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
+import 'package:saudi_guide/Models/chat_model.dart';
+import 'package:saudi_guide/Repo/recomentation_repo/chat_bot_repo.dart';
+import 'package:saudi_guide/Repo/recommendation_repo.dart';
 import 'package:saudi_guide/Screens/chat_screen/components/chat_card.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  final bool? isRecommendedOption;
+  const ChatScreen({Key? key,this.isRecommendedOption = false}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -14,9 +21,72 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textFieldController = TextEditingController();
 
+  List<ChatModel> tempList = [
+  ];
+
+  @override
+  void initState() {
+
+    tempList = [];
+    context.read<ChatListCubit>().getList(list: tempList);
+    if(widget.isRecommendedOption!){
+
+      context.read<ChatBotCubit>().getMessage(isRecommendedOption: widget.isRecommendedOption!);
+      tempList = [];
+      context.read<ChatListCubit>().getList(list: tempList);
+
+
+    }else{
+      if(RecommendationModel.title == "Hajj" || RecommendationModel.title =='Umrah' ) {
+
+        tempList.add( ChatModel(
+            message: ChatBotRepo.question,
+            isHuman: false,
+            dateTime: DateTime.now()));
+        context.read<ChatBotCubit>().getMessage(message: ChatBotRepo.question);
+
+       ChatBotRepo.chatBotMessages = ChatBotRepo.getUserRecommendation();
+        ChatBotRepo.chatBotMessages = ChatBotRepo.clearMessages;
+
+
+        context.read<ChatListCubit>().getList(
+          list: [
+            ChatModel(
+                message: ChatBotRepo.question,
+                isHuman: true,
+                dateTime: DateTime.now()),
+          ],
+        );
+
+
+      }else{
+       tempList.add( ChatModel(
+           message: 'Hello, How I can help you?',
+           isHuman: false,
+           dateTime: DateTime.now()));
+
+    ChatBotRepo.chatBotMessages = ChatBotRepo.clearMessages;
+
+        context.read<ChatListCubit>().getList(
+          list: [
+            ChatModel(
+                message: 'Hello, How I can help you?',
+                isHuman: false,
+                dateTime: DateTime.now()),
+          ],
+        );
+      }
+
+    }
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -48,83 +118,156 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         title: Text('Muhammad '),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              //padding: EdgeInsets.symmetric(vertical: 20.sp),
-              child: ListView(
-                reverse: true,
-                children: const [
-                  ChatCard(
-                    message: 'Demo',
-                    userName: "Saudi Food & Drinks",
-                    userType: UserType.chatBot,
-                  ),
-                ],
+      body: BlocListener<ChatBotCubit, ChatBotState>(
+        listener: (context, state) {
+          print('============== $state');
+          if (state is ChatBotLoaded) {
+            tempList.add(
+              ChatModel(
+                  message: state.message,
+                  isHuman: false,
+                  dateTime: DateTime.now()),
+
+            );
+            scrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.bounceIn,
+            );
+            context.read<ChatListCubit>().getList(list: tempList);
+          }if(state is ChatBotError){
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error),),);
+          }
+          // TODO: implement listener
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                //padding: EdgeInsets.symmetric(vertical: 20.sp),
+                child: BlocBuilder<ChatListCubit, List<ChatModel>>(
+                  builder: (context, chatList) {
+                    return ListView.builder(
+                        controller: scrollController,
+                        reverse: true,
+                        shrinkWrap: true,
+                        itemCount: chatList.length,
+                        itemBuilder: (context, index) {
+                          return ChatCard(
+                            message: chatList[index].message,
+                            userName: chatList[index].isHuman
+                                ? "User"
+                                : "Assistant",
+                            userType: chatList[index].isHuman
+                                ? UserType.user
+                                : UserType.chatBot,
+                          );
+                        });
+                  },
+                ),
               ),
             ),
-          ),
-          const ChatCard(
-            message: 'typing...',
-            userName: "Saudi Food & Drinks",
-            userType: UserType.chatBot,
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(15.sp, 0, 15.sp, 0.sp),
-            height: 75.sp,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 4,
-                  child: Align(
-                    child: TextField(
-                      controller: textFieldController,
-                      decoration: InputDecoration(
+            BlocBuilder<ChatBotCubit, ChatBotState>(
+              builder: (context, state) {
+                if (state is ChatBotLoading) {
+                  return const ChatCard(
+                    message: 'typing...',
+                    userName: "Assistant",
+                    userType: UserType.chatBot,
+                  );
+                } else if (state is ChatBotLoaded) {
+                  return Container();
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(15.sp, 0, 15.sp, 0.sp),
+              height: 75.sp,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Align(
+                      child: TextField(
+                        controller: textFieldController,
+                        decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color(0xffF3F3F3),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 15.sp, vertical: 12.sp),
                           isCollapsed: true,
                           hintText: 'Type here..',
-                          border: const OutlineInputBorder()),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.sp,
-                ),
-                textFieldController.text.isEmpty
-                    ? Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.greenColor),
-                        height: 45.sp,
-                        width: 45.sp,
-                        child: const Center(
-                          child: Icon(
-                            Icons.send,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.greenColor),
-                        height: 45.sp,
-                        width: 45.sp,
-                        child: const Center(
-                          child: Icon(
-                            Icons.mic,
-                            color: Colors.white,
-                          ),
+                          border: const OutlineInputBorder(),
                         ),
                       ),
-              ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5.sp,
+                  ),
+                  // textFieldController.text.isEmpty
+                  //     ?
+                  InkWell(
+                    onTap: () {
+                      tempList.add(
+                        ChatModel(
+                          message: textFieldController.text,
+                          isHuman: true,
+                          dateTime: DateTime.now(),
+                        ),
+                      );
+
+                      context.read<ChatListCubit>().getList(list: tempList);
+
+
+
+                      if(widget.isRecommendedOption!){
+                        context
+                            .read<ChatBotCubit>()
+                            .getMessage(message : textFieldController.text, recommendationList: RecommendationRepo.chatBotMessages);
+                      }else{
+                        context
+                            .read<ChatBotCubit>()
+                            .getMessage(message: textFieldController.text);
+                      }
+
+
+
+                      textFieldController.clear();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: AppColors.greenColor),
+                      height: 45.sp,
+                      width: 45.sp,
+                      child: const Center(
+                        child: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                  // : Container(
+                  //     decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: AppColors.greenColor),
+                  //     height: 45.sp,
+                  //     width: 45.sp,
+                  //     child: const Center(
+                  //       child: Icon(
+                  //         Icons.mic,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
