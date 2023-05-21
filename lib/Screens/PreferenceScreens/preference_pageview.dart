@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:saudi_guide/Screens/PreferencesScreens/card_widget.dart';
+import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/widgets/nationality_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
@@ -16,11 +17,6 @@ class UserPreferenceScreen extends StatefulWidget {
 
 class _UserPreferenceScreenState extends State<UserPreferenceScreen>
     with SingleTickerProviderStateMixin {
-  List<Widget> widgets = const [
-    GenderAndAgeWidget(),
-    NationalityWidget(),
-    CardCustomWidget(),
-  ];
   late final TabController controller;
   int _currentIndex = 0;
   @override
@@ -37,25 +33,32 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
   }
 
   void goToNextTab() {
-    if (_currentIndex < controller.length - 1) {
-      _currentIndex++;
+    if (controller.index == 0) {
       controller.animateTo(
-        _currentIndex,
+        1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    } else if (controller.index == 1) {
+      controller.animateTo(
+        2,
         duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
     }
-  }
-
-  void goToBackTab() {
-    if (_currentIndex > 0) {
-      _currentIndex--;
+    if (controller.index == 2) {
       controller.animateTo(
-        _currentIndex,
+        3,
         duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
+    } else if (controller.index == 3) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const BottomNavigationScreen()));
     }
+    setState(() {});
   }
 
   @override
@@ -90,7 +93,13 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
                     TabBarView(
                         //physics: NeverScrollableScrollPhysics(),
                         controller: controller,
-                        children: widgets),
+                        children: [
+                          const GenderAndAgeWidget(),
+                          NationalityWidget(
+                            controller: controller,
+                          ),
+                          const CardCustomWidget(),
+                        ]),
                     Positioned(
                       bottom: 150.sp,
                       left: 30.sp,

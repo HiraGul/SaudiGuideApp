@@ -6,8 +6,22 @@ import 'package:saudi_guide/Screens/widgets/custom_text_field.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/Utils/prfencess_controller.dart';
 
-class NationalityWidget extends StatelessWidget {
-  const NationalityWidget({Key? key}) : super(key: key);
+class NationalityWidget extends StatefulWidget {
+  TabController controller;
+  NationalityWidget({required this.controller, Key? key}) : super(key: key);
+
+  @override
+  State<NationalityWidget> createState() => _NationalityWidgetState();
+}
+
+class _NationalityWidgetState extends State<NationalityWidget> {
+  void goToBackTab() {
+    widget.controller.animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
