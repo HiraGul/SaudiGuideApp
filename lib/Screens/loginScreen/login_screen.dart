@@ -21,6 +21,13 @@ class _LoginScreenState extends State<LoginScreen> {
   var passController = TextEditingController();
   var name = TextEditingController();
   var isLoading = ValueNotifier<bool>(false);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

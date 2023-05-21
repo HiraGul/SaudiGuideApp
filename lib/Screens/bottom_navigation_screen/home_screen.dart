@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Augmented%20Reality/ar.dart';
+import 'package:saudi_guide/Cubits/change_index_cubit.dart';
 import 'package:saudi_guide/Screens/imagine_saudi_screen/imagine_saudi_screen.dart';
 import 'package:saudi_guide/Screens/multiLanguageScreen/multi_language_screen.dart';
 import 'package:saudi_guide/Screens/recommendation_screen.dart';
@@ -42,12 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": "assets/icons/shield.png"
     },
     {
-      "page": MultiLanguageScreen(),
+      "page": const MultiLanguageScreen(),
       "title": "Multi Language",
       "icon": "assets/icons/language.png"
     },
     {
-      "page": TodoScreen(),
+      "page": const TodoScreen(),
       "title": "To do",
       "icon": "assets/icons/todo.png",
     },
@@ -57,6 +59,29 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": "assets/icons/idea.png",
     },
   ];
+  // var userLoading = ValueNotifier<bool>(true);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // getUser();
+  }
+
+  // getUser() async {
+  //   if (FirebaseAuth.instance.currentUser != null) {
+  //     await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+  //         .get()
+  //         .then((value) {
+  //       userName = value.data()!['name'];
+  //       userLoading.value = !userLoading.value;
+  //     });
+  //   }else{
+  //     userLoading.value = !userLoading.value;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -175,76 +200,86 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: menuItem
                       .map((e) => InkWell(
                             onTap: () {
+                              context
+                                  .read<ChangeIndexCubit>()
+                                  .changeIndex(menuItem.indexOf(e));
                               Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) {
                                 return e['page'];
                               }));
                             },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                left: 0.01.sw,
-                                right: 0.01.sw,
-                                bottom: 10.sp,
-                              ),
-                              width: 0.45.sw,
-                              height: 122.h,
-                              padding: EdgeInsets.only(left: 10.sp),
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withAlpha(100),
-                                      blurRadius: 5)
-                                ],
-                                borderRadius: BorderRadius.circular(20.sp),
-                                color: menuItem.indexOf(e) == 0
-                                    ? AppColors.greenColor
-                                    : Colors.white,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        e['title'],
-                                        style: GoogleFonts.cairo(
-                                          fontWeight: FontWeight.w800,
-                                          color: menuItem.indexOf(e) == 0
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
+                            child: BlocBuilder<ChangeIndexCubit, int>(
+                              builder: (context, state) {
+                                return Container(
+                                  margin: EdgeInsets.only(
+                                    left: 0.01.sw,
+                                    right: 0.01.sw,
+                                    bottom: 10.sp,
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: SizedBox(
-                                      width: 1.sw,
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Container(
-                                          width: 55.w,
-                                          height: 55.h,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: AppColors.lightGreen),
-                                          child: Center(
-                                            child: SizedBox(
-                                                width: 38.w,
-                                                height: 38.h,
-                                                child: Image.asset(
-                                                  e['icon'],
-                                                  color: AppColors.greenColor,
-                                                )),
+                                  width: 0.45.sw,
+                                  height: 122.h,
+                                  padding: EdgeInsets.only(left: 10.sp),
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withAlpha(100),
+                                          blurRadius: 5)
+                                    ],
+                                    borderRadius: BorderRadius.circular(20.sp),
+                                    color: menuItem.indexOf(e) == state
+                                        ? AppColors.greenColor
+                                        : Colors.white,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            e['title'],
+                                            style: GoogleFonts.cairo(
+                                              fontWeight: FontWeight.w800,
+                                              color:
+                                                  menuItem.indexOf(e) == state
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                              fontSize: 15.sp,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: SizedBox(
+                                          width: 1.sw,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Container(
+                                              width: 55.w,
+                                              height: 55.h,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: AppColors.lightGreen),
+                                              child: Center(
+                                                child: SizedBox(
+                                                    width: 38.w,
+                                                    height: 38.h,
+                                                    child: Image.asset(
+                                                      e['icon'],
+                                                      color:
+                                                          AppColors.greenColor,
+                                                    )),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                );
+                              },
                             ),
                           ))
                       .toList(),
