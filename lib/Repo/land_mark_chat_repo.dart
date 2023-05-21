@@ -8,23 +8,38 @@ class LandMarkChatRepo{
 
 
 
-  static List<Map<String,dynamic>> chatBotMessages = [
-    {'role': 'system', 'content': 'You are a friendly Saudi guide that guides tourists in Saudi Arabia. limit your responses to maximum 100 words'},
-    {'role': 'user', 'content': 'I\'m a tourist in Saudi Arabia. Can you guide me to Saudi Arabia? Would that be possible?'},
-    {'role': 'assistant', 'content': 'I am happy to help you. Of course, I can guide you in Saudi Arabia. How can I assist you?'},
+  static List<Map<String,dynamic>> chatBotMessage =[
+    {'role': 'system', 'content': 'You are a powerful AI model that'
+        ' specializes in generating meaningful information from tags and description extracted from an image. Based on the'
+        ' provided tags and description, your task '
+        'is to extract relevant words of importance from description and provide'
+        'useful information. Add'
+        ' historical, cultural, architectural, or any other '
+        'relevant information that would enhance the user\'s understanding of the information present. Limit your response to max 100 words.'},
+    {'role': 'user', 'content': "The tags are "
+        "${LandMarkController.landMark?.description?.tags?.join(' , ')} and the "
+        "description is "
+        "${LandMarkController.landMark?.description?.captions?[0].text} "
+        ""},
   ];
 
 
 
-  static List<Map<String,dynamic>> clearMessages =[
-    {'role': 'system', 'content': 'You are a powerful AI model that specializes in generating detailed information about landmarks. Based on the'
+
+  static List<Map<String,dynamic>> clearMessage =[
+    {'role': 'system', 'content': 'You are a powerful AI model that'
+        ' specializes in generating meaningful information from tags and '
+        'description extracted from an image. Based on the'
         ' provided tags and description, your task '
-        'is to expand on the details and provide a '
-        'comprehensive overview of the landmark. Add'
+        'is to extract relevant words of importance from description and provide'
+        'useful information. Add'
         ' historical, cultural, architectural, or any other '
-        'relevant information that would enhance the user\'s understanding of the landmark.'},
-    {'role': 'user', 'content': "The tags are ${LandMarkController.landMark?.description?.tags} and the "
-        "description is ${LandMarkController.landMark?.description?..captions?.join(' , ')} "
+        'relevant information that would enhance the user\'s understanding of the '
+        'information present. Limit your response to max 100 words.'},
+    {'role': 'user', 'content': "The tags are "
+        "${LandMarkController.landMark?.description?.tags?.join(' , ')} and the "
+        "description is "
+        "${LandMarkController.landMark?.description?.captions?[0].text} "
         ""},
   ];
 
@@ -37,13 +52,12 @@ class LandMarkChatRepo{
 
   static Future<int> interactWithChatBot({required dynamic message, List<Map<String, dynamic>>? recommendationList}) async {
 
-
-  //  var user_dict= {'role': 'user', 'content': '${message}. limit your answer to 50 words'};
-  //   if(recommendationList == null){
-  //     chatBotMessages.add(user_dict);
-  //   }else{
-  //     RecommendationRepo.chatBotMessages.add(user_dict);
-  //   }
+    print('============ in land mark ${LandMarkController.landMark?.description?.tags?.join(' , ')}');
+    print('============ in land mark ${LandMarkController.landMark?.description?.captions?[0].text}');
+   var user_dict= {'role': 'user', 'content': '${message}. limit your answer to 50 words'};
+    if(message != ''){
+      chatBotMessage.add(user_dict);
+    }
 
 
     try {
@@ -58,7 +72,7 @@ class LandMarkChatRepo{
 
 
       final requestBody = {
-        'messages': recommendationList ?? chatBotMessages,
+        'messages':  chatBotMessage,
         "model": "gpt-3.5-turbo",
         "temperature": 0.7,
 
@@ -74,11 +88,13 @@ class LandMarkChatRepo{
 
         var  chatBotDict =  {'role': 'assistant', 'content': content};
 
-        chatBotMessages.add(chatBotDict);
+       chatBotMessage.add(chatBotDict);
         print('=======length ${content.toString().length}');
 
         print(content);
+
         ChatModel.chatBotResponse = content;
+
         return response.statusCode;
       } else {
         print('Request failed with status: ${response.statusCode}');

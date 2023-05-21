@@ -19,11 +19,15 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       List<Map<String, dynamic>>? recommendationList}) async {
     emit(ChatBotLoading());
 
+
+
+
     try {
       var result;
       if (isRecommendedOption) {
         result = await RecommendationRepo.getRecommendation(message: message);
       } else if (LandMarkController.landMark != null) {
+        print('============ in land mark');
         result = await LandMarkChatRepo.interactWithChatBot(
             message: message, recommendationList: recommendationList);
       } else {

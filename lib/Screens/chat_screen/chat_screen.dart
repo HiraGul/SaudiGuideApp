@@ -6,15 +6,17 @@ import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
 import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
 import 'package:saudi_guide/Models/chat_model.dart';
 import 'package:saudi_guide/Models/land_mark_controller.dart';
+import 'package:saudi_guide/Repo/land_mark_chat_repo.dart';
 import 'package:saudi_guide/Repo/recomentation_repo/chat_bot_repo.dart';
 import 'package:saudi_guide/Repo/recommendation_repo.dart';
 import 'package:saudi_guide/Screens/chat_screen/components/chat_card.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 class ChatScreen extends StatefulWidget {
+  final bool isLandMark ;
   final bool? isRecommendedOption;
 
-  const ChatScreen({Key? key, this.isRecommendedOption = false})
+  const ChatScreen({Key? key, this.isRecommendedOption = false , this.isLandMark = false})
       : super(key: key);
 
   @override
@@ -66,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
         /// This will behave as a generic chat bot
 
         if (LandMarkController.landMark != null) {
-          ChatBotRepo.chatBotMessages = ChatBotRepo.clearMessages;
+          LandMarkChatRepo.chatBotMessage = LandMarkChatRepo.clearMessage;
 
           context.read<ChatBotCubit>().getMessage(
               message:
@@ -74,6 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
           // LandMarkController.landMark = null;
         } else {
+
           tempList.add(ChatModel(
               message: 'Hello, How I can help you?',
               isHuman: false,
