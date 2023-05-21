@@ -2,11 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
+import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
+import 'package:saudi_guide/Screens/PreferenceScreens/preference_pageview.dart';
 
+import 'Cubits/ScanCubit/scan_land_mark_cubit.dart';
 import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'Cubits/translate_list_cubit.dart';
-import 'Screens/toDoScreen/todo_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +30,19 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => ScanLandMarkCubit(),
+        ),
+        BlocProvider(
           create: (context) => WeatherForecastCubit(),
         ),
         BlocProvider(
           create: (context) => MyRecommendationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChatBotCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChatListCubit([]),
         ),
         BlocProvider(create: (context) => TranslateListCubit())
       ],
@@ -45,7 +57,7 @@ class _MyAppState extends State<MyApp> {
             minTextAdapt: true,
             useInheritedMediaQuery: true,
             splitScreenMode: true,
-            builder: (context, child) => const TodoScreen(),
+            builder: (context, child) => const UserPreferenceScreen(),
           )),
     );
   }

@@ -1,12 +1,15 @@
 class ChatModel {
   final String message;
   final bool isHuman;
+  final DateTime dateTime;
 
   static String  recommendationResponse = '';
+  static String  chatBotResponse = '';
 
   ChatModel({
     required this.message,
     required this.isHuman,
+    required this.dateTime
   });}
 
 

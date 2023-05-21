@@ -4,3 +4,9 @@ part of 'scan_land_mark_cubit.dart';
 abstract class ScanLandMarkState {}
 
 class ScanLandMarkInitial extends ScanLandMarkState {}
+
+class ScanLandMarkLoading extends ScanLandMarkState {}
+
+class ScanLandMarkLoaded extends ScanLandMarkState {}
+
+class ScanLandMarkException extends ScanLandMarkState {}

@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saudi_guide/Models/chat_model.dart';
+import 'package:saudi_guide/Models/recomendation_model.dart';
 import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 class RecomendedArea extends StatefulWidget {
-  const RecomendedArea({Key? key}) : super(key: key);
+  final RecommendationDataModel model;
+  const RecomendedArea({Key? key,required this.model}) : super(key: key);
 
   @override
   State<RecomendedArea> createState() => _RecomendedAreaState();
 }
 
 class _RecomendedAreaState extends State<RecomendedArea> {
+  @override
+  void initState() {
+
+    RecommendationModel.recommendedRegion = [];
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +67,15 @@ class _RecomendedAreaState extends State<RecomendedArea> {
         child: InkWell(
           onTap: () {
 
-            Navigator.of(context).push(MaterialPageRoute(builder: (context){
-              return ChatScreen();
-            }));
+            if(RecommendationModel.title == 'Hajj' || RecommendationModel.title == 'Umrah'){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return const ChatScreen();
+              }));
+            }else{
+              Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return const ChatScreen(isRecommendedOption: true,);
+              }));
+            }
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
@@ -69,7 +85,7 @@ class _RecomendedAreaState extends State<RecomendedArea> {
             ),
             child: Center(
               child: Text(
-                'Lets Chat',
+                'Proceed',
                 style: GoogleFonts.cairo(
                     color: Colors.white,
                     fontSize: 18.sp,
@@ -79,39 +95,50 @@ class _RecomendedAreaState extends State<RecomendedArea> {
           ),
         ),
       ),
-      body: ListView(
+
+      body: ListView.builder(
         shrinkWrap: true,
-        padding: EdgeInsets.only(top: 60.sp, left: 40.sp, right: 40.sp),
-        children: [
-          RecommendationCheckArea(
-            title: 'Food & Drinks',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationCheckArea(
-            title: 'Entertainment',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationCheckArea(
-            title: 'Tourist',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationCheckArea(
-            title: 'Hajj',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationCheckArea(
-            title: 'Umrah',
-          ),
-        ],
-      ),
+itemCount: widget.model.subCategories.length,
+          padding: EdgeInsets.only(top: 60.sp, left: 40.sp, right: 40.sp),
+          itemBuilder: (context, index){
+            return
+              RecommendationCheckArea(
+                      title:  widget.model.subCategories[index],
+                    );
+      }),
+      // body: ListView(
+      //   shrinkWrap: true,
+      //   padding: EdgeInsets.only(top: 60.sp, left: 40.sp, right: 40.sp),
+      //   children: [
+      //     RecommendationCheckArea(
+      //       title: 'Food & Drinks',
+      //     ),
+      //     SizedBox(
+      //       height: 16.sp,
+      //     ),
+      //     RecommendationCheckArea(
+      //       title: 'Entertainment',
+      //     ),
+      //     SizedBox(
+      //       height: 16.sp,
+      //     ),
+      //     RecommendationCheckArea(
+      //       title: 'Tourist',
+      //     ),
+      //     SizedBox(
+      //       height: 16.sp,
+      //     ),
+      //     RecommendationCheckArea(
+      //       title: 'Hajj',
+      //     ),
+      //     SizedBox(
+      //       height: 16.sp,
+      //     ),
+      //     RecommendationCheckArea(
+      //       title: 'Umrah',
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
@@ -131,10 +158,11 @@ class RecommendationCheckArea extends StatefulWidget {
 
 class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
   bool? checkValue = false;
-  List list = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 15.sp),
       alignment: const Alignment(0.01, -0.06),
       width: 307.sp,
       height: 50.sp,
@@ -165,12 +193,15 @@ class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
               onChanged: (bool? newValue) {
                 setState(() {
                   if (newValue == true) {
-                    list.add(widget.title);
-                    print(list);
+                    RecommendationModel.recommendedRegion.add(widget.title);
+                    print( RecommendationModel.recommendedRegion);
                   } else {
-                    if (list.contains(widget.title)) {
-                      list.remove(widget.title);
+                    if ( RecommendationModel.recommendedRegion.contains(widget.title)) {
+                      RecommendationModel.recommendedRegion.remove(widget.title);
+
+                    print(RecommendationModel.recommendedRegion);
                     }
+
                   }
                   checkValue = newValue;
                 });
