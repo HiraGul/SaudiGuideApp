@@ -11,6 +11,7 @@ import 'package:saudi_guide/Repo/recomentation_repo/chat_bot_repo.dart';
 import 'package:saudi_guide/Repo/recommendation_repo.dart';
 import 'package:saudi_guide/Screens/chat_screen/components/chat_card.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+import 'package:saudi_guide/Utils/shared_prefs.dart';
 
 class ChatScreen extends StatefulWidget {
   final bool isLandMark ;
@@ -133,7 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
         ),
-        title: Text('Muhammad '),
+        title: Text(MySharedPrefs.getIsLoggedIn()?? "User"),
       ),
       body: BlocListener<ChatBotCubit, ChatBotState>(
         listener: (context, state) {

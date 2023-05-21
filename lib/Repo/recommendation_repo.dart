@@ -13,7 +13,7 @@ class RecommendationRepo {
 
 
 
-  static UserData userData = UserData('', '', '', '', '', '', '',);
+  static UserData userData = UserData(userAge: '', gender: '', userLocation: '', monthlyIncome: '', nationality: '', country: '', purpose: '',);
 
 
   static var userInputGpt3 = '';
@@ -48,7 +48,11 @@ static var systemContent = '';
   static Future<int> getRecommendation({String message = ''}) async {
 
 
-    userData = await MySharedPrefs.getUserData();
+   var  data = await MySharedPrefs.getUserData();
+    if(data !=null){
+
+      userData = data;
+    }
     print('========== user data ${userData.monthlyIncome} ${userData.userLocation}');
     var myPrompt = getMyPrompt(isUserCohere: true);
     prompt = '${myPrompt['system']} ${myPrompt['user']}';
