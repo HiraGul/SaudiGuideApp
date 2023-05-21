@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/Utils/strings.dart';
 
 import 'custom_card.dart';
@@ -14,6 +15,7 @@ class CardCustomWidget extends StatefulWidget {
 }
 
 class _CardCustomWidgetState extends State<CardCustomWidget> {
+  int currentIndex = 1;
   void goToBackTab() {
     widget.controller.animateTo(
       1,
@@ -96,41 +98,70 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
             physics: const ClampingScrollPhysics(),
             children: [
               CustomCard(
+                textColor: currentIndex == 1 ? Colors.white : Colors.black,
+                tileColor:
+                    currentIndex == 1 ? AppColors.greenColor : Colors.white,
                 title: "Work",
                 icon: AppStrings.worker,
-                onTap: () {},
+                onTap: () {
+                  currentIndex == 1;
+                  setState(() {});
+                },
               ),
               SizedBox(
                 height: 10.sp,
               ),
               CustomCard(
+                textColor: currentIndex == 2 ? Colors.white : Colors.black,
+                tileColor:
+                    currentIndex == 2 ? AppColors.greenColor : Colors.white,
                 title: "Study",
                 icon: AppStrings.study,
-                onTap: () {},
+                onTap: () {
+                  currentIndex == 2;
+                  setState(() {});
+                },
               ),
               SizedBox(
                 height: 10.sp,
               ),
               CustomCard(
+                textColor: currentIndex == 3 ? Colors.white : Colors.black,
+                tileColor:
+                    currentIndex == 3 ? AppColors.greenColor : Colors.white,
                 title: "Tourist",
                 icon: AppStrings.traveler,
-                onTap: () {},
+                onTap: () {
+                  currentIndex == 3;
+                },
               ),
               SizedBox(
                 height: 10.sp,
               ),
               CustomCard(
+                textColor: currentIndex == 4 ? Colors.white : Colors.black,
+                tileColor:
+                    currentIndex == 4 ? AppColors.greenColor : Colors.white,
                 title: "Hajj",
                 icon: AppStrings.qaaba,
-                onTap: () {},
+                onTap: () {
+                  currentIndex == 4;
+                  setState(() {});
+                },
               ),
               SizedBox(
                 height: 10.sp,
               ),
               CustomCard(
+                textColor: currentIndex == 5 ? Colors.white : Colors.black,
+                tileColor:
+                    currentIndex == 5 ? AppColors.greenColor : Colors.white,
                 title: "Umrah",
                 icon: AppStrings.umrah,
-                onTap: () {},
+                onTap: () {
+                  currentIndex = 5;
+                  setState(() {});
+                },
               ),
             ],
           ),

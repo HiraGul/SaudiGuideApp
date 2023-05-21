@@ -6,9 +6,16 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomCard extends StatelessWidget {
   String title;
   String icon;
+  Color tileColor;
+  Color textColor;
   final VoidCallback onTap;
   CustomCard(
-      {Key? key, required this.title, required this.icon, required this.onTap})
+      {Key? key,
+      required this.title,
+      required this.icon,
+      required this.onTap,
+      required this.textColor,
+      required this.tileColor})
       : super(key: key);
 
   @override
