@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Models/chat_model.dart';
 import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 import 'package:saudi_guide/Screens/recomended_area.dart';
+import 'package:saudi_guide/Screens/widgets/lets_chat_button.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 import '../Models/recomendation_model.dart';
@@ -63,31 +64,8 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   decoration: BoxDecoration(color: Colors.white, boxShadow: [
-      //     BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
-      //   ]),
-      //   height: 70.h,
-      //   child: InkWell(
-      //     onTap: () {},
-      //     child: Container(
-      //       margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
-      //       decoration: BoxDecoration(
-      //         borderRadius: BorderRadius.circular(4.sp),
-      //         color: const Color(0xff299E97),
-      //       ),
-      //       child: Center(
-      //         child: Text(
-      //           'Lets Chat',
-      //           style: GoogleFonts.cairo(
-      //               color: Colors.white,
-      //               fontSize: 18.sp,
-      //               fontWeight: FontWeight.w500),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
+
+      bottomNavigationBar: const LetsChatButton(),
       body: ListView(
         padding: EdgeInsets.only(top: 60.sp, left: 40.sp, right: 40.sp),
         children: [
@@ -114,47 +92,19 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                   ),
             );
           }),
-          // RecommendationContainer(
-          //   title: 'Food & Drinks',
+
+          // InkWell(
+          //   onTap: (){
+          //     RecommendationModel.title = '';
+          //     RecommendationModel.recommendedRegion = [];
+          //     Navigator.of(context).push(MaterialPageRoute(builder: (context){
+          //       return const ChatScreen();
+          //     }));
+          //   },
+          //   child: const RecommendationContainer(
+          //     title: 'Others',
+          //   ),
           // ),
-          // SizedBox(
-          //   height: 16.sp,
-          // ),
-          // RecommendationContainer(
-          //   title: 'Entertainment',
-          // ),
-          // SizedBox(
-          //   height: 16.sp,
-          // ),
-          // RecommendationContainer(
-          //   title: 'Tourist',
-          // ),
-          // SizedBox(
-          //   height: 16.sp,
-          // ),
-          // RecommendationContainer(
-          //   title: 'Hajj',
-          // ),
-          // SizedBox(
-          //   height: 16.sp,
-          // ),
-          // RecommendationContainer(
-          //   title: 'Umrah',
-          // ),
-          //
-          // SizedBox(
-          //   height: 16.sp,
-          // ),
-          InkWell(
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return const ChatScreen();
-              }));
-            },
-            child: const RecommendationContainer(
-              title: 'Others',
-            ),
-          ),
         ],
       ),
     );

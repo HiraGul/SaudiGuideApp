@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Models/chat_model.dart';
 import '../chat_screen/chat_screen.dart';
 
 class LetsChatButton extends StatelessWidget {
@@ -16,7 +17,8 @@ class LetsChatButton extends StatelessWidget {
       height: 70.h,
       child: InkWell(
         onTap: () {
-
+          RecommendationModel.title = '';
+          RecommendationModel.recommendedRegion = [];
           Navigator.of(context).push(MaterialPageRoute(builder: (context){
             return const ChatScreen();
           }));
