@@ -71,14 +71,50 @@ class CardCustomWidget extends StatelessWidget {
         ),
         Container(
           height: 300.sp,
-          child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (BuildContext context, index) {
-                return CustomCard(
-                  title: "Work",
-                  icon: AppStrings.worker,
-                );
-              }),
+          child: ListView(
+            children: [
+              CustomCard(
+                title: "Work",
+                icon: AppStrings.worker,
+                onTap: () {},
+              ),
+              SizedBox(
+                height: 27.sp,
+              ),
+              CustomCard(
+                title: "Study",
+                icon: AppStrings.traveler,
+                onTap: () {},
+              ),
+              SizedBox(
+                height: 27.sp,
+              ),
+              CustomCard(
+                title: "Tourist",
+                icon: AppStrings.traveler,
+                onTap: () {},
+              ),
+              SizedBox(
+                height: 27.sp,
+              ),
+              CustomCard(
+                title: "Hajj",
+                icon: AppStrings.traveler,
+                onTap: () {},
+              ),
+              SizedBox(
+                height: 27.sp,
+              ),
+              CustomCard(
+                title: "Umrah",
+                icon: AppStrings.traveler,
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 60.sp,
         ),
       ],
     );
