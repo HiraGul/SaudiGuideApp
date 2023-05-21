@@ -241,9 +241,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             e['title'],
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.w800,
-                                              color: menuItem.indexOf(e) == 0
-                                                  ? Colors.white
-                                                  : Colors.black,
+                                              color:
+                                                  menuItem.indexOf(e) == state
+                                                      ? Colors.white
+                                                      : Colors.black,
                                               fontSize: 15.sp,
                                             ),
                                           ),
