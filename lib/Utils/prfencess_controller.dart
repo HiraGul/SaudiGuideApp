@@ -7,4 +7,5 @@ class PreferencesController {
   static TextEditingController salaryController = TextEditingController();
   static TextEditingController countryController = TextEditingController();
   static TextEditingController religionController = TextEditingController();
+  static TextEditingController interestController = TextEditingController();
 }

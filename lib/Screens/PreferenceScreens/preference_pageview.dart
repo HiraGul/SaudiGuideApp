@@ -6,6 +6,7 @@ import 'package:saudi_guide/Screens/widgets/nationality_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 import 'age_preference.dart';
+import 'interest_screen.dart';
 
 class UserPreferenceScreen extends StatefulWidget {
   const UserPreferenceScreen({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
     GenderAndAgeWidget(),
     NationalityWidget(),
     CardCustomWidget(),
+    InterestScreen(),
   ];
   late final TabController controller;
   int _currentIndex = 0;
@@ -27,7 +29,7 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
   void initState() {
     super.initState();
     controller =
-        TabController(length: 3, initialIndex: _currentIndex, vsync: this);
+        TabController(length: 4, initialIndex: _currentIndex, vsync: this);
   }
 
   @override
