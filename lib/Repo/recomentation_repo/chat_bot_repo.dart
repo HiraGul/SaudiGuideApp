@@ -44,7 +44,8 @@ static Future<int> interactWithChatBot({required dynamic message, List<Map<Strin
 
   try {
     final url = Uri.parse('https://api.openai.com/v1/chat/completions');
-    final apiKey = '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'; // Replace with your actual API key
+    //final apiKey = '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'; // Replace with your actual API key
+    final apiKey = ''; // Replace with your actual API key
 
     final headers = {
       'Content-Type': 'application/json',
@@ -90,11 +91,24 @@ static Future<int> interactWithChatBot({required dynamic message, List<Map<Strin
 
 
 
-static var  question = 'Could you please provide me with the step-by-step guide for performing the ${RecommendationModel.title}';
+static var  question = '';
 static  List<Map<String , dynamic >> getUserRecommendation(){
-  var subCategory = RecommendationModel.recommendedRegion;
-
+  var subCategory = RecommendationModel.recommendedRegion[0];
+var limitFaq = 'keep your response to 150 words.';
  var  limit="keep your response to 100 words.";
+if(subCategory == '${RecommendationModel.title} Steps'){
+  question = 'Could you please provide me with the step-by-step guide for performing the ${RecommendationModel.title}? ';
+}else if(subCategory == '${RecommendationModel.title} Preparation'){
+question = 'What are the essential preparations that need to be made for ${RecommendationModel.title}?" ';
+}else if(subCategory == '${RecommendationModel.title} Tips'){
+  question = 'Could you please provide me with some useful tips for performing ${RecommendationModel.title}?';
+}else if(subCategory == '${RecommendationModel.title} FAQ\'S'){
+  question = 'Could you please provide me to some frequently asked '
+      'questions (FAQs) about ${RecommendationModel.title}? with brief answers';
+
+}else{
+  question = '';
+}
 
 
   return [
@@ -110,8 +124,8 @@ static  List<Map<String , dynamic >> getUserRecommendation(){
     {'role':'assistant', 'content':'Certainly! I can provide'
         ' you with all the necessary information and guidance '
         'for performing the ${RecommendationModel.title} in Saudi Arabia. Please let me '
-        'know how I can assist you.'}
-    , {'role':'user', 'content':'Could you please provide me with the step-by-step guide for performing the ${RecommendationModel.title}? $limit'},
+        'know how I can assist you.'},
+    {'role':'user', 'content':"$question ${RecommendationModel.title == "Hajj FAQ'S" || RecommendationModel.title == "Umrah FAQ'S" ?limitFaq :"$limit"}  "},
   ];
 
 }

@@ -29,6 +29,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
     tempList = [];
     context.read<ChatListCubit>().getList(list: tempList);
+
+    ///  If user select the recommendation option for
+    ///  the first time the Cohere api will response
+    ///  but when user start chating the ChatGpt api's will return response
+
     if(widget.isRecommendedOption!){
 
       context.read<ChatBotCubit>().getMessage(isRecommendedOption: widget.isRecommendedOption!);
@@ -37,29 +42,35 @@ class _ChatScreenState extends State<ChatScreen> {
 
 
     }else{
+
+      /// For Umrrah and Hajj I use Chat GPT3 api
       if(RecommendationModel.title == "Hajj" || RecommendationModel.title =='Umrah' ) {
+        ChatBotRepo.chatBotMessages = ChatBotRepo.getUserRecommendation();
 
         tempList.add( ChatModel(
             message: ChatBotRepo.question,
-            isHuman: false,
+            isHuman: true,
             dateTime: DateTime.now()));
+        context.read<ChatListCubit>().getList(
+            list: tempList
+        );
         context.read<ChatBotCubit>().getMessage(message: ChatBotRepo.question);
 
-       ChatBotRepo.chatBotMessages = ChatBotRepo.getUserRecommendation();
         ChatBotRepo.chatBotMessages = ChatBotRepo.clearMessages;
 
+        print(ChatBotRepo.question);
 
-        context.read<ChatListCubit>().getList(
-          list: [
-            ChatModel(
-                message: ChatBotRepo.question,
-                isHuman: true,
-                dateTime: DateTime.now()),
-          ],
-        );
+        print('========= ${RecommendationModel.recommendedRegion}');
+        print('========= ${RecommendationModel.title}');
+
+
+        RecommendationModel.recommendedRegion = [];
+
 
 
       }else{
+        /// This will behave as a generic chat bot
+
        tempList.add( ChatModel(
            message: 'Hello, How I can help you?',
            isHuman: false,
