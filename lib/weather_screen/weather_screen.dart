@@ -24,9 +24,12 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   Position? _currentPosition;
   String? city;
+
   @override
   void initState() {
     _determinePosition();
+
+    context.read<WeatherForecastCubit>().getWeatherData(city: 'peshawar');
   }
 
   _determinePosition() async {
@@ -66,9 +69,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
         city = placemark.locality;
 
         setState(() {});
-        context
-            .read<WeatherForecastCubit>()
-            .getWeatherData(city: city ?? 'riyad'!);
       }
     }).catchError((e) {
       debugPrint(e);
@@ -172,7 +172,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               onTap: () {
                 context
                     .read<WeatherForecastCubit>()
-                    .getWeatherData(city: city!);
+                    .getWeatherData(city: 'peshawar');
               },
             );
           }
@@ -198,7 +198,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 ),
                 Text(
                   WeatherModeController.weatherModel!.current!.condition!.text
-                      .toString(),
+                      .toString()
+                      .toLowerCase(),
                   style: GoogleFonts.cairo(
                     fontSize: 16.sp,
                     color: const Color(0xFF878787),
@@ -228,17 +229,43 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Expanded(
                           flex: 6,
                           child: FadeInImage(
-                            placeholder:
-                                const AssetImage("assets/icons/rain.png"),
-                            image: NetworkImage(
-                                '${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
-                                headers: {
-                                  'X-RapidAPI-Key':
-                                      ' 4ba134b8e1msh225dac5b0fc4db6p1de760jsn5e94b47909ad',
-                                  // 'X-RapidAPI-Host':
-                                  //     'weatherapi-com.p.rapidapi.com'
-                                }),
-                          )),
+                              placeholder:
+                                  const AssetImage("assets/icons/sunny.png"),
+                              // image: NetworkImage(
+                              //     'https://${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
+                              //     headers: {
+                              //       'X-RapidAPI-Key':
+                              //           ' 4ba134b8e1msh225dac5b0fc4db6p1de760jsn5e94b47909ad',
+                              //       // 'X-RapidAPI-Host':
+                              //       //     'weatherapi-com.p.rapidapi.com'
+                              //     }),
+                              image: WeatherModeController
+                                      .weatherModel!.current!.condition!.text
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains('sunny')
+                                  ? AssetImage('assets/icons/sunny.png')
+                                  : WeatherModeController.weatherModel!.current!
+                                          .condition!.text
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains('cloudy')
+                                      ? AssetImage('assets/icons/cloud.png')
+                                      : WeatherModeController.weatherModel!
+                                              .current!.condition!.text
+                                              .toString()
+                                              .toLowerCase()
+                                              .contains('mist')
+                                          ? AssetImage('assets/icons/mist.png')
+                                          : WeatherModeController.weatherModel!
+                                                  .current!.condition!.text
+                                                  .toString()
+                                                  .toLowerCase()
+                                                  .contains('rain')
+                                              ? AssetImage(
+                                                  'assets/icons/rain.png')
+                                              : AssetImage(
+                                                  'assets/icons/sunny.png'))),
                       Expanded(
                           flex: 2,
                           child: Container(
