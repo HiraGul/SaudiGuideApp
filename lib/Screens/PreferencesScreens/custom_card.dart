@@ -13,8 +13,8 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 282.0.sp,
-      height: 121.0.sp,
-      margin: EdgeInsets.symmetric(horizontal: 35.sp),
+      height: 90.0.sp,
+      margin: EdgeInsets.only(left: 35.sp, right: 35.sp, bottom: 10.sp),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6.0),
         color: Colors.white,
@@ -47,7 +47,7 @@ class CustomCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 10.sp,
+            width: 31.sp,
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 20.sp),
@@ -55,7 +55,7 @@ class CustomCard extends StatelessWidget {
             width: 1.sp,
           ),
           SizedBox(
-            width: 10.sp,
+            width: 26.sp,
           ),
           Align(
             alignment: Alignment.centerLeft,

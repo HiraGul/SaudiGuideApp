@@ -5,11 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
 import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
+import 'package:saudi_guide/Screens/PreferenceScreens/preference_pageview.dart';
+import 'package:saudi_guide/Screens/PreferencesScreens/prefrences_screen.dart';
 
 import 'Cubits/ScanCubit/scan_land_mark_cubit.dart';
 import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'Cubits/translate_list_cubit.dart';
-import 'Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
             minTextAdapt: true,
             useInheritedMediaQuery: true,
             splitScreenMode: true,
-            builder: (context, child) => const BottomNavigationScreen(),
+            builder: (context, child) => const UserPreferenceScreen(),
           )),
     );
   }

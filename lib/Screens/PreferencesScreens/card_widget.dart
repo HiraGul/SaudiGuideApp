@@ -11,25 +11,54 @@ class CardCustomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: true,
+      primary: false,
       padding: EdgeInsets.zero,
       children: [
         SizedBox(
           height: 48.sp,
         ),
-        Text(
-          'SAUDI GUIDE',
-          style: GoogleFonts.cairo(
-            fontSize: 27.0.sp,
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
-          ),
-          textAlign: TextAlign.center,
+        Row(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(left: 5.sp),
+                width: 31.sp,
+                height: 31.sp,
+                margin: EdgeInsets.only(left: 20.sp),
+                decoration: const BoxDecoration(
+                    color: Color(0xffE9E9E9), shape: BoxShape.circle),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20.sp,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 60.sp,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Why Saudi",
+                style: GoogleFonts.cairo(
+                  fontSize: 27.0.sp,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
         SizedBox(
           height: 5.sp,
         ),
         Text(
-          'Please Select the option given below \nto proceed further',
+          'Why are you visiting Saudi Arabia',
           style: GoogleFonts.cairo(
             fontSize: 16.0.sp,
             color: const Color(0xFF9F9F9F),
@@ -40,17 +69,17 @@ class CardCustomWidget extends StatelessWidget {
         SizedBox(
           height: 40.sp,
         ),
-        CustomCard(
-          title: "As Visitor",
-          icon: AppStrings.traveler,
+        Container(
+          height: 300.sp,
+          child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (BuildContext context, index) {
+                return CustomCard(
+                  title: "Work",
+                  icon: AppStrings.worker,
+                );
+              }),
         ),
-        SizedBox(
-          height: 27.sp,
-        ),
-        CustomCard(
-          title: "As Worker",
-          icon: AppStrings.worker,
-        )
       ],
     );
   }

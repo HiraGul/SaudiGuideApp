@@ -46,6 +46,7 @@ dependencies:
   geolocator: ^9.0.2
   loading_animation_widget:
   image_picker: ^0.8.7+5
+  country_picker:
   geocoding:
 
   http:
