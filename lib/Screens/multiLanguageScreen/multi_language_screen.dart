@@ -23,6 +23,7 @@ class MultiLanguageScreen extends StatefulWidget {
 class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
   var controller = TextEditingController();
   var isLoading = ValueNotifier<bool>(false);
+  String language = "Arabic";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,7 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         leading: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.of(context).pop();
           },
           child: Container(
@@ -56,6 +57,30 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
               fontWeight: FontWeight.bold,
               color: AppColors.appBarTitleColor),
         ),
+        actions: [
+          DropdownButton(
+              iconEnabledColor: AppColors.greenColor,
+              underline: SizedBox(
+                height: 0.sp,
+                width: 0.sp,
+              ),
+              value: language,
+              items: ["Arabic", "hindi", "urdu", "French", "spanish", "bangali"]
+                  .map((item) => DropdownMenuItem(
+                        value: item,
+                        child: MyText(
+                          text: item,
+                          size: 14.sp,
+                          weight: FontWeight.bold,
+                        ),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  language = value!;
+                });
+              })
+        ],
       ),
       body: Column(
         children: [
@@ -253,7 +278,8 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
                             //     context, controller.text.trim());
                             isLoading.value = !isLoading.value;
                             var result = await TranslateTextRepo()
-                                .translateText(context, controller.text.trim());
+                                .translateText(
+                                    context, controller.text.trim(), language);
                             if (result == 501) {
                               showSnackBar(context, "no internet connection");
                               // isLoading.value = !isLoading.value;

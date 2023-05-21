@@ -27,6 +27,7 @@ class _TodoScreenState extends State<TodoScreen> {
   var timeController = TextEditingController();
   dynamic h = '9', m = '10', p = 'am';
   DateTime? taskDate;
+  DateTime? taskTime;
 
   @override
   void initState() {
@@ -47,7 +48,7 @@ class _TodoScreenState extends State<TodoScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         leading: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.of(context).pop();
           },
           child: Container(
@@ -252,7 +253,7 @@ class _TodoScreenState extends State<TodoScreen> {
                   MyFormField(
                     controller: descriptionController,
                     keyboardType: TextInputType.text,
-                    hintText: 'write something',
+                    hintText: 'create new task',
                   ),
                   SizedBox(height: 7.sp),
                   Row(
@@ -270,34 +271,12 @@ class _TodoScreenState extends State<TodoScreen> {
                         width: 5.sp,
                       ),
                       Expanded(
-                          child: InkWell(
-                        onTap: () {
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (context) {
-                          //       return FromToTimePicker(onTab: (a, b) {});
-                          //     });
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 16 * 3.8.sp,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffF3F3F3),
-                            borderRadius: BorderRadius.circular(2.sp),
-                          ),
                           child: TimeField(
-                            hour: (hours) {
-                              h = hours;
-                            },
-                            mints: (mints) {
-                              m = mints;
-                            },
-                            period: (period) {
-                              p = period;
-                            },
-                          ),
-                        ),
-                      ))
+                              hintText: "Time",
+                              controller: timeController,
+                              taskDate: (time) {
+                                taskTime = time;
+                              }))
                     ],
                   ),
                   SizedBox(
@@ -311,38 +290,44 @@ class _TodoScreenState extends State<TodoScreen> {
                         onTap: () async {
                           if (descriptionController.text.isNotEmpty &&
                               dateController.text.isNotEmpty &&
-                              h != null &&
-                              m != null) {
-                            var concate = "$h:$m";
-                            // var date = DateTime.now();
-                            DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-                            var newDate = dateFormat.parse(taskDate.toString());
+                              timeController.text.isNotEmpty) {
+                            // var concate = "$h:$m";
 
-                            DateFormat timeformat = DateFormat('h:mm');
-                            var newtiem = timeformat.parse(concate);
+                            // DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                            // var newDate = dateFormat.parse(taskDate.toString());
+
+                            // DateFormat timeformat = DateFormat('h:mm');
+                            // var newtiem = timeformat.parse(concate);
                             // var formate24 = DateFormat.Hm();
                             // var newdate3 = formate24.format(newDate);
                             // print(newtiem);
                             // print(newDate);
-                            DateTime mergeDate = DateTime(
-                                newDate.year,
-                                newDate.month,
-                                newDate.day,
-                                newtiem.hour,
-                                newtiem.minute);
+                            // DateTime mergeDate = DateTime(
+                            //     newDate.year,
+                            //     newDate.month,
+                            //     newDate.day,
+                            //     newtiem.hour,
+                            //     newtiem.minute);
+                            DateTime merge = DateTime(
+                                taskDate!.year,
+                                taskDate!.month,
+                                taskDate!.day,
+                                taskTime!.hour,
+                                taskTime!.minute);
                             var firestore = FirebaseFirestore.instance;
                             await firestore.collection('userTasks').doc().set({
                               "description": descriptionController.text.trim(),
                               "date": dateController.text.trim(),
-                              "time": newtiem.toString()
+                              "time": timeController.text.trim()
                             });
                             await LocalNotificationSetting.showNotification(
                                 id: 0,
                                 title: descriptionController.text.trim(),
-                                scheduleDate: mergeDate);
+                                scheduleDate: merge);
                             showSnackBar(context, 'Task Added successfully');
                             descriptionController.clear();
                             dateController.clear();
+                            timeController.clear();
                           } else {
                             showSnackBar(context, "enter something...");
                           }
