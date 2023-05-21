@@ -62,15 +62,18 @@ class MyHomePage extends StatelessWidget {
                   SizedBox(
                     height: 10.sp,
                   ),
-                  Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries',
-                    style: GoogleFonts.cairo(
-                      fontSize: 14.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      height: 1.5,
+                  Container(
+                    margin: EdgeInsets.only(left: 10.sp),
+                    child: Text(
+                      'SaudiGuide is an advanced and technology-enabled app that combines a range of cutting-edge features using Cohere & Stable Diffusion to provide an exceptional travel experience for visitors exploring the Kingdom of Saudi Arabia.',
+                      style: GoogleFonts.cairo(
+                        fontSize: 14.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        height: 2,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   SizedBox(
                     height: 10.sp,

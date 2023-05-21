@@ -26,6 +26,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   String? city;
   @override
   void initState() {
+    context.read<WeatherForecastCubit>().emitLoading();
     _determinePosition();
   }
 
@@ -231,7 +232,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             placeholder:
                                 const AssetImage("assets/icons/rain.png"),
                             image: NetworkImage(
-                                '${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
+                                'http:${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
                                 headers: {
                                   'X-RapidAPI-Key':
                                       ' 4ba134b8e1msh225dac5b0fc4db6p1de760jsn5e94b47909ad',
@@ -256,7 +257,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   child: weatherWidget(
                                       image: 'assets/icons/wind.png',
                                       title:
-                                          '${WeatherModeController.weatherModel!.current!.windKph.toString()} kph'),
+                                          '${WeatherModeController.weatherModel!.current!.windKph} kph'),
                                 ),
                                 Expanded(
                                   child: weatherWidget(

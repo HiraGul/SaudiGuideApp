@@ -20,4 +20,8 @@ class WeatherForecastCubit extends Cubit<WeatherForecastState> {
       emit(WeatherForecastException());
     }
   }
+
+  emitLoading() {
+    emit(WeatherForecastLoading());
+  }
 }
