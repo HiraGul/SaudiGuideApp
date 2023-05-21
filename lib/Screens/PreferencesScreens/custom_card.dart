@@ -28,7 +28,7 @@ class CustomCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 35.sp),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.0),
-          color: Colors.white,
+          color: tileColor,
           border: Border.all(
             width: 1.0,
             color: const Color(0xFFEFEFEF),
@@ -74,7 +74,7 @@ class CustomCard extends StatelessWidget {
                 title,
                 style: GoogleFonts.cairo(
                   fontSize: 16.0.sp,
-                  color: Colors.black,
+                  color: textColor,
                   fontWeight: FontWeight.w700,
                 ),
               ),

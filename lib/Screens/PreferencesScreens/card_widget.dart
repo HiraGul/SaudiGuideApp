@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+import 'package:saudi_guide/Utils/prfencess_controller.dart';
 import 'package:saudi_guide/Utils/strings.dart';
 
 import 'custom_card.dart';
@@ -15,7 +16,7 @@ class CardCustomWidget extends StatefulWidget {
 }
 
 class _CardCustomWidgetState extends State<CardCustomWidget> {
-  int currentIndex = 1;
+  int currentIndex = 0;
   void goToBackTab() {
     widget.controller.animateTo(
       1,
@@ -104,8 +105,9 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
                 title: "Work",
                 icon: AppStrings.worker,
                 onTap: () {
-                  currentIndex == 1;
+                  currentIndex = 1;
                   setState(() {});
+                  PreferencesController.purposeController.text = "Work";
                 },
               ),
               SizedBox(
@@ -118,8 +120,9 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
                 title: "Study",
                 icon: AppStrings.study,
                 onTap: () {
-                  currentIndex == 2;
+                  currentIndex = 2;
                   setState(() {});
+                  PreferencesController.purposeController.text = "Study";
                 },
               ),
               SizedBox(
@@ -132,7 +135,10 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
                 title: "Tourist",
                 icon: AppStrings.traveler,
                 onTap: () {
-                  currentIndex == 3;
+                  currentIndex = 3;
+                  setState(() {
+                    PreferencesController.purposeController.text = "Tourist";
+                  });
                 },
               ),
               SizedBox(
@@ -145,8 +151,9 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
                 title: "Hajj",
                 icon: AppStrings.qaaba,
                 onTap: () {
-                  currentIndex == 4;
+                  currentIndex = 4;
                   setState(() {});
+                  PreferencesController.purposeController.text = "Hajj";
                 },
               ),
               SizedBox(
@@ -161,6 +168,7 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
                 onTap: () {
                   currentIndex = 5;
                   setState(() {});
+                  PreferencesController.purposeController.text = "Umrah";
                 },
               ),
             ],
