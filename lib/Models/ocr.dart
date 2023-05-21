@@ -1,6 +1,6 @@
 class OCRModel {
   String? language;
-  int? textAngle;
+  double? textAngle;
   String? orientation;
   List<Regions>? regions;
 

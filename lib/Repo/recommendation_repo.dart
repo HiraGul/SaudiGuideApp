@@ -7,11 +7,7 @@ import '../Models/chat_model.dart';
 class RecommendationRepo {
   //static var conversationText = '${RecommendationModel.title }${RecommendationModel.recommendedRegion.join(" , ") }';
 
-  static var userInputCohere = "The tourist is 25 years old and of "
-      "indian nationality, with a monthly income of 5000 "
-      "riyals. They are particularly interested in this type "
-      "of food the last are  ${RecommendationModel.recommendedRegion.join(' , ')}. "
-      "They want recommendations for the city of Madina.";
+
 
 
 
@@ -53,18 +49,22 @@ static var systemContent = '';
 
     // ChatGPT 3 input
     userInputGpt3 = getMyPrompt(isUserCohere: false)['user'];
-    //prompt = message;
+
     var apiKey =
-        'lYfuIyr5fT0RAU8mgtV5wOOrTtjxXNp0ACMz22nL'; // This is your trial API key
+        ''; // This is your trial API key
     var url = 'https://api.cohere.ai/generate';
 
     try {
       var requestBody = jsonEncode({
         'model': 'command',
         'prompt': prompt,
-        'max_tokens': 300,
-        'temperature': 0.2,
-        'k': 0,
+        'max_tokens': 450,
+        'temperature': 0.9,
+         'k': 11,
+
+        // 'k': 0,  'max_tokens': 200,
+        // 'temperature': 0.2,
+        // 'k': 0,
         'stop_sequences': [],
         'return_likelihoods': 'NONE',
       });
@@ -101,10 +101,11 @@ static var systemContent = '';
 
     var subCategory = RecommendationModel.recommendedRegion.join(' , ');
     var userAge = "25";
+    var gender = "male";
     var userLocation = "Madina";
     var monthlyIncome = "5000";
     var nationality = "indian";
-    var limitResponse = 'Keep in mind to limit your responses up to maximum 100 words';
+    var limitResponse = "Limit your answer to maximum 100 words";
     // print('================== sub category');
     print(subCategory);
     if(RecommendationModel.title == 'Food & Drinks'){
@@ -138,25 +139,36 @@ static var systemContent = '';
       };
 
 
-
-
-
-
     }else if(RecommendationModel.title == 'Tourist'){
 
       return {
-        "system" : 'You are a helpful and knowledgeable Saudi guide.'
-            ' Your responsibility is to assist the tourist in recommending '
-            'the beautiful tourist places based on their preferences'
-            ' and budget. $limitResponse ',
-        // user input
-        "user"  : "${isUserCohere ? 'The tourist is': "I am tourist"} ${userAge} years old and of "
-            "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-            "riyals. They are particularly interested in this type "
-            "of place the list are ${subCategory}. "
-            "They want recommendations for the city of ${userLocation} and most nearby this areas."
+        "system" : "As a friendly travel guide, "
+            "your task is to recommend beautiful "
+            "$subCategory destinations in ${userLocation} and "
+            "nearby areas that are suitable for a "
+            "${userAge}-year-old  ${gender} with a monthly "
+            "salary of ${monthlyIncome} Riyal. Your recommendations "
+            "should include details on the location, attractions, "
+            "activities, and accommodations available at each destination."
+             "Additionally, please ensure"
+            " that your response stays within the token limit while still"
+            " providing enough detail to help the traveler make an informed decision.",
 
+        "user" : ""
       };
+      // return {
+      //   "system" : 'You are a helpful and knowledgeable Saudi guide.'
+      //       ' Your responsibility is to assist the tourist in recommending '
+      //       'the beautiful tourist places based on their preferences'
+      //       ' and budget. $limitResponse ',
+      //   // user input
+      //   "user"  : "${isUserCohere ? 'The tourist is': "I am tourist"} ${userAge} years old and of "
+      //       "${nationality} nationality, with a monthly income of ${monthlyIncome} "
+      //       "riyals. I am particularly interested in this type "
+      //       "of places, ${subCategory}. "
+      //       "Recommend me for the city of ${userLocation} and nearby areas."
+      //
+      // };
 
 
 

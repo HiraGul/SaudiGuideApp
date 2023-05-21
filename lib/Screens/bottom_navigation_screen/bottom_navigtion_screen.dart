@@ -38,7 +38,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     return BlocProvider(
       create: (context) => BottomNavigationCubit(0),
       child: Scaffold(
-        bottomNavigationBar: const LetsChatButton(),
+        //bottomNavigationBar: const LetsChatButton(),
         // bottomNavigationBar: Container(
         //   decoration: BoxDecoration(color: Colors.white, boxShadow: [
         //     BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)

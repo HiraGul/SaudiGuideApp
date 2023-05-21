@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:saudi_guide/Screens/PreferenceScreens/interest_screen.dart';
 import 'package:saudi_guide/Screens/PreferencesScreens/card_widget.dart';
+import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/widgets/nationality_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 import 'age_preference.dart';
-import 'interest_screen.dart';
 
 class UserPreferenceScreen extends StatefulWidget {
   const UserPreferenceScreen({Key? key}) : super(key: key);
@@ -17,12 +18,6 @@ class UserPreferenceScreen extends StatefulWidget {
 
 class _UserPreferenceScreenState extends State<UserPreferenceScreen>
     with SingleTickerProviderStateMixin {
-  List<Widget> widgets = const [
-    GenderAndAgeWidget(),
-    NationalityWidget(),
-    CardCustomWidget(),
-    InterestScreen(),
-  ];
   late final TabController controller;
   int _currentIndex = 0;
   @override
@@ -39,25 +34,31 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
   }
 
   void goToNextTab() {
-    if (_currentIndex < controller.length - 1) {
-      _currentIndex++;
+    if (controller.index == 0) {
       controller.animateTo(
-        _currentIndex,
+        1,
         duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
-    }
-  }
-
-  void goToBackTab() {
-    if (_currentIndex > 0) {
-      _currentIndex--;
+    } else if (controller.index == 1) {
       controller.animateTo(
-        _currentIndex,
+        2,
         duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
+    } else if (controller.index == 2) {
+      controller.animateTo(
+        3,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    } else if (controller.index == 3) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const BottomNavigationScreen()));
     }
+    setState(() {});
   }
 
   @override
@@ -65,26 +66,31 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
     return Scaffold(
         backgroundColor: AppColors.greenColor,
         body: SafeArea(
-            child: ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-              SizedBox(
-                height: 50.sp,
-              ),
-              SvgPicture.asset(
+            child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 60.sp,
+              child: SvgPicture.asset(
                 'assets/splashLogo.svg',
                 fit: BoxFit.contain,
                 height: 59.sp,
                 width: 131.sp,
               ),
+            ),
+            ListView(children: [
               SizedBox(
-                height: 50.sp,
+                height: 150.sp,
               ),
               Container(
                 width: 1.sw,
-                height: 655.0.sp,
+                height: 560.0.sp,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40.0),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20.0.r),
+                    topLeft: Radius.circular(20.0.r),
+                  ),
                   color: Colors.white,
                 ),
                 child: Stack(
@@ -92,9 +98,20 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
                     TabBarView(
                         //physics: NeverScrollableScrollPhysics(),
                         controller: controller,
-                        children: widgets),
+                        children: [
+                          const GenderAndAgeWidget(),
+                          NationalityWidget(
+                            controller: controller,
+                          ),
+                          CardCustomWidget(
+                            controller: controller,
+                          ),
+                          InterestScreen(
+                            controller: controller,
+                          ),
+                        ]),
                     Positioned(
-                      bottom: 150.sp,
+                      bottom: 50.sp,
                       left: 30.sp,
                       right: 30.sp,
                       child: Row(
@@ -147,6 +164,8 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
                   ],
                 ),
               ),
-            ])));
+            ]),
+          ],
+        )));
   }
 }

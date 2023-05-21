@@ -14,7 +14,7 @@ class ScanLandMarkCubit extends Cubit<ScanLandMarkState> {
     if (status == 200) {
       emit(ScanLandMarkLoaded());
     } else if (status == 501) {
-      emit(ScanLandMarkException());
+      emit(ScanLandMarkSocketException());
     } else {
       emit(ScanLandMarkException());
     }

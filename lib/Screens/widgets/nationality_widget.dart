@@ -6,8 +6,23 @@ import 'package:saudi_guide/Screens/widgets/custom_text_field.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/Utils/prfencess_controller.dart';
 
-class NationalityWidget extends StatelessWidget {
-  const NationalityWidget({Key? key}) : super(key: key);
+class NationalityWidget extends StatefulWidget {
+  TabController controller;
+  NationalityWidget({required this.controller, Key? key}) : super(key: key);
+
+  @override
+  State<NationalityWidget> createState() => _NationalityWidgetState();
+}
+
+class _NationalityWidgetState extends State<NationalityWidget> {
+  void goToBackTab() {
+    widget.controller.animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +36,25 @@ class NationalityWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 5.sp),
-                  width: 31.sp,
-                  height: 31.sp,
-                  margin: EdgeInsets.only(left: 20.sp),
-                  decoration: const BoxDecoration(
-                      color: Color(0xffE9E9E9), shape: BoxShape.circle),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    size: 20.sp,
-                    color: Colors.white,
+              InkWell(
+                onTap: () {
+                  goToBackTab();
+                },
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(left: 5.sp),
+                    width: 31.sp,
+                    height: 31.sp,
+                    margin: EdgeInsets.only(left: 20.sp),
+                    decoration: const BoxDecoration(
+                        color: Color(0xffE9E9E9), shape: BoxShape.circle),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: 20.sp,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -89,13 +109,11 @@ class NationalityWidget extends StatelessWidget {
             onTap: () {
               showCountryPicker(
                 context: context,
-                //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
-                exclude: <String>['KN', 'MF'],
-                favorite: <String>['SE'],
-                //Optional. Shows phone code before the country name.
-                showPhoneCode: true,
+
+                favorite: <String>['PK'],
+
+                showPhoneCode: false,
                 onSelect: (Country country) {
-                  print('Select country: ${country.displayName}');
                   PreferencesController.countryController.text = country.name;
                 },
                 // Optional. Sets the theme for the country list picker.
@@ -107,9 +125,18 @@ class NationalityWidget extends StatelessWidget {
                   ),
                   // Optional. Styles the search field.
                   inputDecoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide()),
+                    hintStyle: GoogleFonts.openSans(
+                      fontSize: 14.sp,
+                    ),
                     labelText: 'Search',
                     hintText: 'Start typing to search',
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: AppColors.greenColor,
+                    ),
+                    labelStyle: GoogleFonts.openSans(
+                        color: AppColors.greenColor, fontSize: 14.sp),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: const Color(0xFF8C98A8).withOpacity(0.2),
@@ -155,7 +182,7 @@ class NationalityWidget extends StatelessWidget {
                 enable: true,
                 controller: PreferencesController.religionController,
                 inputType: TextInputType.name,
-                hintText: ' Islam'),
+                hintText: 'Islam'),
           ),
           SizedBox(
             height: 20.sp,

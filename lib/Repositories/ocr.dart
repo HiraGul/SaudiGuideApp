@@ -16,7 +16,7 @@ class OCRRepository {
           'POST',
           Uri.parse(
               'https://saudiguide.cognitiveservices.azure.com//vision/v3.1/ocr'));
-      request.files.add(await http.MultipartFile.fromPath('', 'file'));
+      request.files.add(await http.MultipartFile.fromPath('', file));
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();

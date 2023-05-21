@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
           filled: true,
           fillColor: AppColors.textFieldColor,
           hintStyle: GoogleFonts.openSans(
-            fontSize: 16.sp,
+            fontSize: 14.sp,
           ),
           hintText: hintText,
           border: const OutlineInputBorder(borderSide: BorderSide.none),
