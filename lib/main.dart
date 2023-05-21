@@ -66,8 +66,8 @@ class _MyAppState extends State<MyApp> {
             splitScreenMode: true,
             builder: (context, child) => MySharedPrefs.getIsLoggedIn() == null
                 ? const SplashScreen()
-                : const BottomNavigationScreen(),
-          ),),
+                : const UserPreferenceScreen(),
+          )),
     );
   }
 }

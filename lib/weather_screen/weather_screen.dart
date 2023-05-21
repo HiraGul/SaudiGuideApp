@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:saudi_guide/Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'package:saudi_guide/Models/weather_model_controller.dart';
+import 'package:saudi_guide/Screens/widgets/lets_chat_button.dart';
 import 'package:saudi_guide/Screens/widgets/weekly_weather_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
@@ -79,48 +80,49 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFBFBFB),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
-        ]),
-        height: 70.h,
-        child: Center(
-          child: SizedBox(
-            width: 100.sp,
-            child: Row(
-              children: [
-                Container(
-                    alignment: const Alignment(0.03, -0.03),
-                    width: 37.sp,
-                    height: 35.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.sp),
-                      color: const Color(0xFFE8F3F3),
-                    ),
-                    child: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: AppColors.greenColor,
-                    )),
-                SizedBox(
-                  width: 10.sp,
-                ),
-                Container(
-                    alignment: const Alignment(0.03, -0.03),
-                    width: 37.sp,
-                    height: 35.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.sp),
-                      color: const Color(0xFFE8F3F3),
-                    ),
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: AppColors.greenColor,
-                    )),
-              ],
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: LetsChatButton(),
+      // bottomNavigationBar: Container(
+      //   decoration: BoxDecoration(color: Colors.white, boxShadow: [
+      //     BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
+      //   ]),
+      //   height: 70.h,
+      //   child: Center(
+      //     child: SizedBox(
+      //       width: 100.sp,
+      //       child: Row(
+      //         children: [
+      //           Container(
+      //               alignment: const Alignment(0.03, -0.03),
+      //               width: 37.sp,
+      //               height: 35.sp,
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(6.sp),
+      //                 color: const Color(0xFFE8F3F3),
+      //               ),
+      //               child: Icon(
+      //                 Icons.arrow_back_ios_new_rounded,
+      //                 color: AppColors.greenColor,
+      //               )),
+      //           SizedBox(
+      //             width: 10.sp,
+      //           ),
+      //           Container(
+      //               alignment: const Alignment(0.03, -0.03),
+      //               width: 37.sp,
+      //               height: 35.sp,
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(6.sp),
+      //                 color: const Color(0xFFE8F3F3),
+      //               ),
+      //               child: Icon(
+      //                 Icons.arrow_forward_ios_rounded,
+      //                 color: AppColors.greenColor,
+      //               )),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
       appBar: AppBar(
         toolbarHeight: 90.sp,
         backgroundColor: Colors.white,
@@ -308,7 +310,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   height: 20.sp,
                 ),
                 Container(
-                    padding: EdgeInsets.only(left: 14.sp, right: 19.sp),
+                    padding: EdgeInsets.only(left: 10.sp, right: 10.sp),
                     height: 220.sp,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(11.sp),
@@ -343,6 +345,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             percentage1:
                                 '${WeatherModeController.weatherModel!.forecast!.forecastday![index].day!.avgtempF} F '
                                     .toString(),
+                            image: WeatherModeController.weatherModel!.forecast!
+                                .forecastday![index].day!.condition!.icon!,
                           );
                         })),
               ],

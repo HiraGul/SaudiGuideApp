@@ -8,5 +8,6 @@ class PreferencesController {
   static TextEditingController countryController = TextEditingController();
   static TextEditingController religionController = TextEditingController();
   static TextEditingController interestController = TextEditingController();
+  static TextEditingController purposeController = TextEditingController();
   static List<String> interest = [];
 }

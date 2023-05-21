@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 import 'package:saudi_guide/Models/oc_model_controller.dart';
 import 'package:saudi_guide/Repositories/ocr.dart';
 
@@ -9,7 +9,7 @@ part 'ocrcubit_state.dart';
 
 class OcrcubitCubit extends Cubit<OcrcubitState> {
   OcrcubitCubit() : super(OcrcubitInitial());
-  getOCRData({required String file}) async {
+  getOCRData({required String file, TextEditingController? controller}) async {
     emit(OcrcubitLoading());
     final int status = await OCRRepository.getScannedData(file: file);
     print(status);
@@ -22,13 +22,18 @@ class OcrcubitCubit extends Cubit<OcrcubitState> {
           for (int k = 0;
               k < OCRController.ocrModel!.regions![i].lines![j].words!.length;
               k++) {
-            MultiLineTranslator.name = MultiLineTranslator.name +
-                ' ' +
-                OCRController.ocrModel!.regions![i].lines![j].words![k].text!;
-            print(MultiLineTranslator.name);
+            MultiLineTranslator.name +=
+                ' ${OCRController.ocrModel!.regions![i].lines![j].words![k].text!}';
+
+            // print(MultiLineTranslator.name);
           }
         }
       }
+      if (controller != null) {
+        controller.text = MultiLineTranslator.name;
+      }
+      MultiLineTranslator.name = '';
+      print(MultiLineTranslator.name);
     } else if (status == 501) {
       emit(OcrcubitSocketException());
     } else {

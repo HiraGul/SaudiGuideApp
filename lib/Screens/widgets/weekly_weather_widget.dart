@@ -8,9 +8,11 @@ class WeeklyWeatherWidget extends StatelessWidget {
   final String time;
   final String percentage1;
   final String percentage;
+  final String image;
   const WeeklyWeatherWidget(
       {Key? key,
       required this.dayName,
+      required this.image,
       required this.time,
       required this.percentage1,
       required this.percentage})
@@ -22,7 +24,7 @@ class WeeklyWeatherWidget extends StatelessWidget {
       children: [
         Expanded(
           child: SizedBox(
-            width: 66.32.sp,
+            width: 1.sw,
             height: 26.sp,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,6 +91,17 @@ class WeeklyWeatherWidget extends StatelessWidget {
             ),
           ),
         )),
+        SizedBox(
+          width: 10.sp,
+        ),
+        Expanded(
+          child: Image.network('https:$image', headers: const {
+            'X-RapidAPI-Key':
+                ' 4ba134b8e1msh225dac5b0fc4db6p1de760jsn5e94b47909ad',
+            // 'X-RapidAPI-Host':
+            //     'weatherapi-com.p.rapidapi.com'
+          }),
+        ),
       ],
     );
   }

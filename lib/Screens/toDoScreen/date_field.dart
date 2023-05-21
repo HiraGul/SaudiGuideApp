@@ -22,68 +22,76 @@ class DateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      readOnly: true,
-      cursorHeight: 20.sp,
-      cursorColor: AppColors.greenColor,
-      // autofocus: true,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      controller: controller,
-      maxLines: maxLine ?? 1,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextFormField(
+            readOnly: true,
+            cursorHeight: 20.sp,
+            cursorColor: AppColors.greenColor,
+            // autofocus: true,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            controller: controller,
+            maxLines: maxLine ?? 1,
 
-      style: TextStyle(
-        fontSize: 16.sp,
-        // height: widget.fieldHeight
-      ),
-      decoration: InputDecoration(
-        errorMaxLines: 1,
-        suffixIcon: IconButton(
-          onPressed: () async {
-            var formatedDate = await getDate(context);
-            if (formatedDate != null) {
-              controller!.text = formatedDate;
-            }
-          },
-          icon: Icon(
-            Icons.calendar_month_outlined,
-            color: AppColors.greenColor,
+            style: TextStyle(
+              fontSize: 16.sp,
+              // height: widget.fieldHeight
+            ),
+            decoration: InputDecoration(
+              errorMaxLines: 1,
+              suffixIcon: IconButton(
+                onPressed: () async {
+                  var formatedDate = await getDate(context);
+                  if (formatedDate != null) {
+                    controller!.text = formatedDate;
+                  }
+                },
+                icon: Icon(
+                  Icons.calendar_month_outlined,
+                  color: AppColors.greenColor,
+                ),
+              ),
+              filled: true,
+              fillColor: AppColors.textFieldColor,
+              errorStyle: TextStyle(
+                fontSize: 10.sp,
+                height: 0.2.sp,
+              ),
+              hintStyle: GoogleFonts.openSans(
+                fontSize: 16.sp,
+              ),
+              hintText: hintText,
+              border: const OutlineInputBorder(borderSide: BorderSide.none),
+              // disabledBorder: OutlineInputBorder(
+              //   borderRadius: BorderRadius.circular(4.sp),
+              // ),
+              // focusedErrorBorder: OutlineInputBorder(
+              //   borderRadius: BorderRadius.circular(4.sp),
+              //   borderSide: const BorderSide(
+              //     color: Colors.redAccent,
+              //     width: 1,
+              //   ),
+              // ),
+              // errorBorder: OutlineInputBorder(
+              //   borderRadius: BorderRadius.circular(4.sp),
+              //   borderSide: const BorderSide(
+              //     color: Colors.red,
+              //     width: 1,
+              //   ),
+              // ),
+              // focusedBorder: OutlineInputBorder(
+              //   borderRadius: BorderRadius.circular(4.sp),
+              // ),
+              // enabledBorder: OutlineInputBorder(
+              //   borderRadius: BorderRadius.circular(4.sp),
+              // ),
+            ),
           ),
         ),
-        filled: true,
-        fillColor: AppColors.textFieldColor,
-        errorStyle: TextStyle(
-          fontSize: 10.sp,
-          height: 0.2.sp,
-        ),
-        hintStyle: GoogleFonts.openSans(
-          fontSize: 16.sp,
-        ),
-        hintText: hintText,
-        border: const OutlineInputBorder(borderSide: BorderSide.none),
-        // disabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(4.sp),
-        // ),
-        // focusedErrorBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(4.sp),
-        //   borderSide: const BorderSide(
-        //     color: Colors.redAccent,
-        //     width: 1,
-        //   ),
-        // ),
-        // errorBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(4.sp),
-        //   borderSide: const BorderSide(
-        //     color: Colors.red,
-        //     width: 1,
-        //   ),
-        // ),
-        // focusedBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(4.sp),
-        // ),
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(4.sp),
-        // ),
-      ),
+      ],
     );
   }
 
