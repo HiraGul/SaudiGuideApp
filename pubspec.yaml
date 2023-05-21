@@ -47,6 +47,7 @@ dependencies:
   loading_animation_widget:
   image_picker: ^0.8.7+5
   geocoding:
+  country_picker: ^2.0.20
 
   http:
 

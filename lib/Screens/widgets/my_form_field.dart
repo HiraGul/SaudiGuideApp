@@ -61,6 +61,7 @@ class _MyFormFieldState extends State<MyFormField> {
               // height: widget.fieldHeight
             ),
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(horizontal: 20.sp),
               errorMaxLines: 1,
 
               filled: true,
@@ -70,7 +71,7 @@ class _MyFormFieldState extends State<MyFormField> {
                 height: 0.2.sp,
               ),
               hintStyle: GoogleFonts.openSans(
-                fontSize: 16.sp,
+                fontSize: 14.sp,
               ),
               hintText: widget.hintText,
               border: const OutlineInputBorder(borderSide: BorderSide.none),

@@ -10,3 +10,5 @@ class ScanLandMarkLoading extends ScanLandMarkState {}
 class ScanLandMarkLoaded extends ScanLandMarkState {}
 
 class ScanLandMarkException extends ScanLandMarkState {}
+
+class ScanLandMarkSocketException extends ScanLandMarkState {}

@@ -27,8 +27,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   void initState() {
     _determinePosition();
-
-    context.read<WeatherForecastCubit>().getWeatherData(city: 'peshawar');
   }
 
   _determinePosition() async {
@@ -68,6 +66,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
         city = placemark.locality;
 
         setState(() {});
+        context
+            .read<WeatherForecastCubit>()
+            .getWeatherData(city: city ?? 'riyad'!);
       }
     }).catchError((e) {
       debugPrint(e);
@@ -171,7 +172,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               onTap: () {
                 context
                     .read<WeatherForecastCubit>()
-                    .getWeatherData(city: 'peshawar');
+                    .getWeatherData(city: city!);
               },
             );
           }
@@ -227,7 +228,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Expanded(
                           flex: 6,
                           child: FadeInImage(
-                            placeholder: AssetImage("images/icons/bc.png"),
+                            placeholder:
+                                const AssetImage("assets/icons/rain.png"),
                             image: NetworkImage(
                                 '${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
                                 headers: {
