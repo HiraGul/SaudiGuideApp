@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:saudi_guide/Models/api_keys.dart';
 
 import '../Models/chat_model.dart';
 
@@ -50,8 +51,7 @@ static var systemContent = '';
     // ChatGPT 3 input
     userInputGpt3 = getMyPrompt(isUserCohere: false)['user'];
 
-    var apiKey =
-        ''; // This is your trial API key
+
     var url = 'https://api.cohere.ai/generate';
 
     try {
@@ -73,7 +73,7 @@ static var systemContent = '';
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $apiKey',
+          'Authorization': 'Bearer ${ApiKeys.cohereApi}',
         },
         body: requestBody,
       );

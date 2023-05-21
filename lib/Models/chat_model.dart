@@ -5,6 +5,7 @@ class ChatModel {
 
   static String  recommendationResponse = '';
   static String  chatBotResponse = '';
+  static String  landMarkResponse = '';
 
   ChatModel({
     required this.message,

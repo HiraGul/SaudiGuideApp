@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context, child) => MySharedPrefs.getIsLoggedIn() == null
                 ? const SplashScreen()
                 : const BottomNavigationScreen(),
-          )),
+          ),),
     );
   }
 }

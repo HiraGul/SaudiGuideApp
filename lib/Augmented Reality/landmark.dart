@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:saudi_guide/Cubits/ScanCubit/scan_land_mark_cubit.dart';
+import 'package:saudi_guide/Screens/widgets/lets_chat_button.dart';
 
 import '../Models/land_mark_controller.dart';
 import '../Utils/colors.dart';
@@ -18,31 +19,7 @@ class LandMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.black, boxShadow: [
-          BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
-        ]),
-        height: 70.h,
-        child: InkWell(
-          onTap: () {},
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.sp),
-              color: const Color(0xff299E97),
-            ),
-            child: Center(
-              child: Text(
-                'Lets Chat',
-                style: GoogleFonts.cairo(
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: const LetsChatButton(),
       body: SafeArea(
         child: Stack(
           children: [

@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart'as http;
+import 'package:saudi_guide/Models/api_keys.dart';
 import 'package:saudi_guide/Models/image_saudi_model.dart';
 
 class TextToImageRepo{
-  static var  apiKey = '';
 
 
 
@@ -15,7 +15,7 @@ static Future<int> getTextToImage({required ImageSaudiModel model})async{
     try {
       var headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $apiKey',
+        'Authorization': 'Bearer ${ApiKeys.stableDifussion}',
         'Cookie': '__cf_bm=_qXVATb4mv3lW8awSJtiq.la13CUEGJFCP03IL35g4g-1684653014-0-ARqbk1V3FTIRdZCWz/7M9D3YhqAxbhgqvECzXY+3k6D6UXZpCZ3piUnCUFhgEr2uN32h8TvvstPwJQkWxjmO6aU='
       };
       var request = http.Request('POST', Uri.parse('https://api.stability.ai/v1/generation/stable-diffusion-xl-beta-v2-2-2/text-to-image'));
@@ -86,7 +86,7 @@ static Future<int> getUserInputImage({required ImageSaudiModel model})async{
     try {
       var headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $apiKey',
+        'Authorization': 'Bearer ${ApiKeys.stableDifussion}',
         'Cookie': '__cf_bm=_qXVATb4mv3lW8awSJtiq.la13CUEGJFCP03IL35g4g-1684653014-0-ARqbk1V3FTIRdZCWz/7M9D3YhqAxbhgqvECzXY+3k6D6UXZpCZ3piUnCUFhgEr2uN32h8TvvstPwJQkWxjmO6aU='
       };
       var request = http.Request('POST', Uri.parse('https://api.stability.ai/v1/generation/stable-diffusion-xl-beta-v2-2-2/text-to-image'));
