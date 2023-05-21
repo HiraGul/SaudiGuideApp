@@ -42,19 +42,6 @@ class _MyFormFieldState extends State<MyFormField> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: widget.controller,
             maxLines: widget.maxLine ?? 1,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'field is required';
-              }
-              // if ((widget.label?.toLowerCase() ?? "").contains("email")) {
-              //   if (!emailRegex.hasMatch(value)) {
-              //     return "email is badly formatted";
-              //   }
-              // } else {
-              //   return null;
-              // }
-              return null;
-            },
 
             style: TextStyle(
               fontSize: 16.sp,

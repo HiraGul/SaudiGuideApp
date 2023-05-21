@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:saudi_guide/Cubits/ORCCubit/ocrcubit_cubit.dart';
 import 'package:saudi_guide/Cubits/translate_list_cubit.dart';
+import 'package:saudi_guide/Models/oc_model_controller.dart';
 import 'package:saudi_guide/Models/translate_model.dart';
 import 'package:saudi_guide/Screens/widgets/button_container.dart';
 import 'package:saudi_guide/Screens/widgets/my_form_field.dart';
@@ -23,6 +28,23 @@ class MultiLanguageScreen extends StatefulWidget {
 class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
   var controller = TextEditingController();
   var isLoading = ValueNotifier<bool>(false);
+  getFromGalleryOCR(BuildContext context) async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      BlocProvider.of<OcrcubitCubit>(context).getOCRData(file: imageFile.path);
+
+      for (int i = 0; i < OCRController.ocrModel!.regions!.length; i++) {
+        for (int j = 0; j < OCRController.ocrModel!.regions!.length; j++) {}
+        for (int k = 0; k < OCRController.ocrModel!.regions!.length; k) {}
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +52,7 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         leading: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.of(context).pop();
           },
           child: Container(
@@ -171,10 +193,7 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () {
-                        //TODO: onTap Group 16969
-                        print('onTap Group 16969');
-                      },
+                      onTap: () {},
                       child: SizedBox(
                         width: 74.0,
                         height: 48.0,
