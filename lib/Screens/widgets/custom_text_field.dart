@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextFormField(
         enabled: enable,
-        keyboardType: TextInputType.number,
+        keyboardType: inputType,
         cursorHeight: 20.sp,
         cursorColor: AppColors.greenColor,
         controller: controller,
