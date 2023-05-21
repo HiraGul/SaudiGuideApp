@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:saudi_guide/Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'package:saudi_guide/Models/weather_model_controller.dart';
+import 'package:saudi_guide/Screens/widgets/lets_chat_button.dart';
 import 'package:saudi_guide/Screens/widgets/weekly_weather_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
@@ -24,9 +25,12 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   Position? _currentPosition;
   String? city;
+
   @override
   void initState() {
     _determinePosition();
+
+    context.read<WeatherForecastCubit>().getWeatherData(city: 'peshawar');
   }
 
   _determinePosition() async {
@@ -66,9 +70,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
         city = placemark.locality;
 
         setState(() {});
-        context
-            .read<WeatherForecastCubit>()
-            .getWeatherData(city: city ?? 'riyad'!);
       }
     }).catchError((e) {
       debugPrint(e);
@@ -79,48 +80,49 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFBFBFB),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
-        ]),
-        height: 70.h,
-        child: Center(
-          child: SizedBox(
-            width: 100.sp,
-            child: Row(
-              children: [
-                Container(
-                    alignment: const Alignment(0.03, -0.03),
-                    width: 37.sp,
-                    height: 35.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.sp),
-                      color: const Color(0xFFE8F3F3),
-                    ),
-                    child: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: AppColors.greenColor,
-                    )),
-                SizedBox(
-                  width: 10.sp,
-                ),
-                Container(
-                    alignment: const Alignment(0.03, -0.03),
-                    width: 37.sp,
-                    height: 35.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.sp),
-                      color: const Color(0xFFE8F3F3),
-                    ),
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: AppColors.greenColor,
-                    )),
-              ],
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: LetsChatButton(),
+      // bottomNavigationBar: Container(
+      //   decoration: BoxDecoration(color: Colors.white, boxShadow: [
+      //     BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
+      //   ]),
+      //   height: 70.h,
+      //   child: Center(
+      //     child: SizedBox(
+      //       width: 100.sp,
+      //       child: Row(
+      //         children: [
+      //           Container(
+      //               alignment: const Alignment(0.03, -0.03),
+      //               width: 37.sp,
+      //               height: 35.sp,
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(6.sp),
+      //                 color: const Color(0xFFE8F3F3),
+      //               ),
+      //               child: Icon(
+      //                 Icons.arrow_back_ios_new_rounded,
+      //                 color: AppColors.greenColor,
+      //               )),
+      //           SizedBox(
+      //             width: 10.sp,
+      //           ),
+      //           Container(
+      //               alignment: const Alignment(0.03, -0.03),
+      //               width: 37.sp,
+      //               height: 35.sp,
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(6.sp),
+      //                 color: const Color(0xFFE8F3F3),
+      //               ),
+      //               child: Icon(
+      //                 Icons.arrow_forward_ios_rounded,
+      //                 color: AppColors.greenColor,
+      //               )),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
       appBar: AppBar(
         toolbarHeight: 90.sp,
         backgroundColor: Colors.white,
@@ -172,7 +174,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               onTap: () {
                 context
                     .read<WeatherForecastCubit>()
-                    .getWeatherData(city: city!);
+                    .getWeatherData(city: 'peshawar');
               },
             );
           }
@@ -198,7 +200,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 ),
                 Text(
                   WeatherModeController.weatherModel!.current!.condition!.text
-                      .toString(),
+                      .toString()
+                      .toLowerCase(),
                   style: GoogleFonts.cairo(
                     fontSize: 16.sp,
                     color: const Color(0xFF878787),
@@ -228,17 +231,45 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Expanded(
                           flex: 6,
                           child: FadeInImage(
-                            placeholder:
-                                const AssetImage("assets/icons/rain.png"),
-                            image: NetworkImage(
-                                '${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
-                                headers: {
-                                  'X-RapidAPI-Key':
-                                      ' 4ba134b8e1msh225dac5b0fc4db6p1de760jsn5e94b47909ad',
-                                  // 'X-RapidAPI-Host':
-                                  //     'weatherapi-com.p.rapidapi.com'
-                                }),
-                          )),
+                              placeholder:
+                                  const AssetImage("assets/icons/sunny.png"),
+                              // image: NetworkImage(
+                              //     'https://${WeatherModeController.weatherModel!.current!.condition!.icon.toString()}',
+                              //     headers: {
+                              //       'X-RapidAPI-Key':
+                              //           ' 4ba134b8e1msh225dac5b0fc4db6p1de760jsn5e94b47909ad',
+                              //       // 'X-RapidAPI-Host':
+                              //       //     'weatherapi-com.p.rapidapi.com'
+                              //     }),
+                              image: WeatherModeController
+                                      .weatherModel!.current!.condition!.text
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains('sunny')
+                                  ? const AssetImage('assets/icons/sunny.png')
+                                  : WeatherModeController.weatherModel!.current!
+                                          .condition!.text
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains('cloudy')
+                                      ? const AssetImage(
+                                          'assets/icons/cloud.png')
+                                      : WeatherModeController.weatherModel!
+                                              .current!.condition!.text
+                                              .toString()
+                                              .toLowerCase()
+                                              .contains('mist')
+                                          ? const AssetImage(
+                                              'assets/icons/mist.png')
+                                          : WeatherModeController.weatherModel!
+                                                  .current!.condition!.text
+                                                  .toString()
+                                                  .toLowerCase()
+                                                  .contains('rain')
+                                              ? const AssetImage(
+                                                  'assets/icons/rain.png')
+                                              : const AssetImage(
+                                                  'assets/icons/sunny.png'))),
                       Expanded(
                           flex: 2,
                           child: Container(
@@ -279,7 +310,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   height: 20.sp,
                 ),
                 Container(
-                    padding: EdgeInsets.only(left: 14.sp, right: 19.sp),
+                    padding: EdgeInsets.only(left: 10.sp, right: 10.sp),
                     height: 220.sp,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(11.sp),
@@ -314,6 +345,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             percentage1:
                                 '${WeatherModeController.weatherModel!.forecast!.forecastday![index].day!.avgtempF} F '
                                     .toString(),
+                            image: WeatherModeController.weatherModel!.forecast!
+                                .forecastday![index].day!.condition!.icon!,
                           );
                         })),
               ],

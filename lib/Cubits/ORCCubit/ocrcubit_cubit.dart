@@ -9,8 +9,7 @@ part 'ocrcubit_state.dart';
 
 class OcrcubitCubit extends Cubit<OcrcubitState> {
   OcrcubitCubit() : super(OcrcubitInitial());
-  getOCRData(
-      {required String file, required TextEditingController controller}) async {
+  getOCRData({required String file, TextEditingController? controller}) async {
     emit(OcrcubitLoading());
     final int status = await OCRRepository.getScannedData(file: file);
     print(status);
@@ -30,7 +29,9 @@ class OcrcubitCubit extends Cubit<OcrcubitState> {
           }
         }
       }
-      controller.text = MultiLineTranslator.name;
+      if (controller != null) {
+        controller.text = MultiLineTranslator.name;
+      }
       MultiLineTranslator.name = '';
       print(MultiLineTranslator.name);
     } else if (status == 501) {

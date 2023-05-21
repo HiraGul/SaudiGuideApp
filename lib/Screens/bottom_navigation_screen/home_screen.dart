@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +9,7 @@ import 'package:saudi_guide/Screens/recommendation_screen.dart';
 import 'package:saudi_guide/Screens/safety_security_screen.dart';
 import 'package:saudi_guide/Screens/toDoScreen/todo_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+import 'package:saudi_guide/Utils/shared_prefs.dart';
 import 'package:saudi_guide/weather_screen/weather_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,14 +69,17 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             children: [
               Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                      //   color: Colors.red,
-                      height: 30.sp,
-                      width: 30.sp,
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: SvgPicture.asset('assets/logo_black.svg'),),),),
+                flex: 2,
+                child: SizedBox(
+                  //   color: Colors.red,
+                  height: 30.sp,
+                  width: 30.sp,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: SvgPicture.asset('assets/logo_black.svg'),
+                  ),
+                ),
+              ),
               // Expanded(
               //   child: Row(
               //     children: [
@@ -148,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: NeverScrollableScrollPhysics(),
                 children: [
                   Text(
-                    'Hello John Doe!',
+                    MySharedPrefs.getIsLoggedIn()!,
                     style: GoogleFonts.cairo(
                       fontSize: 26.sp,
                       fontWeight: FontWeight.bold,
