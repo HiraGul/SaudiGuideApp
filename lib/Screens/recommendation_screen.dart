@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saudi_guide/Models/chat_model.dart';
+import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 import 'package:saudi_guide/Screens/recomended_area.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+
+import '../Models/recomendation_model.dart';
 
 class RecommendationScreen extends StatefulWidget {
   const RecommendationScreen({super.key});
@@ -12,6 +16,16 @@ class RecommendationScreen extends StatefulWidget {
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
+  @override
+  void initState() {
+
+    RecommendationModel.title = '';
+    RecommendationModel.recommendedRegion = [];
+    RecommendationModel.message = '';
+
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,32 +91,69 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       body: ListView(
         padding: EdgeInsets.only(top: 60.sp, left: 40.sp, right: 40.sp),
         children: [
-          RecommendationContainer(
-            title: 'Food & Drinks',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationContainer(
-            title: 'Entertainment',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationContainer(
-            title: 'Tourist',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationContainer(
-            title: 'Hajj',
-          ),
-          SizedBox(
-            height: 16.sp,
-          ),
-          RecommendationContainer(
-            title: 'Umrah',
+
+
+          ListView.builder(
+
+            shrinkWrap: true,
+              primary: false,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: RecommendationData.list.length,
+              itemBuilder: (context, index){
+
+            return  InkWell(
+              onTap: () {
+
+                RecommendationModel.title = RecommendationData.list[index].title;
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RecomendedArea(model: RecommendationData.list[index],);
+                }));
+              },
+              child: RecommendationContainer(
+                    title: RecommendationData.list[index].title,
+                  ),
+            );
+          }),
+          // RecommendationContainer(
+          //   title: 'Food & Drinks',
+          // ),
+          // SizedBox(
+          //   height: 16.sp,
+          // ),
+          // RecommendationContainer(
+          //   title: 'Entertainment',
+          // ),
+          // SizedBox(
+          //   height: 16.sp,
+          // ),
+          // RecommendationContainer(
+          //   title: 'Tourist',
+          // ),
+          // SizedBox(
+          //   height: 16.sp,
+          // ),
+          // RecommendationContainer(
+          //   title: 'Hajj',
+          // ),
+          // SizedBox(
+          //   height: 16.sp,
+          // ),
+          // RecommendationContainer(
+          //   title: 'Umrah',
+          // ),
+          //
+          // SizedBox(
+          //   height: 16.sp,
+          // ),
+          InkWell(
+            onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return const ChatScreen();
+              }));
+            },
+            child: const RecommendationContainer(
+              title: 'Others',
+            ),
           ),
         ],
       ),
@@ -120,38 +171,32 @@ class RecommendationContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return RecomendedArea();
-        }));
-      },
-      child: Container(
-        alignment: const Alignment(0.01, -0.06),
-        width: 282.sp,
-        height: 66.sp,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6.sp),
-          color: Colors.white,
-          border: Border.all(
-            width: 1.sp,
-            color: const Color(0xFFEFEFEF),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF5E5E5E).withOpacity(0.1),
-              offset: const Offset(0, 3.0),
-              blurRadius: 12.sp,
-            ),
-          ],
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.sp),
+      alignment: const Alignment(0.01, -0.06),
+      width: 282.sp,
+      height: 66.sp,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6.sp),
+        color: Colors.white,
+        border: Border.all(
+          width: 1.sp,
+          color: const Color(0xFFEFEFEF),
         ),
-        child: Text(
-          title,
-          style: GoogleFonts.cairo(
-            fontSize: 16.sp,
-            color: AppColors.greenColor,
-            fontWeight: FontWeight.w700,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF5E5E5E).withOpacity(0.1),
+            offset: const Offset(0, 3.0),
+            blurRadius: 12.sp,
           ),
+        ],
+      ),
+      child: Text(
+        title,
+        style: GoogleFonts.cairo(
+          fontSize: 16.sp,
+          color: AppColors.greenColor,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

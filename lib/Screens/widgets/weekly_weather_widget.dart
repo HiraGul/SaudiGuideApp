@@ -6,11 +6,13 @@ import 'package:saudi_guide/Utils/colors.dart';
 class WeeklyWeatherWidget extends StatelessWidget {
   final String dayName;
   final String time;
+  final String percentage1;
   final String percentage;
   const WeeklyWeatherWidget(
       {Key? key,
       required this.dayName,
       required this.time,
+      required this.percentage1,
       required this.percentage})
       : super(key: key);
 
@@ -25,18 +27,18 @@ class WeeklyWeatherWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '-',
-                      style: GoogleFonts.cairo(
-                        fontSize: 12.sp,
-                        color: const Color(0xFF280146),
-                      ),
-                    ),
-                  ),
-                ),
+                // Expanded(
+                //   child: Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Text(
+                //       '-',
+                //       style: GoogleFonts.cairo(
+                //         fontSize: 12.sp,
+                //         color: const Color(0xFF280146),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Expanded(
                   flex: 5,
                   child: Container(
@@ -58,7 +60,7 @@ class WeeklyWeatherWidget extends StatelessWidget {
             child: Container(
           alignment: Alignment.centerRight,
           child: Text(
-            time,
+            percentage,
             style: GoogleFonts.cairo(
               fontSize: 14.sp,
               color: AppColors.greenColor,
@@ -69,7 +71,18 @@ class WeeklyWeatherWidget extends StatelessWidget {
             child: Container(
           alignment: Alignment.centerRight,
           child: Text(
-            percentage,
+            percentage1,
+            style: GoogleFonts.cairo(
+              fontSize: 14.sp,
+              color: AppColors.greenColor,
+            ),
+          ),
+        )),
+        Expanded(
+            child: Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+            time,
             style: GoogleFonts.cairo(
               fontSize: 14.sp,
               color: AppColors.greenColor,

@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/home_screen.dart';
+import 'package:saudi_guide/Screens/widgets/button_container.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/cubits/bottom_navigation_cubit.dart';
+
+import '../widgets/lets_chat_button.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
   const BottomNavigationScreen({Key? key}) : super(key: key);
@@ -18,6 +22,13 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   PageController pageController = PageController();
 
   @override
+  void initState() {
+
+    // context.read<MyRecommendationCubit>().getMessage(message: 'I want to perform umrrah');
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     // value: SystemUiOverlayStyle(
     //           systemNavigationBarIconBrightness: Brightness.dark,
@@ -27,46 +38,47 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     return BlocProvider(
       create: (context) => BottomNavigationCubit(0),
       child: Scaffold(
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
-          ]),
-          height: 70.h,
-          child: Row(
-            children: [
-              BottomNavItems(
-                pageController: pageController,
-                iconData: Icons.home,
-                title: "Home",
-                currentIndex: 0,
-              ),
-              BottomNavItems(
-                pageController: pageController,
-                iconData: CupertinoIcons.calendar,
-                title: "Calendar",
-                currentIndex: 1,
-              ),
-              BottomNavItems(
-                pageController: pageController,
-                iconData: Icons.search,
-                title: "Search",
-                currentIndex: 2,
-              ),
-              BottomNavItems(
-                pageController: pageController,
-                iconData: Icons.info,
-                title: "Help",
-                currentIndex: 3,
-              ),
-              BottomNavItems(
-                pageController: pageController,
-                iconData: Icons.person,
-                title: "Profile",
-                currentIndex: 4,
-              ),
-            ],
-          ),
-        ),
+        bottomNavigationBar: const LetsChatButton(),
+        // bottomNavigationBar: Container(
+        //   decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        //     BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
+        //   ]),
+        //   height: 70.h,
+        //   child: Row(
+        //     children: [
+        //       BottomNavItems(
+        //         pageController: pageController,
+        //         iconData: Icons.home,
+        //         title: "Home",
+        //         currentIndex: 0,
+        //       ),
+        //       BottomNavItems(
+        //         pageController: pageController,
+        //         iconData: CupertinoIcons.calendar,
+        //         title: "Calendar",
+        //         currentIndex: 1,
+        //       ),
+        //       BottomNavItems(
+        //         pageController: pageController,
+        //         iconData: Icons.search,
+        //         title: "Search",
+        //         currentIndex: 2,
+        //       ),
+        //       BottomNavItems(
+        //         pageController: pageController,
+        //         iconData: Icons.info,
+        //         title: "Help",
+        //         currentIndex: 3,
+        //       ),
+        //       BottomNavItems(
+        //         pageController: pageController,
+        //         iconData: Icons.person,
+        //         title: "Profile",
+        //         currentIndex: 4,
+        //       ),
+        //     ],
+        //   ),
+        // ),
         body: SafeArea(
             child: PageView(
           controller: pageController,
