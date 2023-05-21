@@ -9,10 +9,12 @@ import 'package:saudi_guide/Repo/recomentation_repo/chat_bot_repo.dart';
 import 'package:saudi_guide/Repo/recommendation_repo.dart';
 import 'package:saudi_guide/Screens/chat_screen/components/chat_card.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+import 'package:saudi_guide/Utils/shared_prefs.dart';
 
 class ChatScreen extends StatefulWidget {
   final bool? isRecommendedOption;
-  const ChatScreen({Key? key,this.isRecommendedOption = false}) : super(key: key);
+  const ChatScreen({Key? key, this.isRecommendedOption = false})
+      : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -21,12 +23,10 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textFieldController = TextEditingController();
 
-  List<ChatModel> tempList = [
-  ];
+  List<ChatModel> tempList = [];
 
   @override
   void initState() {
-
     tempList = [];
     context.read<ChatListCubit>().getList(list: tempList);
 
@@ -34,26 +34,23 @@ class _ChatScreenState extends State<ChatScreen> {
     ///  the first time the Cohere api will response
     ///  but when user start chating the ChatGpt api's will return response
 
-    if(widget.isRecommendedOption!){
-
-      context.read<ChatBotCubit>().getMessage(isRecommendedOption: widget.isRecommendedOption!);
+    if (widget.isRecommendedOption!) {
+      context
+          .read<ChatBotCubit>()
+          .getMessage(isRecommendedOption: widget.isRecommendedOption!);
       tempList = [];
       context.read<ChatListCubit>().getList(list: tempList);
-
-
-    }else{
-
+    } else {
       /// For Umrrah and Hajj I use Chat GPT3 api
-      if(RecommendationModel.title == "Hajj" || RecommendationModel.title =='Umrah' ) {
+      if (RecommendationModel.title == "Hajj" ||
+          RecommendationModel.title == 'Umrah') {
         ChatBotRepo.chatBotMessages = ChatBotRepo.getUserRecommendation();
 
-        tempList.add( ChatModel(
+        tempList.add(ChatModel(
             message: ChatBotRepo.question,
             isHuman: true,
             dateTime: DateTime.now()));
-        context.read<ChatListCubit>().getList(
-            list: tempList
-        );
+        context.read<ChatListCubit>().getList(list: tempList);
         context.read<ChatBotCubit>().getMessage(message: ChatBotRepo.question);
 
         ChatBotRepo.chatBotMessages = ChatBotRepo.clearMessages;
@@ -63,20 +60,16 @@ class _ChatScreenState extends State<ChatScreen> {
         print('========= ${RecommendationModel.recommendedRegion}');
         print('========= ${RecommendationModel.title}');
 
-
         RecommendationModel.recommendedRegion = [];
-
-
-
-      }else{
+      } else {
         /// This will behave as a generic chat bot
 
-       tempList.add( ChatModel(
-           message: 'Hello, How I can help you?',
-           isHuman: false,
-           dateTime: DateTime.now()));
+        tempList.add(ChatModel(
+            message: 'Hello, How I can help you?',
+            isHuman: false,
+            dateTime: DateTime.now()));
 
-    ChatBotRepo.chatBotMessages = ChatBotRepo.clearMessages;
+        ChatBotRepo.chatBotMessages = ChatBotRepo.clearMessages;
 
         context.read<ChatListCubit>().getList(
           list: [
@@ -87,7 +80,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         );
       }
-
     }
 
     // TODO: implement initState
@@ -127,7 +119,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
         ),
-        title: Text('Muhammad '),
+        title: Text(MySharedPrefs.getIsLoggedIn()!),
       ),
       body: BlocListener<ChatBotCubit, ChatBotState>(
         listener: (context, state) {
@@ -138,7 +130,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   message: state.message,
                   isHuman: false,
                   dateTime: DateTime.now()),
-
             );
             scrollController.animateTo(
               0,
@@ -146,8 +137,13 @@ class _ChatScreenState extends State<ChatScreen> {
               curve: Curves.bounceIn,
             );
             context.read<ChatListCubit>().getList(list: tempList);
-          }if(state is ChatBotError){
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error),),);
+          }
+          if (state is ChatBotError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.error),
+              ),
+            );
           }
           // TODO: implement listener
         },
@@ -166,9 +162,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         itemBuilder: (context, index) {
                           return ChatCard(
                             message: chatList[index].message,
-                            userName: chatList[index].isHuman
-                                ? "User"
-                                : "Assistant",
+                            userName:
+                                chatList[index].isHuman ? "User" : "Assistant",
                             userType: chatList[index].isHuman
                                 ? UserType.user
                                 : UserType.chatBot,
@@ -232,19 +227,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
                       context.read<ChatListCubit>().getList(list: tempList);
 
-
-
-                      if(widget.isRecommendedOption!){
-                        context
-                            .read<ChatBotCubit>()
-                            .getMessage(message : textFieldController.text, recommendationList: RecommendationRepo.chatBotMessages);
-                      }else{
+                      if (widget.isRecommendedOption!) {
+                        context.read<ChatBotCubit>().getMessage(
+                            message: textFieldController.text,
+                            recommendationList:
+                                RecommendationRepo.chatBotMessages);
+                      } else {
                         context
                             .read<ChatBotCubit>()
                             .getMessage(message: textFieldController.text);
                       }
-
-
 
                       textFieldController.clear();
                     },
