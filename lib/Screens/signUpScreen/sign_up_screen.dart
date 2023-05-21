@@ -107,6 +107,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             email: emailController.text.trim(),
                             password: passController.text.trim(),
                             context: context,
+                            userName: nameController.text.trim(),
                           );
                           isLoading.value = !isLoading.value;
                         },

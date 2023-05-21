@@ -5,8 +5,23 @@ import 'package:saudi_guide/Utils/strings.dart';
 
 import 'custom_card.dart';
 
-class CardCustomWidget extends StatelessWidget {
-  const CardCustomWidget({Key? key}) : super(key: key);
+class CardCustomWidget extends StatefulWidget {
+  TabController controller;
+  CardCustomWidget({required this.controller, Key? key}) : super(key: key);
+
+  @override
+  State<CardCustomWidget> createState() => _CardCustomWidgetState();
+}
+
+class _CardCustomWidgetState extends State<CardCustomWidget> {
+  void goToBackTab() {
+    widget.controller.animateTo(
+      1,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +35,25 @@ class CardCustomWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 5.sp),
-                width: 31.sp,
-                height: 31.sp,
-                margin: EdgeInsets.only(left: 20.sp),
-                decoration: const BoxDecoration(
-                    color: Color(0xffE9E9E9), shape: BoxShape.circle),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20.sp,
-                  color: Colors.white,
+            InkWell(
+              onTap: () {
+                goToBackTab();
+              },
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: 5.sp),
+                  width: 31.sp,
+                  height: 31.sp,
+                  margin: EdgeInsets.only(left: 20.sp),
+                  decoration: const BoxDecoration(
+                      color: Color(0xffE9E9E9), shape: BoxShape.circle),
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    size: 20.sp,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -67,11 +87,13 @@ class CardCustomWidget extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         SizedBox(
-          height: 40.sp,
+          height: 20.sp,
         ),
-        Container(
-          height: 300.sp,
+        SizedBox(
+          height: 280.sp,
           child: ListView(
+            padding: EdgeInsets.zero,
+            physics: const ClampingScrollPhysics(),
             children: [
               CustomCard(
                 title: "Work",
@@ -79,15 +101,15 @@ class CardCustomWidget extends StatelessWidget {
                 onTap: () {},
               ),
               SizedBox(
-                height: 27.sp,
+                height: 10.sp,
               ),
               CustomCard(
                 title: "Study",
-                icon: AppStrings.traveler,
+                icon: AppStrings.study,
                 onTap: () {},
               ),
               SizedBox(
-                height: 27.sp,
+                height: 10.sp,
               ),
               CustomCard(
                 title: "Tourist",
@@ -95,19 +117,19 @@ class CardCustomWidget extends StatelessWidget {
                 onTap: () {},
               ),
               SizedBox(
-                height: 27.sp,
+                height: 10.sp,
               ),
               CustomCard(
                 title: "Hajj",
-                icon: AppStrings.traveler,
+                icon: AppStrings.qaaba,
                 onTap: () {},
               ),
               SizedBox(
-                height: 27.sp,
+                height: 10.sp,
               ),
               CustomCard(
                 title: "Umrah",
-                icon: AppStrings.traveler,
+                icon: AppStrings.umrah,
                 onTap: () {},
               ),
             ],

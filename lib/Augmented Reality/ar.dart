@@ -25,6 +25,7 @@ class AugmentedRealityScreen extends StatelessWidget {
       );
       if (pickedFile != null) {
         File imageFile = File(pickedFile.path);
+
         BlocProvider.of<ScanLandMarkCubit>(context)
             .getScanLandMarkData(file: imageFile.path);
         Navigator.push(

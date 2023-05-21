@@ -9,6 +9,7 @@ import 'package:saudi_guide/Screens/recommendation_screen.dart';
 import 'package:saudi_guide/Screens/safety_security_screen.dart';
 import 'package:saudi_guide/Screens/toDoScreen/todo_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+import 'package:saudi_guide/Utils/shared_prefs.dart';
 import 'package:saudi_guide/weather_screen/weather_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,11 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "title": "Multi Language",
       "icon": "assets/icons/todo.png"
     },
-    {
-      "page": TodoScreen(),
-      "title": "To do",
-      "icon": "assets/icons/todo.png"
-    },
+    {"page": TodoScreen(), "title": "To do", "icon": "assets/icons/todo.png"},
   ];
 
   @override
@@ -136,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 10.h,
               ),
               Text(
-                'Hello John Doe!',
+                MySharedPrefs.getIsLoggedIn()!,
                 style: GoogleFonts.cairo(
                   fontSize: 26.sp,
                   fontWeight: FontWeight.bold,

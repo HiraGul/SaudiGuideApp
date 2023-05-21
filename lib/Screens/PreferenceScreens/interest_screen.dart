@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:saudi_guide/Screens/widgets/custom_text_field.dart';
 import 'package:saudi_guide/Screens/widgets/interest_screen_widget.dart';
+import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/Utils/prfencess_controller.dart';
 
-class InterestScreen extends StatelessWidget {
-  const InterestScreen({Key? key}) : super(key: key);
+class InterestScreen extends StatefulWidget {
+  TabController controller;
+  InterestScreen({required this.controller, Key? key}) : super(key: key);
+
+  @override
+  State<InterestScreen> createState() => _InterestScreenState();
+}
+
+class _InterestScreenState extends State<InterestScreen> {
+  void goToBackTab() {
+    widget.controller.animateTo(
+      2,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +35,25 @@ class InterestScreen extends StatelessWidget {
         ),
         Row(
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 5.sp),
-                width: 31.sp,
-                height: 31.sp,
-                margin: EdgeInsets.only(left: 20.sp),
-                decoration: const BoxDecoration(
-                    color: Color(0xffE9E9E9), shape: BoxShape.circle),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20.sp,
-                  color: Colors.white,
+            InkWell(
+              onTap: () {
+                goToBackTab();
+              },
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: 5.sp),
+                  width: 31.sp,
+                  height: 31.sp,
+                  margin: EdgeInsets.only(left: 20.sp),
+                  decoration: const BoxDecoration(
+                      color: Color(0xffE9E9E9), shape: BoxShape.circle),
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    size: 20.sp,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -87,22 +107,68 @@ class InterestScreen extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.only(left: 51.sp, right: 65.sp),
-          child: CustomTextField(
+          child: Container(
+            height: 45.sp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3.0.sp),
+              color: AppColors.textFieldColor,
+            ),
+            child: TextFormField(
+              keyboardType: TextInputType.text,
+              cursorHeight: 20.sp,
+              cursorColor: AppColors.greenColor,
               controller: PreferencesController.interestController,
-              inputType: TextInputType.name,
-              hintText: 'Type and Select'),
+              style: TextStyle(
+                fontSize: 16.sp,
+                // height: widget.fieldHeight
+              ),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 12.sp),
+                filled: true,
+                fillColor: AppColors.textFieldColor,
+                hintStyle: GoogleFonts.openSans(
+                  fontSize: 14.sp,
+                ),
+                hintText: 'Please select',
+                border: const OutlineInputBorder(borderSide: BorderSide.none),
+              ),
+              onFieldSubmitted: (val) {
+                PreferencesController.interest
+                    .add(PreferencesController.interestController.text);
+                PreferencesController.interestController.clear();
+                setState(() {});
+              },
+            ),
+          ),
         ),
         SizedBox(
           height: 30.sp,
         ),
-        Container(
-          padding: EdgeInsets.only(left: 51.sp, right: 65.sp),
-          child: Wrap(
-            children: [
-              InterestScreenWidget(title: 'History', closeTap: () {}),
-            ],
-          ),
-        ),
+        GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 10 / 2,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 10),
+            itemCount: PreferencesController.interest.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 10.sp),
+                child: Wrap(
+                  children: [
+                    InterestScreenWidget(
+                        title: PreferencesController.interest[index],
+                        closeTap: () {
+                          if (PreferencesController.interest.isNotEmpty) {
+                            PreferencesController.interest.removeAt(index);
+                            setState(() {});
+                          }
+                        }),
+                  ],
+                ),
+              );
+            }),
         SizedBox(
           height: 60.sp,
         ),

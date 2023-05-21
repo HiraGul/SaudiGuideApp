@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Screens/widgets/custom_text_field.dart';
@@ -144,7 +143,7 @@ class _GenderAndAgeWidgetState extends State<GenderAndAgeWidget> {
                       child: CustomTextField(
                         controller: PreferencesController.ageController,
                         inputType: TextInputType.number,
-                        hintText: '25',
+                        hintText: '',
                       ),
                     ),
                   ],
@@ -171,7 +170,7 @@ class _GenderAndAgeWidgetState extends State<GenderAndAgeWidget> {
                         child: CustomTextField(
                       controller: PreferencesController.familyController,
                       inputType: TextInputType.number,
-                      hintText: '10',
+                      hintText: '',
                     )),
                   ],
                 )),
@@ -191,7 +190,7 @@ class _GenderAndAgeWidgetState extends State<GenderAndAgeWidget> {
           CustomTextField(
             controller: PreferencesController.salaryController,
             inputType: TextInputType.number,
-            hintText: '50000',
+            hintText: '',
           )
         ],
       ),

@@ -17,7 +17,7 @@ class CustomCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 282.0.sp,
-        height: 90.0.sp,
+        height: 66.0.sp,
         margin: EdgeInsets.symmetric(horizontal: 35.sp),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.0),
@@ -42,7 +42,7 @@ class CustomCard extends StatelessWidget {
               width: 10.sp,
             ),
             CircleAvatar(
-              radius: 35.sp,
+              radius: 22.sp,
               backgroundColor: const Color(0xffECFFFE),
               child: SvgPicture.string(
                 icon,

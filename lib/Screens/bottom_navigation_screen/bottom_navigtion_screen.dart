@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/home_screen.dart';
-import 'package:saudi_guide/Screens/widgets/button_container.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/cubits/bottom_navigation_cubit.dart';
 
@@ -23,11 +20,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   @override
   void initState() {
-
     // context.read<MyRecommendationCubit>().getMessage(message: 'I want to perform umrrah');
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     // value: SystemUiOverlayStyle(
@@ -38,7 +35,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     return BlocProvider(
       create: (context) => BottomNavigationCubit(0),
       child: Scaffold(
-        bottomNavigationBar: const LetsChatButton(),
+        bottomNavigationBar: LetsChatButton(),
         // bottomNavigationBar: Container(
         //   decoration: BoxDecoration(color: Colors.white, boxShadow: [
         //     BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)

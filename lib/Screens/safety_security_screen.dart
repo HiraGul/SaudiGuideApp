@@ -90,7 +90,7 @@ class SafeAndSecurityScreen extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(left: 14.sp, top: 14.sp),
-              height: 110.sp,
+              height: 130.sp,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6.sp),
                   border: Border.all(

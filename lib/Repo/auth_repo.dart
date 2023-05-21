@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/loginScreen/login_screen.dart';
 
+import '../Utils/shared_prefs.dart';
 import '../Utils/show_snackbar.dart';
 
 class AuthRepo {
-  // DatabaseService databaseService = DatabaseService();
   final auth = FirebaseAuth.instance;
-  signIn({email, password, context}) async {
+  signIn({email, password, context, name}) async {
     try {
       var credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
       showSnackBar(context, "successfully Login");
-      Navigator.push(context,
+      Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
     } on SocketException {
       showSnackBar(context, "No internet connection");
@@ -39,12 +39,17 @@ class AuthRepo {
     required email,
     required password,
     required context,
+    required userName,
   }) async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
+          .createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      )
           .then((value) async {
-        Navigator.push(context,
+        MySharedPrefs.setIsLoggedIn(isLoggedIn: userName);
+        Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginScreen()));
       });
 

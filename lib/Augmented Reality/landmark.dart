@@ -62,6 +62,15 @@ class LandMark extends StatelessWidget {
                 color: Colors.black.withOpacity(0.6),
                 child: BlocBuilder<ScanLandMarkCubit, ScanLandMarkState>(
                   builder: (context, state) {
+                    if (state is ScanLandMarkException) {
+                      return Text('Exception occurred',
+                          style: GoogleFonts.cairo(
+                            fontSize: 14.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            height: 1.5,
+                          ));
+                    }
                     if (state is ScanLandMarkLoading) {
                       return Align(
                         alignment: Alignment.center,
