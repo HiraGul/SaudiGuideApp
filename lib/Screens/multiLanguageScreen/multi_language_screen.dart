@@ -29,7 +29,8 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
   var controller = TextEditingController();
   var isLoading = ValueNotifier<bool>(false);
   String language = "Arabic";
-  getFromGalleryOCR(BuildContext context) async {
+  getFromGalleryOCR(
+      BuildContext context, TextEditingController editingController) async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
@@ -37,7 +38,8 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
     );
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
-      BlocProvider.of<OcrcubitCubit>(context).getOCRData(file: imageFile.path);
+      BlocProvider.of<OcrcubitCubit>(context)
+          .getOCRData(file: imageFile.path, controller: editingController);
     }
   }
 
@@ -75,28 +77,34 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
               color: AppColors.appBarTitleColor),
         ),
         actions: [
-          DropdownButton(
-              iconEnabledColor: AppColors.greenColor,
-              underline: SizedBox(
-                height: 0.sp,
-                width: 0.sp,
-              ),
-              value: language,
-              items: ["Arabic", "hindi", "urdu", "French", "spanish", "bangali"]
-                  .map((item) => DropdownMenuItem(
-                        value: item,
-                        child: MyText(
-                          text: item,
-                          size: 14.sp,
-                          weight: FontWeight.bold,
-                        ),
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  language = value!;
-                });
-              })
+          Padding(
+            padding: EdgeInsets.only(right: 5.sp, top: 5.sp),
+            child: DropdownButton(
+                alignment: Alignment.bottomLeft,
+                iconEnabledColor: AppColors.greenColor,
+                underline: SizedBox(
+                  height: 0.sp,
+                  width: 0.sp,
+                ),
+                value: language,
+                items:
+                    ["Arabic", "hindi", "urdu", "French", "spanish", "bangali"]
+                        .map((item) => DropdownMenuItem(
+                              alignment: Alignment.centerLeft,
+                              value: item,
+                              child: MyText(
+                                text: item,
+                                size: 14.sp,
+                                weight: FontWeight.bold,
+                              ),
+                            ))
+                        .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    language = value!;
+                  });
+                }),
+          )
         ],
       ),
       body: Column(
@@ -231,8 +239,8 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
                             Positioned(
                               bottom: 9.0,
                               child: InkWell(
-                                onTap: () {
-                                  getFromGalleryOCR(context);
+                                onTap: () async {
+                                  await getFromGalleryOCR(context, controller);
                                 },
                                 child: SizedBox(
                                   width: 25.37.sp,
