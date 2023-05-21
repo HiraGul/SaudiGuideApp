@@ -126,7 +126,8 @@ static var systemContent = '';
             'the best food, drinks, and restaurants based on their preferences'
             ' and budget. $limitResponse ',
         // user input
-       "user"  : "${isUserCohere ? 'The tourist is': "I am tourist"}  ${userAge} years old and of "
+       "user"  : "${isUserCohere ? 'The tourist is': "I am tourist"}  ${userAge} years "
+           "old and of "
             "${nationality} nationality, with a monthly income of ${monthlyIncome} "
             "riyals. They are particularly interested in this type "
             "of food the list are  ${subCategory}. "
