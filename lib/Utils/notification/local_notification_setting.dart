@@ -55,6 +55,7 @@ class LocalNotificationSetting {
         'Channel Name',
         channelDescription: 'Channel Description',
         visibility: NotificationVisibility.public,
+
         ticker: 'yes',
         channelShowBadge: true,
         enableLights: true,
@@ -62,7 +63,7 @@ class LocalNotificationSetting {
         playSound: true,
         enableVibration: true,
         importance: Importance.max,
-        icon: 'notification',
+        icon: '@mipmap/ic_launcher',
         // sound: RawResourceAndroidNotificationSound('azaan'),
       ),
       iOS: DarwinNotificationDetails(),

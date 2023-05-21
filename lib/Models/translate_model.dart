@@ -27,10 +27,9 @@ class TranslateModel {
 
 class Data {
   final List<Translation>? translations;
+  String? detectedText;
 
-  Data({
-    this.translations,
-  });
+  Data({this.translations, this.detectedText});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         translations: json["translations"] == null
