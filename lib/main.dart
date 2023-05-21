@@ -12,6 +12,7 @@ import 'package:saudi_guide/Screens/splash_screen.dart';
 import 'Cubits/ScanCubit/scan_land_mark_cubit.dart';
 import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'Cubits/translate_list_cubit.dart';
+import 'Screens/PreferenceScreens/preference_pageview.dart';
 import 'Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'Utils/shared_prefs.dart';
 

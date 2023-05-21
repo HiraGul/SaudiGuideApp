@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:saudi_guide/Models/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +21,20 @@ class MySharedPrefs {
 
   static Future clearSharedPreferences() => preferences!.clear();
 
-  // static UserData getUseData( ) async {
-  //   preferences = await SharedPreferences.getInstance();
-  //   await preferences?.setString("user", userModel.toJson().toString());
+  static Future<UserData> getUserData( ) async {
+    preferences = await SharedPreferences.getInstance();
+  var data =    preferences?.getString('user');
+
+
+  if(data != null){
+   var  jsonResponse =  json.decode(data ?? "");
+
+   return UserData.fromJson(jsonResponse);
+  }else{
+    return UserData('', '', '', '', '', '', '');
+  }
+  }
+
+
+    // await preferences?.setString("user", userModel.toJson().toString());
 }

@@ -2,14 +2,18 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:saudi_guide/Models/api_keys.dart';
+import 'package:saudi_guide/Models/user_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Models/chat_model.dart';
+import '../Utils/shared_prefs.dart';
 
 class RecommendationRepo {
   //static var conversationText = '${RecommendationModel.title }${RecommendationModel.recommendedRegion.join(" , ") }';
 
 
 
+  static UserData userData = UserData('', '', '', '', '', '', '',);
 
 
   static var userInputGpt3 = '';
@@ -44,6 +48,8 @@ static var systemContent = '';
   static Future<int> getRecommendation({String message = ''}) async {
 
 
+    userData = await MySharedPrefs.getUserData();
+    print('========== user data ${userData.monthlyIncome} ${userData.userLocation}');
     var myPrompt = getMyPrompt(isUserCohere: true);
     prompt = '${myPrompt['system']} ${myPrompt['user']}';
     systemContent = myPrompt['system'];
@@ -97,14 +103,15 @@ static var systemContent = '';
   }
 
 
-  static Map<String ,dynamic> getMyPrompt({required bool isUserCohere}){
+  static Map<String ,dynamic> getMyPrompt({required bool isUserCohere}) {
+
 
     var subCategory = RecommendationModel.recommendedRegion.join(' , ');
-    var userAge = "25";
-    var gender = "male";
-    var userLocation = "Riyad";
-    var monthlyIncome = "5000";
-    var nationality = "indian";
+    var userAge = "${userData.userAge}";
+    var gender = "${userData.gender}";
+    var userLocation = "Riyadh";
+    var monthlyIncome = "${userData.monthlyIncome}";
+    var nationality = "${userData.nationality}";
     var limitResponse = "Limit your answer to maximum 100 words";
     // print('================== sub category');
     print(subCategory);
