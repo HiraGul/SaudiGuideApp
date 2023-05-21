@@ -5,13 +5,13 @@ import 'package:http/http.dart'as http;
 import 'package:saudi_guide/Models/image_saudi_model.dart';
 
 class TextToImageRepo{
-
+  static var  apiKey = '';
 
 
 
 static Future<int> getTextToImage({required ImageSaudiModel model})async{
 
-var apiKey = 'sk-TDwLYZVUKCVEz79FGQyguwhz0CZsZUBToBpFSKxUk03vXicZ';
+
     try {
       var headers = {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ var apiKey = 'sk-TDwLYZVUKCVEz79FGQyguwhz0CZsZUBToBpFSKxUk03vXicZ';
 
 static Future<int> getUserInputImage({required ImageSaudiModel model})async{
 
-var apiKey = '';
+
     try {
       var headers = {
         'Content-Type': 'application/json',
