@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +15,6 @@ import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'Cubits/prefrences_validation_cubit.dart';
 import 'Cubits/translate_list_cubit.dart';
 import 'Screens/PreferenceScreens/preference_pageview.dart';
-import 'Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'Utils/shared_prefs.dart';
 
 void main() async {
@@ -55,7 +53,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ChatListCubit([]),
-        ), BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => RecommendataionValidationCubit(0),
         ),
         BlocProvider(create: (context) => TranslateListCubit()),
@@ -70,10 +69,11 @@ class _MyAppState extends State<MyApp> {
             minTextAdapt: true,
             useInheritedMediaQuery: true,
             splitScreenMode: true,
-            builder: (context, child) =>
-                FirebaseAuth.instance.currentUser == null
-                    ? const SplashScreen()
-                    : const BottomNavigationScreen(),
+            builder: (context, child) => MySharedPrefs.getIsLoggedIn() != null
+                ? MySharedPrefs.getInterest() == true
+                    ? const BottomNavigationScreen()
+                    : const UserPreferenceScreen()
+                : const SplashScreen(),
           )),
     );
   }

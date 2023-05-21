@@ -19,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
   var passController = TextEditingController();
+  var name = TextEditingController();
   var isLoading = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
@@ -69,13 +70,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: MyText(
                             textAlign: TextAlign.center,
                             text:
-                                'Please enter your Email and password to get into the app',
+                            'Please enter your Email and password to get into the app',
                             size: 14.sp,
                             weight: FontWeight.w600,
                           ),
                         ),
                         SizedBox(
                           height: 30.sp,
+                        ),
+                        MyFormField(
+                          controller: name,
+                          hintText: "Name",
+                          keyboardType: TextInputType.name,
+                        ),
+                        SizedBox(
+                          height: 20.sp,
                         ),
                         MyFormField(
                           controller: emailController,
@@ -110,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () async {
                             isLoading.value = !isLoading.value;
                             await AuthRepo().signIn(
+                              name: name.text.trim(),
                               email: emailController.text.trim(),
                               password: passController.text.trim(),
                               context: context,
@@ -149,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const SignupScreen()));
+                                          const SignupScreen()));
                                 },
                                 child: MyText(
                                   text: 'Sign up',

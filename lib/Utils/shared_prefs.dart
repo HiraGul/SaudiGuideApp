@@ -15,6 +15,10 @@ class MySharedPrefs {
       await preferences!.setString('login', isLoggedIn);
   static String? getIsLoggedIn() => preferences!.getString('login');
 
+  static setInterest({required bool isLoggedIn}) async =>
+      await preferences!.setBool('check', isLoggedIn);
+  static bool? getInterest() => preferences!.getBool('check');
+
 
 
 

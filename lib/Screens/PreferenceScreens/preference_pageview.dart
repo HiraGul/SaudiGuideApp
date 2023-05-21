@@ -6,6 +6,7 @@ import 'package:saudi_guide/Screens/PreferencesScreens/card_widget.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/widgets/nationality_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+import 'package:saudi_guide/Utils/shared_prefs.dart';
 
 import 'age_preference.dart';
 
@@ -53,6 +54,8 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
         curve: Curves.ease,
       );
     } else if (controller.index == 3) {
+
+      MySharedPrefs.setInterest(isLoggedIn: true);
       Navigator.push(
           context,
           MaterialPageRoute(
