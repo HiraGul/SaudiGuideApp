@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:saudi_guide/Augmented%20Reality/landmark.dart';
 import 'package:saudi_guide/Augmented%20Reality/ocr.dart';
 import 'package:saudi_guide/Cubits/ORCCubit/ocrcubit_cubit.dart';
+import 'package:saudi_guide/Screens/widgets/lets_chat_button.dart';
 
 import '../Cubits/ScanCubit/scan_land_mark_cubit.dart';
 
@@ -96,31 +97,7 @@ class AugmentedRealityScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(color: Colors.grey.withAlpha(50), blurRadius: 5)
-        ]),
-        height: 70.h,
-        child: InkWell(
-          onTap: () {},
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.sp),
-              color: const Color(0xff299E97),
-            ),
-            child: Center(
-              child: Text(
-                'Lets Chat',
-                style: GoogleFonts.cairo(
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: LetsChatButton(),
       appBar: AppBar(
         toolbarHeight: 90.sp,
         backgroundColor: Colors.white,
