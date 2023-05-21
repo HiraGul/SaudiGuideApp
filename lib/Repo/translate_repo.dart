@@ -10,7 +10,7 @@ import '../Models/translate_model.dart';
 class TranslateTextRepo {
   // List<TranslateModel> chatList = [];
 
-  Future<void> translateText(BuildContext context, text) async {
+  Future<int> translateText(BuildContext context, text) async {
     try {
       var request = http.Request(
           'GET',
@@ -22,15 +22,16 @@ class TranslateTextRepo {
       if (response.statusCode == 200) {
         var model =
             translateModelFromJson(await response.stream.bytesToString());
+        model.data!.detectedText = "$text in Arabic";
         // chatList.add(model);
         context.read<TranslateListCubit>().addItem(model);
       }
 
-      // return response.statusCode;
-    } on SocketException catch (e) {
-      print(e.toString());
+      return response.statusCode;
+    } on SocketException {
+      return 501;
     } catch (e) {
-      print(e.toString());
+      return 400;
     }
   }
 }

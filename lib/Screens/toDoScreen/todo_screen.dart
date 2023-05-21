@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:saudi_guide/Screens/widgets/button_container.dart';
 import 'package:saudi_guide/Screens/widgets/my_form_field.dart';
 import 'package:saudi_guide/Screens/widgets/my_text.dart';
@@ -24,7 +25,8 @@ class _TodoScreenState extends State<TodoScreen> {
   var descriptionController = TextEditingController();
   var dateController = TextEditingController();
   var timeController = TextEditingController();
-  dynamic h, m;
+  dynamic h = '9', m = '10', p = 'am';
+  DateTime? taskDate;
 
   @override
   void initState() {
@@ -60,7 +62,7 @@ class _TodoScreenState extends State<TodoScreen> {
         elevation: 4,
         centerTitle: true,
         title: Text(
-          'To do',
+          'To Do',
           style: GoogleFonts.cairo(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -87,19 +89,23 @@ class _TodoScreenState extends State<TodoScreen> {
               left: 0,
               right: 0,
               child: SizedBox(
-                height: 0.6.sh,
+                height: 0.5.sh,
                 child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('userTasks')
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.greenColor,
+                        return Align(
+                          alignment: Alignment.center,
+                          child: LoadingAnimationWidget.twistingDots(
+                            leftDotColor: AppColors.greenColor,
+                            rightDotColor: Colors.black,
+                            size: 40.sp,
                           ),
                         );
-                      } else if (snapshot.hasData) {
+                      }
+                      if (snapshot.hasData) {
                         return ListView.builder(
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
@@ -183,22 +189,33 @@ class _TodoScreenState extends State<TodoScreen> {
                                 ),
                               );
                             });
-                      } else if (snapshot.hasError) {
-                        return Center(
-                          child: MyText(
-                            text: "Something went wrong",
-                            size: 20.sp,
-                          ),
-                        );
-                      } else {
-                        return Center(
-                          child: MyText(
-                            text: 'No Data Available',
-                            size: 20.sp,
-                            weight: FontWeight.bold,
-                          ),
-                        );
                       }
+                      // if (snapshot.hasError) {
+                      //   return Center(
+                      //     child: MyText(
+                      //       text: "Something went wrong",
+                      //       size: 20.sp,
+                      //     ),
+                      //   );
+                      // }
+                      //  if
+                      //  (snapshot.data == null ||
+                      //     snapshot.connectionState == ConnectionState.done) {
+                      //   return Center(
+                      //     child: MyText(
+                      //       text: 'No Data Available',
+                      //       size: 20.sp,
+                      //       weight: FontWeight.bold,
+                      //     ),
+                      //   );
+                      // }
+                      return Center(
+                        child: MyText(
+                          text: 'No Data Available',
+                          size: 20.sp,
+                          weight: FontWeight.bold,
+                        ),
+                      );
                     }),
               )),
           Positioned(
@@ -239,6 +256,9 @@ class _TodoScreenState extends State<TodoScreen> {
                         child: DateField(
                           controller: dateController,
                           hintText: "Date",
+                          taskDate: (date) {
+                            taskDate = date;
+                          },
                         ),
                       ),
                       SizedBox(
@@ -255,7 +275,7 @@ class _TodoScreenState extends State<TodoScreen> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          height: 60.sp,
+                          height: 16 * 3.8.sp,
                           decoration: BoxDecoration(
                             color: const Color(0xffF3F3F3),
                             borderRadius: BorderRadius.circular(2.sp),
@@ -266,6 +286,9 @@ class _TodoScreenState extends State<TodoScreen> {
                             },
                             mints: (mints) {
                               m = mints;
+                            },
+                            period: (period) {
+                              p = period;
                             },
                           ),
                         ),
@@ -284,26 +307,40 @@ class _TodoScreenState extends State<TodoScreen> {
                           if (descriptionController.text.isNotEmpty &&
                               dateController.text.isNotEmpty &&
                               h != null &&
-                              m != null) {}
-                          var firestore = FirebaseFirestore.instance;
-                          await firestore.collection('userTasks').doc().set({
-                            "description": 'added new Task',
-                            "date": '12/12/12',
-                            "time": "09:09 am"
-                          });
-                          var date = TimeOfDay.fromDateTime(
-                              DateTime.now().add(const Duration(minutes: 3)));
-                          var currentDate = DateTime.now();
+                              m != null) {
+                            var concate = "$h:$m";
+                            // var date = DateTime.now();
+                            DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                            var newDate = dateFormat.parse(taskDate.toString());
 
-                          await LocalNotificationSetting.showNotification(
-                              id: 2,
-                              scheduleDate: DateTime(
-                                  currentDate.year,
-                                  currentDate.month,
-                                  currentDate.day,
-                                  date.hour,
-                                  date.minute));
-                          showSnackBar(context, 'Task Added successfully');
+                            DateFormat timeformat = DateFormat('h:mm');
+                            var newtiem = timeformat.parse(concate);
+                            // var formate24 = DateFormat.Hm();
+                            // var newdate3 = formate24.format(newDate);
+                            // print(newtiem);
+                            // print(newDate);
+                            DateTime mergeDate = DateTime(
+                                newDate.year,
+                                newDate.month,
+                                newDate.day,
+                                newtiem.hour,
+                                newtiem.minute);
+                            var firestore = FirebaseFirestore.instance;
+                            await firestore.collection('userTasks').doc().set({
+                              "description": descriptionController.text.trim(),
+                              "date": dateController.text.trim(),
+                              "time": newtiem.toString()
+                            });
+                            await LocalNotificationSetting.showNotification(
+                                id: 0,
+                                title: descriptionController.text.trim(),
+                                scheduleDate: mergeDate);
+                            showSnackBar(context, 'Task Added successfully');
+                            descriptionController.clear();
+                            dateController.clear();
+                          } else {
+                            showSnackBar(context, "enter something...");
+                          }
                         },
                         child: ButtonContainer(
                             widget: MyText(
