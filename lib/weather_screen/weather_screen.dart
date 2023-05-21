@@ -244,27 +244,29 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                       .toString()
                                       .toLowerCase()
                                       .contains('sunny')
-                                  ? AssetImage('assets/icons/sunny.png')
+                                  ? const AssetImage('assets/icons/sunny.png')
                                   : WeatherModeController.weatherModel!.current!
                                           .condition!.text
                                           .toString()
                                           .toLowerCase()
                                           .contains('cloudy')
-                                      ? AssetImage('assets/icons/cloud.png')
+                                      ? const AssetImage(
+                                          'assets/icons/cloud.png')
                                       : WeatherModeController.weatherModel!
                                               .current!.condition!.text
                                               .toString()
                                               .toLowerCase()
                                               .contains('mist')
-                                          ? AssetImage('assets/icons/mist.png')
+                                          ? const AssetImage(
+                                              'assets/icons/mist.png')
                                           : WeatherModeController.weatherModel!
                                                   .current!.condition!.text
                                                   .toString()
                                                   .toLowerCase()
                                                   .contains('rain')
-                                              ? AssetImage(
+                                              ? const AssetImage(
                                                   'assets/icons/rain.png')
-                                              : AssetImage(
+                                              : const AssetImage(
                                                   'assets/icons/sunny.png'))),
                       Expanded(
                           flex: 2,
