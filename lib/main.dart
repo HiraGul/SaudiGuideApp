@@ -56,9 +56,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           useInheritedMediaQuery: true,
-          theme: ThemeData(
-              // useMaterial3: true
-              ),
+          theme: ThemeData(),
           home: ScreenUtilInit(
             designSize: const Size(360, 690),
             minTextAdapt: true,
