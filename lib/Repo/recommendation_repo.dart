@@ -1,14 +1,19 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:saudi_guide/Models/api_keys.dart';
+import 'package:saudi_guide/Models/user_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Models/chat_model.dart';
+import '../Utils/shared_prefs.dart';
 
 class RecommendationRepo {
   //static var conversationText = '${RecommendationModel.title }${RecommendationModel.recommendedRegion.join(" , ") }';
 
 
 
+  static UserData userData = UserData(userAge: '', gender: '', userLocation: '', monthlyIncome: '', nationality: '', country: '', purpose: '',);
 
 
   static var userInputGpt3 = '';
@@ -43,6 +48,12 @@ static var systemContent = '';
   static Future<int> getRecommendation({String message = ''}) async {
 
 
+   var  data = await MySharedPrefs.getUserData();
+    if(data !=null){
+
+      userData = data;
+    }
+    print('========== user data ${userData.monthlyIncome} ${userData.userLocation}');
     var myPrompt = getMyPrompt(isUserCohere: true);
     prompt = '${myPrompt['system']} ${myPrompt['user']}';
     systemContent = myPrompt['system'];
@@ -50,8 +61,7 @@ static var systemContent = '';
     // ChatGPT 3 input
     userInputGpt3 = getMyPrompt(isUserCohere: false)['user'];
 
-    var apiKey =
-        ''; // This is your trial API key
+
     var url = 'https://api.cohere.ai/generate';
 
     try {
@@ -73,7 +83,7 @@ static var systemContent = '';
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $apiKey',
+          'Authorization': 'Bearer ${ApiKeys.cohereApi}',
         },
         body: requestBody,
       );
@@ -97,14 +107,15 @@ static var systemContent = '';
   }
 
 
-  static Map<String ,dynamic> getMyPrompt({required bool isUserCohere}){
+  static Map<String ,dynamic> getMyPrompt({required bool isUserCohere}) {
+
 
     var subCategory = RecommendationModel.recommendedRegion.join(' , ');
-    var userAge = "25";
-    var gender = "male";
-    var userLocation = "Madina";
-    var monthlyIncome = "5000";
-    var nationality = "indian";
+    var userAge = "${userData.userAge}";
+    var gender = "${userData.gender}";
+    var userLocation = "Riyadh";
+    var monthlyIncome = "${userData.monthlyIncome}";
+    var nationality = "${userData.nationality}";
     var limitResponse = "Limit your answer to maximum 100 words";
     // print('================== sub category');
     print(subCategory);

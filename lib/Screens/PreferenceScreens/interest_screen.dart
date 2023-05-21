@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saudi_guide/Models/user_data.dart';
 import 'package:saudi_guide/Screens/widgets/interest_screen_widget.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/Utils/prfencess_controller.dart';
+import 'package:saudi_guide/Utils/shared_prefs.dart';
 
 class InterestScreen extends StatefulWidget {
   TabController controller;
+
   InterestScreen({required this.controller, Key? key}) : super(key: key);
 
   @override
@@ -14,6 +17,30 @@ class InterestScreen extends StatefulWidget {
 }
 
 class _InterestScreenState extends State<InterestScreen> {
+  void initState() {
+    // UserData userData = UserData(
+    //     PreferencesController.countryController.text,
+    //     PreferencesController.genderController.text,
+    //     PreferencesController.salaryController.text,
+    //     PreferencesController.countryController.text,
+    //     PreferencesController.purposeController.text,
+    //     PreferencesController.ageController.text,
+    //     'Riyadh');
+
+    UserData userData = UserData(
+      userAge: PreferencesController.ageController.text,
+      gender: PreferencesController.genderController.text,
+      userLocation: PreferencesController.countryController.text,
+      monthlyIncome: PreferencesController.salaryController.text,
+      nationality: PreferencesController.countryController.text,
+      country: PreferencesController.countryController.text,
+      purpose: PreferencesController.purposeController.text,
+    );
+    MySharedPrefs.setUseData(userData);
+
+    super.initState();
+  }
+
   void goToBackTab() {
     widget.controller.animateTo(
       2,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Models/chat_model.dart';
 import 'package:saudi_guide/Models/recomendation_model.dart';
 import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
+
+import '../Cubits/prefrences_validation_cubit.dart';
 
 class RecomendedArea extends StatefulWidget {
   final RecommendationDataModel model;
@@ -19,6 +22,7 @@ class _RecomendedAreaState extends State<RecomendedArea> {
   @override
   void initState() {
     RecommendationModel.recommendedRegion = [];
+    context.read<RecommendataionValidationCubit>().getIndex(index: 0);
     // TODO: implement initState
     super.initState();
   }
@@ -62,7 +66,8 @@ class _RecomendedAreaState extends State<RecomendedArea> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: RecommendationModel.title == 'Hajj' ||
+          RecommendationModel.title == 'Umrah' ? SizedBox():Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
             color: Colors.grey.withAlpha(50),
@@ -70,37 +75,53 @@ class _RecomendedAreaState extends State<RecomendedArea> {
           )
         ]),
         height: 70.h,
-        child: InkWell(
-          onTap: () {
-            if (RecommendationModel.title == 'Hajj' ||
-                RecommendationModel.title == 'Umrah') {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return const ChatScreen();
-              }));
-            } else {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return const ChatScreen(
-                  isRecommendedOption: true,
-                );
-              }));
-            }
-          },
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.sp),
-              color: const Color(0xff299E97),
-            ),
-            child: Center(
-              child: Text(
-                'Proceed',
-                style: GoogleFonts.cairo(
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w500),
+        child: BlocBuilder<RecommendataionValidationCubit, int>(
+          builder: (context, length) {
+            return InkWell(
+              onTap: () {
+
+                if(length == 0){
+
+                  ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Please select one option')));
+                }else{
+                  if (RecommendationModel.title == 'Hajj' ||
+                      RecommendationModel.title == 'Umrah') {
+
+
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return const ChatScreen();
+                        }));
+                  } else {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return const ChatScreen(
+                            isRecommendedOption: true,
+                          );
+                        }));
+                  }
+                }
+
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: 20.sp, vertical: 10.sp),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.sp),
+                  color: const Color(0xff299E97),
+                ),
+                child: Center(
+                  child: Text(
+                    'Proceed',
+                    style: GoogleFonts.cairo(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
 
@@ -170,25 +191,24 @@ class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
   Widget build(BuildContext context) {
     return InkWell(
 
-      onTap: (){
-        if(RecommendationModel.title == 'Hajj' ||RecommendationModel.title == "Umrah" ){
-
+      onTap: () {
+        if (RecommendationModel.title == 'Hajj' ||
+            RecommendationModel.title == "Umrah") {
+          context.read<RecommendataionValidationCubit>().getIndex(index: 1);
           RecommendationModel.recommendedRegion.add(widget.title);
           print('${RecommendationModel.recommendedRegion}');
 
-          Navigator.of(context).push(MaterialPageRoute(builder: (context){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return ChatScreen();
           }),);
-
-        }else{
+        } else {
           print(checkValue);
-          if(checkValue == true){
+          if (checkValue == true) {
             RecommendationModel.recommendedRegion.add(widget.title);
             print(RecommendationModel.recommendedRegion);
             checkValue = false;
-            setState(() {
-            });
-          }else{
+            setState(() {});
+          } else {
             if (RecommendationModel.recommendedRegion
                 .contains(widget.title)) {
               RecommendationModel.recommendedRegion
@@ -203,9 +223,6 @@ class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
             }
           }
         }
-
-
-
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 15.sp),
@@ -229,7 +246,9 @@ class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
         ),
         child: Row(
           children: [
-            RecommendationModel.title == 'Hajj' ||RecommendationModel.title == "Umrah" ? SizedBox():     Transform.scale(
+            RecommendationModel.title == 'Hajj' ||
+                RecommendationModel.title == "Umrah" ? SizedBox() : Transform
+                .scale(
               scale: 1.3,
               child: Checkbox(
                 shape: RoundedRectangleBorder(
@@ -239,6 +258,7 @@ class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
                 onChanged: (bool? newValue) {
                   setState(() {
                     if (newValue == true) {
+                      context.read<RecommendataionValidationCubit>().getIndex(index: 1);
                       RecommendationModel.recommendedRegion.add(widget.title);
                       print(RecommendationModel.recommendedRegion);
                     } else {

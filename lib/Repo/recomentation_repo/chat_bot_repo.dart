@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart'as http;
+import 'package:saudi_guide/Models/api_keys.dart';
 import 'package:saudi_guide/Models/chat_model.dart';
 import 'package:saudi_guide/Repo/recommendation_repo.dart';
 class ChatBotRepo{
@@ -27,14 +28,9 @@ class ChatBotRepo{
   // 'Tourist: Where can I find the best food in Madina?';
 
 
-
-static Future<int> interactWithChatBot({required dynamic message, List<Map<String, dynamic>>? recommendationList}) async {
-
-
-
+  static Future<int> interactWithChatBot({required dynamic message, List<Map<String, dynamic>>? recommendationList}) async {
 
   var user_dict= {'role': 'user', 'content': '${message}. limit your answer to 50 words'};
-
   if(recommendationList == null){
     chatBotMessages.add(user_dict);
   }else{
@@ -44,12 +40,11 @@ static Future<int> interactWithChatBot({required dynamic message, List<Map<Strin
 
   try {
     final url = Uri.parse('https://api.openai.com/v1/chat/completions');
-    //final apiKey = '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'; // Replace with your actual API key
-    final apiKey = ''; // Replace with your actual API key
+  // Replace with your actual API key
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
+      'Authorization': 'Bearer ${ApiKeys.chatGptApi}',
     };
 
 
@@ -87,6 +82,14 @@ static Future<int> interactWithChatBot({required dynamic message, List<Map<Strin
     // TODO
   }
 }
+
+
+
+
+
+
+
+
 
 
 

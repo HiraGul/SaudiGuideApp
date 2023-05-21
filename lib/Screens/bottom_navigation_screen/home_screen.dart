@@ -176,8 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   Text(
-                    MySharedPrefs.getIsLoggedIn()!,
-                    // MySharedPrefs.getIsLoggedIn()!,
+                    MySharedPrefs.getIsLoggedIn() ?? "User",
                     style: GoogleFonts.cairo(
                       fontSize: 26.sp,
                       fontWeight: FontWeight.bold,

@@ -9,13 +9,26 @@ import 'package:image_picker/image_picker.dart';
 import 'package:saudi_guide/Augmented%20Reality/landmark.dart';
 import 'package:saudi_guide/Augmented%20Reality/ocr.dart';
 import 'package:saudi_guide/Cubits/ORCCubit/ocrcubit_cubit.dart';
+import 'package:saudi_guide/Models/land_mark_controller.dart';
 import 'package:saudi_guide/Screens/widgets/lets_chat_button.dart';
 
 import '../Cubits/ScanCubit/scan_land_mark_cubit.dart';
 
-class AugmentedRealityScreen extends StatelessWidget {
+class AugmentedRealityScreen extends StatefulWidget {
   const AugmentedRealityScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AugmentedRealityScreen> createState() => _AugmentedRealityScreenState();
+}
+
+class _AugmentedRealityScreenState extends State<AugmentedRealityScreen> {
+
+  @override
+  void initState() {
+
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     getFromCamera(BuildContext context) async {
