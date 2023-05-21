@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
 import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
 import 'package:saudi_guide/Cubits/stable_disfussion_repo/text_to_image_cubit.dart';
-import 'package:saudi_guide/Screens/PreferenceScreens/preference_pageview.dart';
+import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/splash_screen.dart';
 
 import 'Cubits/ScanCubit/scan_land_mark_cubit.dart';
@@ -64,9 +65,10 @@ class _MyAppState extends State<MyApp> {
             minTextAdapt: true,
             useInheritedMediaQuery: true,
             splitScreenMode: true,
-            builder: (context, child) => MySharedPrefs.getIsLoggedIn() == null
-                ? const SplashScreen()
-                : const UserPreferenceScreen(),
+            builder: (context, child) =>
+                FirebaseAuth.instance.currentUser == null
+                    ? const SplashScreen()
+                    : const BottomNavigationScreen(),
           )),
     );
   }

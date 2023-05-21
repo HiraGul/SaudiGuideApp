@@ -28,9 +28,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   void initState() {
+    context.read<WeatherForecastCubit>().emitLoading();
     _determinePosition();
-
-    context.read<WeatherForecastCubit>().getWeatherData(city: 'peshawar');
   }
 
   _determinePosition() async {
@@ -68,6 +67,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
       if (placemarks != null && placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
         city = placemark.locality;
+
+        context
+            .read<WeatherForecastCubit>()
+            .getWeatherData(city: city ?? 'Riyadh');
 
         setState(() {});
       }
@@ -174,7 +177,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               onTap: () {
                 context
                     .read<WeatherForecastCubit>()
-                    .getWeatherData(city: 'peshawar');
+                    .getWeatherData(city: city ?? 'Riyadh');
               },
             );
           }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:saudi_guide/Screens/loginScreen/login_screen.dart';
+import 'package:saudi_guide/Screens/PreferenceScreens/preference_pageview.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -91,7 +91,7 @@ class MyHomePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
+                        builder: (context) => const UserPreferenceScreen()));
               },
               child: Container(
                 width: 55.0.sp,
