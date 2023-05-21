@@ -7,11 +7,11 @@ import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
 import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
 import 'package:saudi_guide/Cubits/stable_disfussion_repo/text_to_image_cubit.dart';
+import 'package:saudi_guide/Screens/toDoScreen/todo_screen.dart';
 
 import 'Cubits/ScanCubit/scan_land_mark_cubit.dart';
 import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'Cubits/translate_list_cubit.dart';
-import 'Screens/toDoScreen/todo_screen.dart';
 import 'Utils/shared_prefs.dart';
 
 void main() async {
