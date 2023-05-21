@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saudi_guide/Cubits/ORCCubit/ocrcubit_cubit.dart';
+import 'package:saudi_guide/Cubits/change_index_cubit.dart';
 import 'package:saudi_guide/Cubits/chat_bot_cubit/chat_bot_cubit.dart';
 import 'package:saudi_guide/Cubits/chat_list_cubit.dart';
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
@@ -15,6 +16,7 @@ import 'Cubits/translate_list_cubit.dart';
 import 'Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'Utils/shared_prefs.dart';
 
+dynamic userName;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -53,7 +55,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ChatListCubit([]),
         ),
         BlocProvider(create: (context) => TranslateListCubit()),
-        BlocProvider(create: (context) => TextToImageCubit())
+        BlocProvider(create: (context) => TextToImageCubit()),
+        BlocProvider(create: (context) => ChangeIndexCubit())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

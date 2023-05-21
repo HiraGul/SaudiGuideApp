@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
@@ -16,8 +17,10 @@ class AuthRepo {
           .signInWithEmailAndPassword(email: email, password: password);
 
       showSnackBar(context, "successfully Login");
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const BottomNavigationScreen()));
     } on SocketException {
       showSnackBar(context, "No internet connection");
     } on FirebaseAuthException catch (e) {
@@ -49,6 +52,11 @@ class AuthRepo {
       )
           .then((value) async {
         MySharedPrefs.setIsLoggedIn(isLoggedIn: userName);
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set({"name": userName});
+        // FirebaseAuth.instance.currentUser!.displayName = userName;
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginScreen()));
       });
