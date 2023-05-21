@@ -11,12 +11,14 @@ class DateField extends StatelessWidget {
     this.controller,
     this.hintText,
     this.maxLine,
+    required this.taskDate,
   });
 
   final TextEditingController? controller;
   final String? hintText;
 
   final int? maxLine;
+  final Function(DateTime) taskDate;
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +30,6 @@ class DateField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       maxLines: maxLine ?? 1,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'field is required';
-        }
-        // if ((widget.label?.toLowerCase() ?? "").contains("email")) {
-        //   if (!emailRegex.hasMatch(value)) {
-        //     return "email is badly formatted";
-        //   }
-        // } else {
-        //   return null;
-        // }
-        return null;
-      },
 
       style: TextStyle(
         fontSize: 16.sp,
@@ -114,6 +103,7 @@ class DateField extends StatelessWidget {
         lastDate: DateTime(2026));
     if (pickedDate != null) {
       var formatedDAte = DateFormat("dd/MM/yyyy").format(pickedDate);
+      taskDate(pickedDate);
 
       return formatedDAte;
     }

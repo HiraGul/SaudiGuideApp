@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:saudi_guide/Utils/strings.dart';
+import 'package:saudi_guide/Screens/widgets/custom_text_field.dart';
+import 'package:saudi_guide/Screens/widgets/interest_screen_widget.dart';
+import 'package:saudi_guide/Utils/prfencess_controller.dart';
 
-import 'custom_card.dart';
-
-class CardCustomWidget extends StatelessWidget {
-  const CardCustomWidget({Key? key}) : super(key: key);
+class InterestScreen extends StatelessWidget {
+  const InterestScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +38,12 @@ class CardCustomWidget extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 60.sp,
+              width: 74.sp,
             ),
             Align(
               alignment: Alignment.center,
               child: Text(
-                "Why Saudi",
+                "Interest",
                 style: GoogleFonts.cairo(
                   fontSize: 27.0.sp,
                   color: Colors.black,
@@ -57,59 +57,49 @@ class CardCustomWidget extends StatelessWidget {
         SizedBox(
           height: 5.sp,
         ),
-        Text(
-          'Why are you visiting Saudi Arabia',
-          style: GoogleFonts.cairo(
-            fontSize: 16.0.sp,
-            color: const Color(0xFF9F9F9F),
-            fontWeight: FontWeight.w600,
+        Align(
+          alignment: Alignment.center,
+          child: Text(
+            'Please add the required\n Inforamtion ',
+            style: GoogleFonts.cairo(
+              fontSize: 16.0.sp,
+              color: const Color(0xFF9F9F9F),
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
         ),
         SizedBox(
           height: 40.sp,
         ),
         Container(
-          height: 300.sp,
-          child: ListView(
+          padding: EdgeInsets.only(left: 51.sp, right: 65.sp),
+          child: Text(
+            'Area of Interest',
+            style: GoogleFonts.cairo(
+              fontSize: 15.0,
+              color: const Color(0xFF858585),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 8.sp,
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 51.sp, right: 65.sp),
+          child: CustomTextField(
+              controller: PreferencesController.interestController,
+              inputType: TextInputType.name,
+              hintText: 'Type and Select'),
+        ),
+        SizedBox(
+          height: 30.sp,
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 51.sp, right: 65.sp),
+          child: Wrap(
             children: [
-              CustomCard(
-                title: "Work",
-                icon: AppStrings.worker,
-                onTap: () {},
-              ),
-              SizedBox(
-                height: 27.sp,
-              ),
-              CustomCard(
-                title: "Study",
-                icon: AppStrings.traveler,
-                onTap: () {},
-              ),
-              SizedBox(
-                height: 27.sp,
-              ),
-              CustomCard(
-                title: "Tourist",
-                icon: AppStrings.traveler,
-                onTap: () {},
-              ),
-              SizedBox(
-                height: 27.sp,
-              ),
-              CustomCard(
-                title: "Hajj",
-                icon: AppStrings.traveler,
-                onTap: () {},
-              ),
-              SizedBox(
-                height: 27.sp,
-              ),
-              CustomCard(
-                title: "Umrah",
-                icon: AppStrings.traveler,
-                onTap: () {},
-              ),
+              InterestScreenWidget(title: 'History', closeTap: () {}),
             ],
           ),
         ),

@@ -8,7 +8,9 @@ import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.
 import 'package:saudi_guide/Cubits/stable_disfussion_repo/text_to_image_cubit.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/chat_screen/chat_screen.dart';
+import 'package:saudi_guide/Screens/PreferenceScreens/preference_pageview.dart';
 
+import 'Cubits/ScanCubit/scan_land_mark_cubit.dart';
 import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
 import 'Cubits/translate_list_cubit.dart';
 import 'Screens/PreferenceScreens/preference_pageview.dart';
@@ -34,18 +36,22 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => ScanLandMarkCubit(),
+        ),
+        BlocProvider(
           create: (context) => WeatherForecastCubit(),
         ),
         BlocProvider(
           create: (context) => MyRecommendationCubit(),
-        ),    BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => ChatBotCubit(),
-        ),     BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => ChatListCubit([]),
         ) ,  BlocProvider(
           create: (context) => TextToImageCubit(),
         ),
-
         BlocProvider(create: (context) => TranslateListCubit())
       ],
       child: MaterialApp(
