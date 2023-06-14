@@ -19,6 +19,7 @@ class _GenderAndAgeWidgetState extends State<GenderAndAgeWidget> {
       height: 0.6.sh,
       width: 1.sw,
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         children: [
           SizedBox(

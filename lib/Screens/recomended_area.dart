@@ -67,63 +67,68 @@ class _RecomendedAreaState extends State<RecomendedArea> {
         ),
       ),
       bottomNavigationBar: RecommendationModel.title == 'Hajj' ||
-          RecommendationModel.title == 'Umrah' ? SizedBox():Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withAlpha(50),
-            blurRadius: 5,
-          )
-        ]),
-        height: 70.h,
-        child: BlocBuilder<RecommendataionValidationCubit, int>(
-          builder: (context, length) {
-            return InkWell(
-              onTap: () {
+              RecommendationModel.title == 'Umrah'
+          ? SizedBox()
+          : Container(
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withAlpha(50),
+                  blurRadius: 5,
+                )
+              ]),
+              height: 70.h,
+              child: BlocBuilder<RecommendataionValidationCubit, int>(
+                builder: (context, length) {
+                  return InkWell(
+                    onTap: () {
+                      var setValue =RecommendationModel.recommendedRegion.toSet();
+                      List<String> recomendList = setValue.toList();
+                      RecommendationModel.recommendedRegion =recomendList;
+                      print(RecommendationModel.recommendedRegion);
+                      if (length == 0) {
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context)
+                          ..showSnackBar(
+                              SnackBar(content: Text('Please select one option')));
 
-                if(length == 0){
-
-                  ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Please select one option')));
-                }else{
-                  if (RecommendationModel.title == 'Hajj' ||
-                      RecommendationModel.title == 'Umrah') {
-
-
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) {
-                          return const ChatScreen();
-                        }));
-                  } else {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) {
-                          return const ChatScreen(
-                            isRecommendedOption: true,
-                          );
-                        }));
-                  }
-                }
-
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: 20.sp, vertical: 10.sp),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.sp),
-                  color: const Color(0xff299E97),
-                ),
-                child: Center(
-                  child: Text(
-                    'Proceed',
-                    style: GoogleFonts.cairo(
-                        color: Colors.white,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
+                      } else {
+                        if (RecommendationModel.title == 'Hajj' ||
+                            RecommendationModel.title == 'Umrah') {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return const ChatScreen();
+                              }));
+                        } else {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return const ChatScreen(
+                                  isRecommendedOption: true,
+                                );
+                              }));
+                        }
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 20.sp, vertical: 10.sp),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4.sp),
+                        color: const Color(0xff299E97),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Proceed',
+                          style: GoogleFonts.cairo(
+                              color: Colors.white,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
+            ),
 
       body: ListView.builder(
           shrinkWrap: true,
@@ -189,113 +194,143 @@ class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-
-      onTap: () {
-        if (RecommendationModel.title == 'Hajj' ||
-            RecommendationModel.title == "Umrah") {
+    return BlocBuilder<RecommendataionValidationCubit, int>(
+      builder: (context, validator) {
+        return InkWell(
+          onTap:  RecommendationModel.title == 'Hajj' ||
+        RecommendationModel.title == "Umrah" ?() {
           context.read<RecommendataionValidationCubit>().getIndex(index: 1);
           RecommendationModel.recommendedRegion.add(widget.title);
           print('${RecommendationModel.recommendedRegion}');
 
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return ChatScreen();
-          }),);
-        } else {
-          print(checkValue);
-          if (checkValue == true) {
-            RecommendationModel.recommendedRegion.add(widget.title);
-            print(RecommendationModel.recommendedRegion);
-            checkValue = false;
-            setState(() {});
-          } else {
-            if (RecommendationModel.recommendedRegion
-                .contains(widget.title)) {
-              RecommendationModel.recommendedRegion
-                  .remove(widget.title);
-
-
-              print(RecommendationModel.recommendedRegion);
-              checkValue = true;
-              setState(() {
-
-              });
-            }
-          }
-        }
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 15.sp),
-        alignment: const Alignment(0.01, -0.06),
-        width: 307.sp,
-        height: 50.sp,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6.r),
-          color: Colors.white,
-          border: Border.all(
-            width: 1.sp,
-            color: const Color(0xFFEFEFEF),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF5E5E5E).withOpacity(0.1),
-              offset: const Offset(0, 3.0),
-              blurRadius: 12.sp,
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            RecommendationModel.title == 'Hajj' ||
-                RecommendationModel.title == "Umrah" ? SizedBox() : Transform
-                .scale(
-              scale: 1.3,
-              child: Checkbox(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                value: checkValue,
-                tristate: false,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    if (newValue == true) {
-                      context.read<RecommendataionValidationCubit>().getIndex(index: 1);
-                      RecommendationModel.recommendedRegion.add(widget.title);
-                      print(RecommendationModel.recommendedRegion);
-                    } else {
-                      if (RecommendationModel.recommendedRegion
-                          .contains(widget.title)) {
-                        RecommendationModel.recommendedRegion
-                            .remove(widget.title);
-
-                        print(RecommendationModel.recommendedRegion);
-                      }
-                    }
-                    checkValue = newValue!;
-                  });
-                },
-                activeColor: AppColors.greenColor,
-                side: const BorderSide(color: Color(0xff585858)),
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) {
+              return ChatScreen();
+            }),
+          );
+        } : null,
+          child: Container(
+            margin: EdgeInsets.only(bottom: 15.sp),
+            alignment: const Alignment(0.01, -0.06),
+            width: 307.sp,
+            height: 50.sp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6.r),
+              color: Colors.white,
+              border: Border.all(
+                width: 1.sp,
+                color: const Color(0xFFEFEFEF),
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF5E5E5E).withOpacity(0.1),
+                  offset: const Offset(0, 3.0),
+                  blurRadius: 12.sp,
+                ),
+              ],
             ),
-            const SizedBox(
-              width: 30,
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.title,
-                  style: GoogleFonts.cairo(
-                    fontSize: 16.sp,
-                    color: AppColors.greenColor,
-                    fontWeight: FontWeight.w700,
+            child: Row(
+              children: [
+                RecommendationModel.title == 'Hajj' ||
+                        RecommendationModel.title == "Umrah"
+                    ? const SizedBox()
+                    : Transform.scale(
+                        scale: 1.3,
+                        child: Checkbox(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          value: checkValue,
+                          tristate: false,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              if (newValue == true) {
+                                context
+                                    .read<RecommendataionValidationCubit>()
+                                    .getIndex(index: 1);
+                                RecommendationModel.recommendedRegion
+                                    .add(widget.title);
+                                print(RecommendationModel.recommendedRegion);
+                              } else {
+                                if (RecommendationModel.recommendedRegion
+                                    .contains(widget.title)) {
+                                  RecommendationModel.recommendedRegion
+                                      .remove(widget.title);
+
+                                  context
+                                      .read<RecommendataionValidationCubit>()
+                                      .getIndex(index: --validator);
+                                  print(RecommendationModel.recommendedRegion);
+                                }
+                              }
+                              checkValue = newValue!;
+                            });
+                          },
+                          activeColor: AppColors.greenColor,
+                          side: const BorderSide(color: Color(0xff585858)),
+                        ),
+                      ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget.title,
+                      style: GoogleFonts.cairo(
+                        fontSize: 16.sp,
+                        color: AppColors.greenColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
+
+
+//          onTap: () {
+//             if (RecommendationModel.title == 'Hajj' ||
+//                 RecommendationModel.title == "Umrah") {
+//               context.read<RecommendataionValidationCubit>().getIndex(index: 1);
+//               RecommendationModel.recommendedRegion.add(widget.title);
+//               print('${RecommendationModel.recommendedRegion}');
+//
+//               Navigator.of(context).push(
+//                 MaterialPageRoute(builder: (context) {
+//                   return ChatScreen();
+//                 }),
+//               );
+//             } else {
+//               print('====== this is value ${checkValue}');
+//               if (checkValue == false) {
+//                 RecommendationModel.recommendedRegion.add(widget.title);
+//                 print(RecommendationModel.recommendedRegion);
+//                 checkValue = true;
+//                 context
+//                     .read<RecommendataionValidationCubit>()
+//                     .getIndex(index: ++validator);
+//                 setState(() {});
+//               } else {
+//                 checkValue = true;
+//                 setState(() {});
+//                 if (RecommendationModel.recommendedRegion
+//                     .contains(widget.title)) {
+//                   RecommendationModel.recommendedRegion.remove(widget.title);
+//                   context
+//                       .read<RecommendataionValidationCubit>()
+//                       .getIndex(index: --validator);
+//
+//                   print(RecommendationModel.recommendedRegion);
+//                   checkValue = true;
+//                   setState(() {});
+//                 }
+//               }
+//             }
+//           },

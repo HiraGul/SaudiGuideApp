@@ -45,6 +45,8 @@ class _TodoScreenState extends State<TodoScreen> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        toolbarHeight: 80.sp,
+
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         leading: InkWell(

@@ -44,7 +44,7 @@ class ChatBotRepo{
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${ApiKeys.chatGptApi}',
+      'Authorization': 'Bearer ${ApiKeys.chatBotApi}',
     };
 
 

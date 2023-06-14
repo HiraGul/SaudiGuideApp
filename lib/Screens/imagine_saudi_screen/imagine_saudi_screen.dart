@@ -191,6 +191,7 @@ class _ImagineSaudiScreenState extends State<ImagineSaudiScreen> {
                     if (textController.text.isNotEmpty) {
 
 
+                      FocusScope.of(context).unfocus();
                       var data = ImageSaudiModel(
                         displayQuestion: '',
                         prompt: textController.text.trim(),
@@ -208,7 +209,7 @@ class _ImagineSaudiScreenState extends State<ImagineSaudiScreen> {
                       height: 45.sp,
                       child: ButtonContainer(
                           widget: MyText(
-                        text: "Translate",
+                        text: "Generate Image",
                         size: 18.sp,
                         weight: FontWeight.w600,
                         color: Colors.white,

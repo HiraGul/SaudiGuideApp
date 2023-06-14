@@ -9,11 +9,13 @@ class MyFormField extends StatefulWidget {
   final TextEditingController? controller;
   final String? hintText;
 
+  final String? Function(String?)? validator;
   final int? maxLine;
   final TextInputType keyboardType;
 
   const MyFormField({
     Key? key,
+    this.validator,
     required this.controller,
     this.hintText,
     this.maxLine,
@@ -35,6 +37,7 @@ class _MyFormFieldState extends State<MyFormField> {
         Align(
           alignment: Alignment.centerLeft,
           child: TextFormField(
+            validator: widget.validator,
             keyboardType: widget.keyboardType,
             cursorHeight: 20.sp,
             cursorColor: AppColors.greenColor,

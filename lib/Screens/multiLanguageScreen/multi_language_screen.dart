@@ -46,7 +46,10 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
+        toolbarHeight: 80.sp,
+
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         leading: InkWell(
@@ -79,31 +82,33 @@ class _MultiLanguageScreenState extends State<MultiLanguageScreen> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 5.sp, top: 5.sp),
-            child: DropdownButton(
-                alignment: Alignment.bottomLeft,
-                iconEnabledColor: AppColors.greenColor,
-                underline: SizedBox(
-                  height: 0.sp,
-                  width: 0.sp,
-                ),
-                value: language,
-                items:
-                    ["Arabic", "hindi", "urdu", "French", "spanish", "bangali"]
-                        .map((item) => DropdownMenuItem(
-                              alignment: Alignment.centerLeft,
-                              value: item,
-                              child: MyText(
-                                text: item,
-                                size: 14.sp,
-                                weight: FontWeight.bold,
-                              ),
-                            ))
-                        .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    language = value!;
-                  });
-                }),
+            child: Center(
+              child: DropdownButton(
+                  alignment: Alignment.bottomLeft,
+                  iconEnabledColor: AppColors.greenColor,
+                  underline: SizedBox(
+                    height: 0.sp,
+                    width: 0.sp,
+                  ),
+                  value: language,
+                  items:
+                      ["Arabic", "hindi", "urdu", "French", "spanish", "bangali"]
+                          .map((item) => DropdownMenuItem(
+                                alignment: Alignment.centerLeft,
+                                value: item,
+                                child: MyText(
+                                  text: item,
+                                  size: 14.sp,
+                                  weight: FontWeight.bold,
+                                ),
+                              ))
+                          .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      language = value!;
+                    });
+                  }),
+            ),
           )
         ],
       ),

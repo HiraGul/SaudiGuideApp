@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Augmented%20Reality/ar.dart';
 import 'package:saudi_guide/Cubits/change_index_cubit.dart';
+import 'package:saudi_guide/Screens/document_upload_screen/document_upload_screen.dart';
 import 'package:saudi_guide/Screens/imagine_saudi_screen/imagine_saudi_screen.dart';
 import 'package:saudi_guide/Screens/multiLanguageScreen/multi_language_screen.dart';
 import 'package:saudi_guide/Screens/recommendation_screen.dart';
@@ -12,6 +14,7 @@ import 'package:saudi_guide/Screens/safety_security_screen.dart';
 import 'package:saudi_guide/Screens/toDoScreen/todo_screen.dart';
 import 'package:saudi_guide/Utils/colors.dart';
 import 'package:saudi_guide/Utils/shared_prefs.dart';
+import 'package:saudi_guide/Screens/web_scrap_screen/web_scrap_screen.dart';
 import 'package:saudi_guide/weather_screen/weather_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,7 +27,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> menuItem = [
     {
-      "page": const RecommendationScreen(),
+      "page": const
+      RecommendationScreen(),
       "title": "Guidance",
       "icon": "assets/icons/guidance.png"
     },
@@ -57,6 +61,18 @@ class _HomeScreenState extends State<HomeScreen> {
       "page": const ImagineSaudiScreen(),
       "title": "Imagine Saudi",
       "icon": "assets/icons/idea.png",
+    },
+    {
+      "page": const
+      DocumentUploadScreen(),
+      "title": "Document Information",
+      "icon": "assets/icons/document.png"
+    },
+    {
+      "page": const
+      WebScrapScreen(),
+      "title": "Website Info",
+      "icon": "assets/icons/guidance.png"
     },
   ];
   // var userLoading = ValueNotifier<bool>(true);
@@ -266,10 +282,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 child: SizedBox(
                                                     width: 38.w,
                                                     height: 38.h,
-                                                    child: Image.asset(
+                                                    child:menuItem.indexOf( e)== 7? Icon(CupertinoIcons.doc,   color:
+                                                    AppColors.greenColor,size: 30.sp,):  Image.asset(
                                                       e['icon'],
                                                       color:
-                                                          AppColors.greenColor,
+                                                     AppColors.greenColor,
                                                     )),
                                               ),
                                             ),

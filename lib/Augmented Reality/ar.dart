@@ -110,7 +110,7 @@ class _AugmentedRealityScreenState extends State<AugmentedRealityScreen> {
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      bottomNavigationBar: LetsChatButton(),
+      bottomNavigationBar: const LetsChatButton(),
       appBar: AppBar(
         toolbarHeight: 90.sp,
         backgroundColor: Colors.white,

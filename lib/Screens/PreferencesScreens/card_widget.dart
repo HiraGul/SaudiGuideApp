@@ -29,6 +29,8 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const BouncingScrollPhysics(),
+
       shrinkWrap: true,
       primary: false,
       padding: EdgeInsets.zero,
@@ -93,10 +95,11 @@ class _CardCustomWidgetState extends State<CardCustomWidget> {
           height: 20.sp,
         ),
         SizedBox(
-          height: 280.sp,
+
           child: ListView(
+            shrinkWrap: true,
             padding: EdgeInsets.zero,
-            physics: const ClampingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             children: [
               CustomCard(
                 textColor: currentIndex == 1 ? Colors.white : Colors.black,
