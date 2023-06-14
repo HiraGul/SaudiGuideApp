@@ -53,6 +53,8 @@ class _InterestScreenState extends State<InterestScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const BouncingScrollPhysics(),
+
       shrinkWrap: true,
       primary: false,
       padding: EdgeInsets.zero,
@@ -60,7 +62,7 @@ class _InterestScreenState extends State<InterestScreen> {
         SizedBox(
           height: 48.sp,
         ),
-        Row(
+        Stack(
           children: [
             InkWell(
               onTap: () {
@@ -84,9 +86,7 @@ class _InterestScreenState extends State<InterestScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              width: 74.sp,
-            ),
+
             Align(
               alignment: Alignment.center,
               child: Text(
@@ -107,7 +107,7 @@ class _InterestScreenState extends State<InterestScreen> {
         Align(
           alignment: Alignment.center,
           child: Text(
-            'Please add the required\n Inforamtion ',
+            'Please add the required\n Information ',
             style: GoogleFonts.cairo(
               fontSize: 16.0.sp,
               color: const Color(0xFF9F9F9F),
@@ -117,7 +117,7 @@ class _InterestScreenState extends State<InterestScreen> {
           ),
         ),
         SizedBox(
-          height: 40.sp,
+          height: 30.sp,
         ),
         Container(
           padding: EdgeInsets.only(left: 51.sp, right: 65.sp),
@@ -132,41 +132,73 @@ class _InterestScreenState extends State<InterestScreen> {
         SizedBox(
           height: 8.sp,
         ),
-        Container(
-          padding: EdgeInsets.only(left: 51.sp, right: 65.sp),
-          child: Container(
-            height: 45.sp,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3.0.sp),
-              color: AppColors.textFieldColor,
-            ),
-            child: TextFormField(
-              keyboardType: TextInputType.text,
-              cursorHeight: 20.sp,
-              cursorColor: AppColors.greenColor,
-              controller: PreferencesController.interestController,
-              style: TextStyle(
-                fontSize: 16.sp,
-                // height: widget.fieldHeight
-              ),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 12.sp),
-                filled: true,
-                fillColor: AppColors.textFieldColor,
-                hintStyle: GoogleFonts.openSans(
-                  fontSize: 14.sp,
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 51.sp, ),
+                child: Container(
+                  height: 45.sp,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(3.0.sp),
+                    color: AppColors.textFieldColor,
+                  ),
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    cursorHeight: 20.sp,
+                    cursorColor: AppColors.greenColor,
+                    controller: PreferencesController.interestController,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      // height: widget.fieldHeight
+                    ),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 12.sp),
+                      filled: true,
+                      fillColor: AppColors.textFieldColor,
+                      hintStyle: GoogleFonts.openSans(
+                        fontSize: 14.sp,
+                      ),
+                      hintText: 'Please select',
+                      border: const OutlineInputBorder(borderSide: BorderSide.none),
+                    ),
+                    onFieldSubmitted: (val) {
+                      PreferencesController.interest
+                          .add(PreferencesController.interestController.text);
+                      PreferencesController.interestController.clear();
+                      setState(() {});
+                    },
+                  ),
                 ),
-                hintText: 'Please select',
-                border: const OutlineInputBorder(borderSide: BorderSide.none),
               ),
-              onFieldSubmitted: (val) {
-                PreferencesController.interest
-                    .add(PreferencesController.interestController.text);
-                PreferencesController.interestController.clear();
-                setState(() {});
-              },
             ),
-          ),
+
+                InkWell(
+                  onTap: (){
+                    PreferencesController.interest
+                        .add(PreferencesController.interestController.text);
+                    PreferencesController.interestController.clear();
+                    setState(() {});
+                  },
+                  child: Container(
+                    height: 45.sp,
+                    width: 40.sp,
+
+                    margin: EdgeInsets.only(left: 5.sp,right: 30.sp),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0.r),
+                      color: AppColors.greenColor,
+                    ),
+                    child: Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 20.sp,
+                    ),
+                  ),
+                )
+
+            
+          ],
         ),
         SizedBox(
           height: 30.sp,

@@ -82,24 +82,27 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
                 width: 131.sp,
               ),
             ),
-            ListView(children: [
-              SizedBox(
-                height: 150.sp,
-              ),
-              Container(
-                width: 1.sw,
-                height: 560.0.sp,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20.0.r),
-                    topLeft: Radius.circular(20.0.r),
-                  ),
-                  color: Colors.white,
-                ),
-                child: Stack(
-                  children: [
-                    TabBarView(
-                        //physics: NeverScrollableScrollPhysics(),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top:150.sp,
+              child: Container(
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.0.r),
+                      topLeft: Radius.circular(20.0.r),
+                    ),
+                    color: Colors.white,),
+                child: Column(children: [
+                  // SizedBox(
+                  //   height: 150.sp,
+                  // ),
+
+                  Expanded(
+                    child: TabBarView(
+                        physics: NeverScrollableScrollPhysics(),
                         controller: controller,
                         children: [
                           const GenderAndAgeWidget(),
@@ -113,61 +116,67 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen>
                             controller: controller,
                           ),
                         ]),
-                    Positioned(
-                      bottom: 50.sp,
-                      left: 30.sp,
-                      right: 30.sp,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TabPageSelector(
-                              color: Colors.grey.shade100,
-                              selectedColor: AppColors.greenColor,
-                              controller: controller,
-                              borderStyle: BorderStyle.solid),
-                          InkWell(
-                            onTap: () {
-                              goToNextTab();
-                            },
-                            child: Container(
-                              width: 34.0.sp,
-                              height: 30.0.sp,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4.0.r),
-                                color: AppColors.greenColor,
-                              ),
-                              child: Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                color: Colors.white,
-                                size: 20.sp,
-                              ),
+                  ),
+                  Container(
+
+                    padding: EdgeInsets.fromLTRB(24.sp, 0.sp, 24.sp, 20.sp,
+                    ),
+                    // bottom: 50.sp,
+                    // left: 30.sp,
+                    // right: 30.sp,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TabPageSelector(
+                            color: Colors.grey.shade100,
+                            selectedColor: AppColors.greenColor,
+                            controller: controller,
+                            borderStyle: BorderStyle.solid),
+                        InkWell(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            goToNextTab();
+
+                          },
+                          child: Container(
+                            width: 34.0.sp,
+                            height: 30.0.sp,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.0.r),
+                              color: AppColors.greenColor,
+                            ),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Colors.white,
+                              size: 20.sp,
                             ),
                           ),
-                          // InkWell(
-                          //   onTap: () {
-                          //     goToBackTab();
-                          //   },
-                          //   child: Container(
-                          //     width: 34.0.sp,
-                          //     height: 30.0.sp,
-                          //     decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(4.0.r),
-                          //       color: AppColors.greenColor,
-                          //     ),
-                          //     child: Icon(
-                          //       Icons.arrow_back_ios,
-                          //       color: Colors.white,
-                          //       size: 20.sp,
-                          //     ),
-                          //   ),
-                          // )
-                        ],
-                      ),
+                        ),
+                        // InkWell(
+                        //   onTap: () {
+                        //     goToBackTab();
+                        //   },
+                        //   child: Container(
+                        //     width: 34.0.sp,
+                        //     height: 30.0.sp,
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(4.0.r),
+                        //       color: AppColors.greenColor,
+                        //     ),
+                        //     child: Icon(
+                        //       Icons.arrow_back_ios,
+                        //       color: Colors.white,
+                        //       size: 20.sp,
+                        //     ),
+                        //   ),
+                        // )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+
+                ]),
               ),
-            ]),
+            ),
           ],
         )));
   }

@@ -30,6 +30,8 @@ class _NationalityWidgetState extends State<NationalityWidget> {
       height: 0.6.sh,
       width: 1.sw,
       child: ListView(
+        physics: const BouncingScrollPhysics(),
+
         children: [
           SizedBox(
             height: 48.sp,
@@ -182,7 +184,7 @@ class _NationalityWidgetState extends State<NationalityWidget> {
                 enable: true,
                 controller: PreferencesController.religionController,
                 inputType: TextInputType.name,
-                hintText: 'Islam'),
+                hintText: 'Enter religion'),
           ),
           SizedBox(
             height: 20.sp,
