@@ -22,8 +22,9 @@ class WebScrapRepo {
 
       if (response.statusCode == 200) {
         var data = json.decode(await response.stream.bytesToString());
-     //   print(data['data']);
+        //   print(data['data']);
         scrapData = data['data'];
+        print(data['data']);
 
         try {
           storeInDb(
@@ -40,7 +41,7 @@ class WebScrapRepo {
         print(response.reasonPhrase);
         return response.statusCode;
       }
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
       // TODO
     }
@@ -63,10 +64,10 @@ Future<bool> storeInDb(
       "website_name": websiteName,
       "is_predefined": isPredefined,
       "url": url,
-      "date_time" : DateTime.now(),
+      "date_time": DateTime.now(),
     });
     return true;
-  } on Exception catch (e) {
+  } on Exception {
 // Fluttertoast.showToast(msg: e.toString(), backgroundColor: Colors.red);
 
     rethrow;

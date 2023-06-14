@@ -3,22 +3,16 @@ class ChatModel {
   final bool isHuman;
   final DateTime dateTime;
 
-  static String  recommendationResponse = '';
-  static String  chatBotResponse = '';
-  static String  landMarkResponse = '';
+  static String recommendationResponse = '';
+  static String chatBotResponse = '';
+  static String landMarkResponse = '';
+  static String webScrapMessage = '';
 
-  ChatModel({
-    required this.message,
-    required this.isHuman,
-    required this.dateTime
-  });}
+  ChatModel(
+      {required this.message, required this.isHuman, required this.dateTime});
+}
 
-
-
-
-class RecommendationModel{
-
-
+class RecommendationModel {
   static String title = '';
   static List<String> recommendedRegion = [];
   static String message = '';
@@ -29,7 +23,6 @@ class RecommendationModel{
   //
   // final String message;
   // String area ;
-
 
   //RecommendationModel({required this.title ,required this.message, this.area = ''});
 }

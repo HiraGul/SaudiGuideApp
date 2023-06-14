@@ -9,6 +9,7 @@ import 'package:saudi_guide/Cubits/web_scrap_cubit/web_scrap_cubit.dart';
 import 'package:saudi_guide/Cubits/website_scrap_list/web_scrap_list_cubit.dart';
 import 'package:saudi_guide/Repo/web_scrap_list_repo.dart';
 import 'package:saudi_guide/Screens/web_scrap_screen/add_website_dialog.dart';
+import 'package:saudi_guide/Screens/web_scrap_screen/web_scrap_chat_screen.dart';
 
 import '../widgets/my_form_field.dart';
 import '../../Utils/colors.dart';
@@ -34,7 +35,7 @@ class _WebScrapScreenState extends State<WebScrapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Padding(
-     //   padding: EdgeInsets.only(bottom: 120.sp),
+        //   padding: EdgeInsets.only(bottom: 120.sp),
         padding: EdgeInsets.zero,
         child: FloatingActionButton.extended(
           onPressed: () {
@@ -91,79 +92,92 @@ class _WebScrapScreenState extends State<WebScrapScreen> {
                   return ListView.builder(
                       itemCount: state.list.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          height: 55.sp,
-                          padding: EdgeInsets.symmetric(horizontal :10.sp),
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 15.sp,
-                            vertical: 5.sp,
-                          ),
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withAlpha(50),
-                                blurRadius: 5,
-                              )
-                            ],
-                            color: Colors.white,
-                          ),
-                          child: Row(
-                            children: [
-                              // Transform.scale(
-                              //   scale: 1.3,
-                              //   child: Checkbox(
-                              //     shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(10)),
-                              //     value: checkValue[index],
-                              //     tristate: false,
-                              //     onChanged: (bool? newValue) {
-                              //       checkValue[index] = newValue!;
-                              //       setState(() {});
-                              //     },
-                              //     activeColor: AppColors.greenColor,
-                              //     side: const BorderSide(color: Color(0xff585858)),
-                              //   ),
-                              // ),
-                              // SizedBox(width: 5.sp),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-
-                                        child: Text(
-                                          state.list[index].websiteName,
-                                          style: GoogleFonts.cairo(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16.sp,
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => WebScraptChatScreen(
+                                          docInfo: state.list[index],
+                                        )));
+                          },
+                          child: Container(
+                            height: 55.sp,
+                            padding: EdgeInsets.symmetric(horizontal: 10.sp),
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 15.sp,
+                              vertical: 5.sp,
+                            ),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withAlpha(50),
+                                  blurRadius: 5,
+                                )
+                              ],
+                              color: Colors.white,
+                            ),
+                            child: Row(
+                              children: [
+                                // Transform.scale(
+                                //   scale: 1.3,
+                                //   child: Checkbox(
+                                //     shape: RoundedRectangleBorder(
+                                //         borderRadius: BorderRadius.circular(10)),
+                                //     value: checkValue[index],
+                                //     tristate: false,
+                                //     onChanged: (bool? newValue) {
+                                //       checkValue[index] = newValue!;
+                                //       setState(() {});
+                                //     },
+                                //     activeColor: AppColors.greenColor,
+                                //     side: const BorderSide(color: Color(0xff585858)),
+                                //   ),
+                                // ),
+                                // SizedBox(width: 5.sp),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            state.list[index].websiteName,
+                                            style: GoogleFonts.cairo(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16.sp,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Click to continue',
-                                          style: GoogleFonts.cairo(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12.sp,
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Click to continue',
+                                            style: GoogleFonts.cairo(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12.sp,
+                                            ),
                                           ),
-
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                             state.list[index].isPredefined ? SizedBox(): InkWell(
-                                  onTap:(){
-
-                                    WebScrapListRepo.deleteField(docId: state.list[index].docId);
-                        },
-                                  child: Icon(Icons.delete,color: Colors.red,))
-                            ],
+                                state.list[index].isPredefined
+                                    ? const SizedBox()
+                                    : InkWell(
+                                        onTap: () {
+                                          WebScrapListRepo.deleteField(
+                                              docId: state.list[index].docId);
+                                        },
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                        ))
+                              ],
+                            ),
                           ),
                         );
                       });
@@ -239,4 +253,3 @@ class _WebScrapScreenState extends State<WebScrapScreen> {
     );
   }
 }
-

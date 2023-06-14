@@ -10,6 +10,7 @@ import 'package:saudi_guide/Cubits/document_base_chat/document_base_chat_cubit.d
 import 'package:saudi_guide/Cubits/my_recomendation_repo/my_recomendation_cubit.dart';
 import 'package:saudi_guide/Cubits/stable_disfussion_repo/text_to_image_cubit.dart';
 import 'package:saudi_guide/Cubits/user_document_cubit/upload_document_cubit.dart';
+import 'package:saudi_guide/Cubits/webScrapChatListCubit/web_scrap_chat_list_cubit.dart';
 import 'package:saudi_guide/Cubits/website_scrap_list/web_scrap_list_cubit.dart';
 import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_screen.dart';
 import 'package:saudi_guide/Screens/splash_screen.dart';
@@ -70,7 +71,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => SelectedDocumentCubit(0)),
         BlocProvider(create: (context) => DocumentBaseChatCubit()),
         BlocProvider(create: (context) => WebScrapCubit()),
-        BlocProvider(create: (context) => WebScrapListCubit())
+        BlocProvider(create: (context) => WebScrapListCubit()),
+        BlocProvider(create: (context) => WebScrapChatListCubit())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
