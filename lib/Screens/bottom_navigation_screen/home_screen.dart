@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:saudi_guide/Augmented%20Reality/ar.dart';
 import 'package:saudi_guide/Cubits/change_index_cubit.dart';
 import 'package:saudi_guide/Screens/document_upload_screen/document_upload_screen.dart';
+import 'package:saudi_guide/Screens/driving_guide_screen/driving_guide_screen.dart';
 import 'package:saudi_guide/Screens/imagine_saudi_screen/imagine_saudi_screen.dart';
 import 'package:saudi_guide/Screens/multiLanguageScreen/multi_language_screen.dart';
 import 'package:saudi_guide/Screens/recommendation_screen.dart';
@@ -70,8 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
     },
     {
       "page": const
+      DrivingGuideScreen(),
+      "title": "Driving Guide",
+      "icon": "assets/icons/document.png"
+    },
+    {
+      "page": const
       WebScrapScreen(),
-      "title": "Website Info",
+      "title": "Web Search",
       "icon": "assets/icons/guidance.png"
     },
   ];

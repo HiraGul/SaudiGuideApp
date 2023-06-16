@@ -16,6 +16,7 @@ import 'package:saudi_guide/Screens/bottom_navigation_screen/bottom_navigtion_sc
 import 'package:saudi_guide/Screens/splash_screen.dart';
 import 'Cubits/ScanCubit/scan_land_mark_cubit.dart';
 import 'Cubits/WeatherCubit/weather_forcast_cubit.dart';
+import 'Cubits/driving_guide_cubit/driving_guide_cubit.dart';
 import 'Cubits/prefrences_validation_cubit.dart';
 import 'Cubits/translate_list_cubit.dart';
 import 'Cubits/user_document_cubit/selected_document_cubit.dart';
@@ -72,7 +73,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => DocumentBaseChatCubit()),
         BlocProvider(create: (context) => WebScrapCubit()),
         BlocProvider(create: (context) => WebScrapListCubit()),
-        BlocProvider(create: (context) => WebScrapChatListCubit())
+        BlocProvider(create: (context) => WebScrapChatListCubit()),
+        BlocProvider(create: (context) => DrivingGuideCubit())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

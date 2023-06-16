@@ -1,114 +1,18 @@
-import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:saudi_guide/Models/api_keys.dart';
 import 'package:saudi_guide/Models/user_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:saudi_guide/Repo/recomentation_repo/chat_bot_repo.dart';
 
 import '../Models/chat_model.dart';
-import '../Utils/shared_prefs.dart';
+import '../Models/land_mark_controller.dart';
 
 class RecommendationRepo {
-  //static var conversationText = '${RecommendationModel.title }${RecommendationModel.recommendedRegion.join(" , ") }';
 
 
 
   static UserData userData = UserData(userAge: '', gender: '', userLocation: '', monthlyIncome: '', nationality: '', country: '', purpose: '',);
 
-
-  static var userInputGpt3 = '';
-
-  // static var prompt = 'You are a helpful and knowledgeable Saudi guide.'
-  //     ' Your responsibility is to assist the tourist in recommending '
-  //     'the best food, drinks, and restaurants based on their preferences'
-  //     ' and budget. $userInputCohere';
-
- static var prompt = '';
-
-static var systemContent = '';
-  static List<Map<String, dynamic>> chatBotMessages = [
-    {
-      'role': 'system',
-      'content':systemContent
-            // 'You are a helpful and knowledgeable Saudi guide. Your responsibility is to assist the tourist in recommending the best food, drinks, and restaurants based on their preferences and budget.'
-    },
-    {
-      'role': 'user',
-      'content':
-        userInputGpt3
-    },
-    {
-      'role': 'assistant',
-      'content':
-      ChatModel.recommendationResponse
-    },
-  ];
-
-
-  static Future<int> getRecommendation({String message = ''}) async {
-
-
-   var  data = await MySharedPrefs.getUserData();
-    if(data !=null){
-
-      userData = data;
-    }
-    print('========== user data ${userData.monthlyIncome} ${userData.userLocation}');
-    var myPrompt = getMyPrompt(isUserCohere: true);
-    prompt = '${myPrompt['system']} ${myPrompt['user']}';
-    systemContent = myPrompt['system'];
-
-    // ChatGPT 3 input
-    userInputGpt3 = getMyPrompt(isUserCohere: false)['user'];
-
-
-    var url = 'https://api.cohere.ai/generate';
-
-    try {
-      var requestBody = jsonEncode({
-        'model': 'command',
-        'prompt': prompt,
-        'max_tokens': 450,
-        'temperature': 0.9,
-         'k': 11,
-
-        // 'k': 0,  'max_tokens': 200,
-        // 'temperature': 0.2,
-        // 'k': 0,
-        'stop_sequences': [],
-        'return_likelihoods': 'NONE',
-      });
-
-      var response = await http.post(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${ApiKeys.cohereApi}',
-        },
-        body: requestBody,
-      );
-
-      if (response.statusCode == 200) {
-        var jsonResponse = json.decode(response.body);
-        print(jsonResponse);
-        //var  prediction = jsonResponse['generations'][0]['text'];
-        ChatModel.recommendationResponse = jsonResponse["text"];
-        // print('================================= response ');
-        // print('Prediction: $prediction');
-        return 200;
-      } else {
-        print('Request failed with status code ${response.statusCode}');
-        return response.statusCode;
-      }
-    } on Exception catch (e) {
-      rethrow;
-      // TODO
-    }
-  }
-
-
-  static Map<String ,dynamic> getMyPrompt({required bool isUserCohere}) {
-
+  static Map<String,dynamic> getMyPrompt() {
 
     var subCategory = RecommendationModel.recommendedRegion.join(' , ');
     var userAge = "${userData.userAge}";
@@ -121,206 +25,113 @@ static var systemContent = '';
     print(subCategory);
     if(RecommendationModel.title == 'Food & Drinks'){
       return {
-        "system" : 'You are a helpful and knowledgeable Saudi guide.'
-            ' Your responsibility is to assist the tourist in recommending '
-            'the best food, drinks, and restaurants based on their preferences'
-            ' and budget. $limitResponse ',
-        // user input
-       "user"  : "${isUserCohere ? 'The tourist is': "I am tourist"}  ${userAge} years "
-           "old and of "
+        "message" : "I am tourist ${userAge} years "
+        "old and of "
             "${nationality} nationality, with a monthly income of ${monthlyIncome} "
             "riyals. They are particularly interested in this type "
             "of food the list are  ${subCategory}. "
-            "They want recommendations for the city of ${userLocation}."
+            "They want recommendations for the city of ${userLocation}.",
 
+            "type" : "Food"
       };
+
     }else if(RecommendationModel.title == 'Entertainments'){
 
       return {
-        "system" : 'You are a helpful and knowledgeable Saudi guide.'
-            ' Your responsibility is to assist the tourist in recommending '
-            'the best entertainment sources and places based on their preferences'
-            ' and budget. $limitResponse ',
-        // user input
-        "user"  : "${isUserCohere ? 'The tourist is': "I am tourist"} ${userAge} years old and of "
+        "message" :   "I am tourist ${userAge} years old and of "
             "${nationality} nationality, with a monthly income of ${monthlyIncome} "
             "riyals. They are particularly interested in this type "
             "of entertitment the list is ${subCategory}. "
-            "They want recommendations for the city of ${userLocation}"
-
+            "They want recommendations for the city of ${userLocation}",
+        "type" : "Entertainments"
       };
-
-
     }else if(RecommendationModel.title == 'Tourist'){
-
-      return {
-        "system" : "As a friendly travel guide, "
-            "your task is to recommend beautiful "
+      return    {
+        "message" :   "As a friendly travel guide, "
+        "recommend me beautiful "
             "$subCategory destinations in ${userLocation} and "
             "nearby areas that are suitable for a "
             "${userAge}-year-old  ${gender} with a monthly "
             "salary of ${monthlyIncome} Riyal. Your recommendations "
             "should include details on the location, attractions, "
             "activities, and accommodations available at each destination."
-             "Additionally, please ensure"
+            "Additionally, please ensure"
             " that your response stays within the token limit while still"
-            " providing enough detail to help the traveler make an informed decision.",
-
-        "user" : ""
+            " providing enough detail to help the traveler make an informed decision."
+            "They want recommendations for the city of ${userLocation}",
+        "type" : "Entertainments"
       };
-      // return {
-      //   "system" : 'You are a helpful and knowledgeable Saudi guide.'
-      //       ' Your responsibility is to assist the tourist in recommending '
-      //       'the beautiful tourist places based on their preferences'
-      //       ' and budget. $limitResponse ',
-      //   // user input
-      //   "user"  : "${isUserCohere ? 'The tourist is': "I am tourist"} ${userAge} years old and of "
-      //       "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-      //       "riyals. I am particularly interested in this type "
-      //       "of places, ${subCategory}. "
-      //       "Recommend me for the city of ${userLocation} and nearby areas."
-      //
-      // };
+    }else if(RecommendationModel.title == "Landmark" ){
 
-
-
+    return  {
+    "message" : "The tags are "
+      "${LandMarkController.landMark?.description?.tags?.join(' , ')} and the "
+          "description is "
+          "${LandMarkController.landMark?.description?.captions?[0].text} ",
+    "type" : "Landmark"
+    };
+    }else if(RecommendationModel.title == "Hajj" || RecommendationModel.title == "Umrah"){
+    getUserRecommendation();
+      return  {
+        "message" : question,
+        "type" : "worship"
+      };
     }else {
-      return {
-        "system" : "",
-        "user" : "",
+      return  {
+        "message" : '',
+        "type" : "general"
       };
     }
+  }
 
+  static var  question = '';
+  static  List<Map<String , dynamic >> getUserRecommendation(){
+    var subCategory = RecommendationModel.recommendedRegion[0];
+    var limitFaq = 'keep your response to 150 words.';
+    var  limit="keep your response to 100 words.";
+    if(subCategory == '${RecommendationModel.title} Steps'){
+      question = 'Could you please provide me with the step-by-step guide for performing the ${RecommendationModel.title}?, give the response in points';
+    }else if(subCategory == '${RecommendationModel.title} Preparation'){
+      question = 'What are the essential preparations that need to be made for ${RecommendationModel.title}?", give the response in points';
+    }else if(subCategory == '${RecommendationModel.title} Tips'){
+      question = 'Could you please provide me with some useful tips for performing ${RecommendationModel.title}?,give the response in points';
+    }else if(subCategory == '${RecommendationModel.title} FAQ\'S'){
+      question = 'Could you please provide me to some frequently asked '
+          'questions (FAQs) about ${RecommendationModel.title}? with brief answers,give the response in points';
+
+    }else{
+      question = '';
+    }
+
+    return [
+      {'role':'system', 'content':'You are a friendly Saudi guide that'
+          ' guides tourists in Saudi Arabia to perform the '
+          '${RecommendationModel.title} based on the tourist\'s query..'},
+
+
+      {'role':'user', 'content':" I'm a tourist in Saudi "
+          "Arabia, and I want to perform the ${RecommendationModel.title}. Can you guide me?"},
+
+
+      {'role':'assistant', 'content':'Certainly! I can provide'
+          ' you with all the necessary information and guidance '
+          'for performing the ${RecommendationModel.title} in Saudi Arabia. Please let me '
+          'know how I can assist you.'},
+      {'role':'user', 'content':"$question ${RecommendationModel.title == "Hajj FAQ'S" || RecommendationModel.title == "Umrah FAQ'S" ?limitFaq :"$limit"}  "},
+    ];
 
   }
 
 
 
-//   static getPrompt({required String recommendation}){
-//
-//     var subCategory = RecommendationModel.recommendedRegion.join(' , ');
-//     var userAge = "25";
-//     var userLocation = "Madina";
-//     var monthlyIncome = "5000";
-//     var nationality = "indian";
-// var limitResponse = 'Keep in mind to limit your responses up to maximum 100 words';
-//    // print('================== sub category');
-//     print(subCategory);
-//     if(RecommendationModel.title == 'Food & Drinks'){
-//       return 'You are a helpful and knowledgeable Saudi guide.'
-//           ' Your responsibility is to assist the tourist in recommending '
-//           'the best food, drinks, and restaurants based on their preferences'
-//           ' and budget. $limitResponse '
-//           // user input
-//           "The tourist is ${userAge} years old and of "
-//       "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-//           "riyals. They are particularly interested in this type "
-//           "of food the list are  ${subCategory}. "
-//           "They want recommendations for the city of ${userLocation}.";
-//     }else if(RecommendationModel.title == 'Entertainments'){
-//
-//       return 'You are a helpful and knowledgeable Saudi guide.'
-//           ' Your responsibility is to assist the tourist in recommending '
-//           'the best entertainment sources and places based on their preferences'
-//           ' and budget. $limitResponse '
-// // user input
-//           "The tourist is ${userAge} years old and of "
-//           "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-//           "riyals. They are particularly interested in this type "
-//           "of entertitment the list is ${subCategory}. "
-//           "They want recommendations for the city of ${userLocation}";
-//
-//
-//
-//
-//
-//     }else if(RecommendationModel.title == 'Tourist'){
-//       return 'You are a helpful and knowledgeable Saudi guide.'
-//     ' Your responsibility is to assist the tourist in recommending '
-//     'the beautiful tourist places based on their preferences'
-//     ' and budget. $limitResponse '
-// // user input
-//     "The tourist is ${userAge} years old and of "
-//     "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-//     "riyals. They are particularly interested in this type "
-//     "of place the list are ${subCategory}. "
-//     "They want recommendations for the city of ${userLocation} and most nearby this areas.";
-//
-//
-//     }else if(RecommendationModel.title == 'Hajj'){
-//       return '';
-//     }else if(RecommendationModel.title == 'Umrah'){
-//       return '';
-//     }else {
-//       return '';
-//     }
-//
-//
-//   }
 
-
-
-  static getSystemContent({required String recommendation}){
-
-    var subCategory = RecommendationModel.recommendedRegion.join(' , ');
-    var userAge = "25";
-    var userLocation = "Madina";
-    var monthlyIncome = "5000";
-    var nationality = "indian";
-    var limitResponse = 'Keep in mind to limit your responses up to maximum 100 words';
-    print(subCategory);
-    if(RecommendationModel.title == 'Food & Drinks'){
-      return 'You are a helpful and knowledgeable Saudi guide.'
-          ' Your responsibility is to assist the tourist in recommending '
-          'the best food, drinks, and restaurants based on their preferences'
-          ' and budget. $limitResponse '
-      // user input
-          "The tourist is ${userAge} years old and of "
-          "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-          "riyals. They are particularly interested in this type "
-          "of food the list are  ${subCategory}. "
-          "They want recommendations for the city of ${userLocation}.";
-    }else if(RecommendationModel.title == 'Entertainments'){
-
-      return 'You are a helpful and knowledgeable Saudi guide.'
-          ' Your responsibility is to assist the tourist in recommending '
-          'the best entertainment sources and places based on their preferences'
-          ' and budget. $limitResponse '
-// user input
-          "The tourist is ${userAge} years old and of "
-          "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-          "riyals. They are particularly interested in this type "
-          "of entertitment the list is ${subCategory}. "
-          "They want recommendations for the city of ${userLocation}";
-
-
-
-
-
-    }else if(RecommendationModel.title == 'Tourist'){
-      return 'You are a helpful and knowledgeable Saudi guide.'
-          ' Your responsibility is to assist the tourist in recommending '
-          'the beautiful tourist places based on their preferences'
-          ' and budget. $limitResponse '
-// user input
-          "The tourist is ${userAge} years old and of "
-          "${nationality} nationality, with a monthly income of ${monthlyIncome} "
-          "riyals. They are particularly interested in this type "
-          "of place the list are ${subCategory}. "
-          "They want recommendations for the city of ${userLocation} and most nearby this areas.";
-
-
-    }else if(RecommendationModel.title == 'Hajj'){
-      return '';
-    }else if(RecommendationModel.title == 'Umrah'){
-      return '';
-    }else {
-      return '';
-    }
-
-
-  }
 
 
 
 }
+
+
+
+
+
+

@@ -13,10 +13,11 @@ import 'package:open_file/open_file.dart';
 import '../../Utils/colors.dart';
 
 class DocumentInfoCard extends StatelessWidget {
+  final bool? showDeleteIcon;
   final int index;
   final Documents document;
 
-  const DocumentInfoCard({Key? key, required this.document,required this.index}) : super(key: key);
+  const DocumentInfoCard({Key? key, required this.document,required this.index, this.showDeleteIcon = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class DocumentInfoCard extends StatelessWidget {
               ),
 
 
-              InkWell(
+              showDeleteIcon  == false ? SizedBox():     InkWell(
                   onTap: (){
                     UploadDocumentRepo.docList.removeAt(index);
                     FirebaseStorage.instance.ref('user_documents').child(FirebaseAuth.instance.currentUser!.uid).child(document.fileName).delete();

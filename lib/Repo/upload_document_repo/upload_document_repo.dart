@@ -4,6 +4,7 @@ import 'package:saudi_guide/Models/user_document_model.dart';
 
 class UploadDocumentRepo {
 
+
   static var documentRef = FirebaseFirestore.instance
       .collection("user-documents");
   static List<Documents>  docList = [];
@@ -21,4 +22,27 @@ static Future<Stream<UserDocumentModel>?> getAllDocuments() async {
 
 
   }
+
+
+
+
+
+
+
+
+  static Future<Stream<UserDocumentModel>?> getDrivingGuideDoc() async {
+    try {
+      return  documentRef
+          .doc('sikandar')
+          .snapshots()
+          .map((event) => UserDocumentModel.fromJson(event));
+    } on Exception catch (e) {
+      rethrow;
+      // TODO
+    }
+
+
+
+  }
+
 }

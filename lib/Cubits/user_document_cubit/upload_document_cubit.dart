@@ -37,4 +37,32 @@ class UploadDocumentCubit extends Cubit<UploadDocumentState> {
     }
     
   }
+
+
+
+
+
+  getDrivingGuideDoc()async{
+
+    emit(UploadDocumentLoading());
+
+
+    var response = await UploadDocumentRepo.getDrivingGuideDoc();
+
+    try {
+      if(response != null){
+        firebaseStream = response.listen((event) {
+
+          emit(UploadDocumentLoaded(model:event));
+        });
+      }else{
+        emit(UploadDocumentEmpty());
+      }
+    } on Exception catch (e) {
+      emit(UploadDocumentError(error: e.toString()));
+      // TODO
+    }
+
+  }
+
 }

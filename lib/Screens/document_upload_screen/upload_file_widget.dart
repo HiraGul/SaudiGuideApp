@@ -135,7 +135,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
                                     .ref()
                                     .child('user_documents')
                                     .child(
-                                        FirebaseAuth.instance.currentUser!.uid)
+                                FirebaseAuth.instance.currentUser!.uid)
                                     .child(fileName.toString());
                                 UploadTask uploadTask = ref.putFile(
                                   fileForFirebase,
@@ -150,6 +150,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
                                     await taskSnapshot.ref.getDownloadURL();
                                 print("Uploading done");
 
+                                print(' url ===== $url');
                                 //Documents.toJson(UploadDocumentRepo.docList);
 
                                 List<Map<String, dynamic>> list = [];
@@ -165,7 +166,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
                                 var docRef = FirebaseFirestore.instance
                                     .collection('user-documents')
                                     .doc(
-                                        FirebaseAuth.instance.currentUser?.uid);
+                                    FirebaseAuth.instance.currentUser!.uid);
 
                                 docRef.set({'document': list});
                                 picked = null;

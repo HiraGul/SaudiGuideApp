@@ -12,26 +12,26 @@ class MyRecommendationCubit extends Cubit<MyRecomendationState> {
 
 
 
-  getMessage({ String message  = ''}) async {
-
-
-
-    emit(MyRecommendationLoading());
-
-    try {
-      var result =    await  RecommendationRepo.getRecommendation(message: message);
-
-
-      if(result == 200){
-        emit(MyRecommendationLoaded(message: ChatModel.recommendationResponse));
-      }else{
-        emit(MyRecommendationError( error: ApiResponse.getErrorMessage(statusCode: result)));
-      }
-    } on Exception catch (e) {
-      print('$e');
-      // TODO
-    }
-  }
+  // getMessage({ String message  = ''}) async {
+  //
+  //
+  //
+  //   emit(MyRecommendationLoading());
+  //
+  //   try {
+  //     var result =    await  RecommendationRepo.getRecommendation(message: message);
+  //
+  //
+  //     if(result == 200){
+  //       emit(MyRecommendationLoaded(message: ChatModel.recommendationResponse));
+  //     }else{
+  //       emit(MyRecommendationError( error: ApiResponse.getErrorMessage(statusCode: result)));
+  //     }
+  //   } on Exception catch (e) {
+  //     print('$e');
+  //     // TODO
+  //   }
+  // }
 
 }
 

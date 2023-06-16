@@ -45,6 +45,7 @@ dependencies:
   flutter_svg: null
   # from_to_time_picker: ^1.1.1
   google_fonts: ^4.0.4
+  rive: ^0.11.3
   intl: ^0.18.1
   file_picker: ^5.2.7
   flutter_local_notifications: ^14.1.0
@@ -56,6 +57,9 @@ dependencies:
   geocoding:
   shared_preferences: ^2.1.1
   dotted_border: ^2.0.0+3
+  speech_to_text: ^6.1.1
+  flutter_tts: ^3.7.0
+  avatar_glow: ^2.0.2
 
 
   http:

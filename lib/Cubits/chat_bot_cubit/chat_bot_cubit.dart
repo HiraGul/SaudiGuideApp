@@ -1,8 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:saudi_guide/Models/land_mark_controller.dart';
-import 'package:saudi_guide/Repo/land_mark_chat_repo.dart';
-import 'package:saudi_guide/Repo/recommendation_repo.dart';
 
 import '../../Models/chat_model.dart';
 import '../../Repo/api_response.dart';
@@ -15,43 +14,95 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   getMessage(
       {dynamic message = '',
-      bool isRecommendedOption = false,
-      List<Map<String, dynamic>>? recommendationList}) async {
+
+      }) async {
     emit(ChatBotLoading());
 
-
-
-
+    print('=========== loading state ');
     try {
-      var result;
-      if (isRecommendedOption) {
-        result = await RecommendationRepo.getRecommendation(message: message);
-      } else if (LandMarkController.landMark != null) {
-        print('============ in land mark');
-        result = await LandMarkChatRepo.interactWithChatBot(
-            message: message, recommendationList: recommendationList);
-      } else {
-        result = await ChatBotRepo.interactWithChatBot(
-            message: message, recommendationList: recommendationList);
+      var statusCode ;
+
+      if(RecommendationModel.title == 'weather'){
+         statusCode =  await ChatBotRepo.askWeatherFromBot(message: message);
+
+      }else{
+         statusCode =  await ChatBotRepo.chatBotApi(message: message);
+
       }
 
-      if (result == 200) {
+
+      if (statusCode == ApiResponse.ok) {
+        print('=========== Loaded state ');
+
+        emit(ChatBotLoaded(message:   ChatModel.chatBotResponse ));
+      } else {
+        print('=========== Error state  $statusCode ');
+
+        print('==========stats code ${statusCode}');
         emit(
-          ChatBotLoaded(
-            message: isRecommendedOption
-                ? ChatModel.recommendationResponse
-                : ChatModel.chatBotResponse,
+          ChatBotError(
+            error: ApiResponse.getErrorMessage(statusCode: statusCode),
           ),
         );
-      } else {
-        emit(ChatBotError(
-            error: ApiResponse.getErrorMessage(statusCode: result)));
       }
     } on Exception catch (e) {
+
       print('$e');
-      emit(ChatBotError(error: ApiResponse.getErrorMessage(statusCode: 1000)));
+      if(e is SocketException){
+        print('=========== Internet Exception state   ');
+
+        emit(ChatBotError(error: ApiResponse.getErrorMessage(statusCode: 1000)));
+
+      }else{
+        print('=========== Exception ${e.toString()}  ');
+
+        emit(ChatBotError(error:e.toString()));
+
+      }
 
       // TODO
     }
   }
 }
+
+//  getMessage(
+//       {dynamic message = '',
+//       bool isRecommendedOption = false,
+//       List<Map<String, dynamic>>? recommendationList}) async {
+//     emit(ChatBotLoading());
+//
+//
+//
+//
+//     try {
+//       var result;
+//       if (isRecommendedOption) {
+//         result = await RecommendationRepo.getRecommendation(message: message);
+//       } else if (LandMarkController.landMark != null) {
+//         print('============ in land mark');
+//         result = await LandMarkChatRepo.interactWithChatBot(
+//             message: message, recommendationList: recommendationList);
+//       } else {
+//         result = await ChatBotRepo.interactWithChatBot(
+//             message: message, recommendationList: recommendationList);
+//       }
+//
+//       if (result == 200) {
+//         emit(
+//           ChatBotLoaded(
+//             message: isRecommendedOption
+//                 ? ChatModel.recommendationResponse
+//                 : ChatModel.chatBotResponse,
+//           ),
+//         );
+//       } else {
+//         emit(ChatBotError(
+//             error: ApiResponse.getErrorMessage(statusCode: result)));
+//       }
+//     } on Exception catch (e) {
+//       print('$e');
+//       emit(ChatBotError(error: ApiResponse.getErrorMessage(statusCode: 1000)));
+//
+//       // TODO
+//     }
+//   }

@@ -12,6 +12,7 @@ class DocumentBaseChatCubit extends Cubit<DocumentBaseChatState> {
 
   getMessage(
       {dynamic message = '',
+        required String userId,
       required String fileIndex}) async {
     emit(DocumentBaseChatLoading());
 
@@ -19,7 +20,7 @@ class DocumentBaseChatCubit extends Cubit<DocumentBaseChatState> {
       // var result =
       //     await DocumentBaseChatRepo.interactWithChatBot(message: message);
       var result =
-          await DocumentBaseChatRepo.getDocumentResponse(fileIndex: fileIndex, message: message.toString());
+          await DocumentBaseChatRepo.getDocumentResponse(userId: userId,fileIndex: fileIndex, message: message.toString());
 
       if (result == 200) {
         emit(

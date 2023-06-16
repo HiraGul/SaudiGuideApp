@@ -18,7 +18,7 @@ class ChatCard extends StatelessWidget {
         horizontal: 14.sp,
         vertical: 11.sp,
       ),
-      child: Align(
+      child:    Align(
         alignment: userType ==UserType.chatBot ? Alignment.centerLeft :Alignment.centerRight ,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),

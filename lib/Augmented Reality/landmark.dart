@@ -34,7 +34,7 @@ class LandMark extends StatelessWidget {
           child: InkWell(
             onTap: () {
 
-              RecommendationModel.title = '';
+              RecommendationModel.title= 'Landmark';
               RecommendationModel.recommendedRegion = [];
               print(
                   '${LandMarkController.landMark?.description?.tags?.join(' , ')}');

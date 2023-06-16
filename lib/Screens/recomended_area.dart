@@ -205,7 +205,8 @@ class _RecommendationCheckAreaState extends State<RecommendationCheckArea> {
 
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
-              return ChatScreen();
+              return const ChatScreen( isRecommendedOption: true,
+              );
             }),
           );
         } : null,
