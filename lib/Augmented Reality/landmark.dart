@@ -46,7 +46,7 @@ class LandMark extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.sp),
-                color: const Color(0xff299E97),
+                color:              AppColors.greenColor,
               ),
               child: Center(
                 child: Text(

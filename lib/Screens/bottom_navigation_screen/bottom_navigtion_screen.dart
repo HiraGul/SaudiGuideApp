@@ -81,13 +81,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         // ),
         body: SafeArea(
             child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
           children: [
             const HomeScreen(),
-            Container(),
-            Container(),
-            Container(),
-            Container(),
+
           ],
         )),
       ),

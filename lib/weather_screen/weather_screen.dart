@@ -103,7 +103,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
             margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.sp),
-              color: const Color(0xff299E97),
+            //  color: const Color(0xff299E97),
+              color: AppColors.greenColor,
             ),
             child: Center(
               child: Text(
@@ -173,8 +174,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
             width: 31.sp,
             height: 31.sp,
             margin: EdgeInsets.only(left: 20.sp),
-            decoration: const BoxDecoration(
-                color: Color.fromRGBO(41, 158, 151, 1), shape: BoxShape.circle),
+            decoration:  BoxDecoration(
+                color:              AppColors.greenColor,
+                 shape: BoxShape.circle),
             child: Icon(
               Icons.arrow_back_ios,
               size: 20.sp,

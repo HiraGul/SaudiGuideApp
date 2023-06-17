@@ -38,6 +38,7 @@ class _WebScrapScreenState extends State<WebScrapScreen> {
         //   padding: EdgeInsets.only(bottom: 120.sp),
         padding: EdgeInsets.zero,
         child: FloatingActionButton.extended(
+          backgroundColor:                          AppColors.greenColor,
           onPressed: () {
             showDialog(
                 context: context,
@@ -62,8 +63,9 @@ class _WebScrapScreenState extends State<WebScrapScreen> {
             width: 31.sp,
             height: 31.sp,
             margin: EdgeInsets.only(left: 20.sp),
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(41, 158, 151, 1),
+            decoration:  BoxDecoration(
+              color:              AppColors.greenColor,
+
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -75,7 +77,7 @@ class _WebScrapScreenState extends State<WebScrapScreen> {
         elevation: 3,
         centerTitle: true,
         title: Text(
-          'Safety And Security',
+          'Web Search',
           style: GoogleFonts.cairo(
             fontSize: 22.sp,
             fontWeight: FontWeight.w700,

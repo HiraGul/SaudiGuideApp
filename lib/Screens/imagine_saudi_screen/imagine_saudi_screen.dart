@@ -85,8 +85,9 @@ class _ImagineSaudiScreenState extends State<ImagineSaudiScreen> {
             width: 31.sp,
             height: 31.sp,
             margin: EdgeInsets.only(left: 15.sp),
-            decoration: const BoxDecoration(
-                color: Color.fromRGBO(41, 158, 151, 1), shape: BoxShape.circle),
+            decoration:  BoxDecoration(
+                color:              AppColors.greenColor,
+                 shape: BoxShape.circle),
             child: Icon(
               Icons.arrow_back_ios,
               size: 15.sp,
@@ -126,6 +127,7 @@ class _ImagineSaudiScreenState extends State<ImagineSaudiScreen> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 15.sp, vertical: 20.sp),
                       decoration: BoxDecoration(
+                        //  color: Color(0xffF4FCFC),
                           color: Color(0xffF4FCFC),
                           boxShadow: [
                             BoxShadow(

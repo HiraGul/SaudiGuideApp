@@ -108,288 +108,290 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.sp),
-          height: 70.h,
-          color: Colors.white,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: SizedBox(
-                  //   color: Colors.red,
-                  height: 30.sp,
-                  width: 30.sp,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: SvgPicture.asset('assets/logo_black.svg'),
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.sp),
+            height: 70.h,
+            color: Colors.white,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(
+                    //   color: Colors.red,
+                    height: 30.sp,
+                    width: 30.sp,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: SvgPicture.asset('assets/logo_black.svg'),
+                    ),
                   ),
                 ),
-              ),
-              // Expanded(
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: Align(
-              //           alignment: Alignment.centerRight,
-              //           child: Container(
-              //             height: 40.sp,
-              //             width: 40.sp,
-              //             decoration: BoxDecoration(
-              //                 borderRadius: BorderRadius.circular(8.sp),
-              //                 color: Colors.white,
-              //                 boxShadow: [
-              //                   BoxShadow(
-              //                       color: Colors.grey.withAlpha(100),
-              //                       blurRadius: 10)
-              //                 ]),
-              //             child: const Center(
-              //               child: Icon(
-              //                 CupertinoIcons.bell,
-              //                 color: Colors.grey,
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //       Expanded(
-              //         child: Align(
-              //           alignment: Alignment.center,
-              //           child: Container(
-              //             height: 40.sp,
-              //             width: 40.sp,
-              //             decoration: BoxDecoration(
-              //               borderRadius: BorderRadius.circular(8.sp),
-              //               color: Colors.white,
-              //               boxShadow: [
-              //                 BoxShadow(
-              //                   color: Colors.grey.withAlpha(100),
-              //                   blurRadius: 10,
-              //                 )
-              //               ],
-              //             ),
-              //             child: const Center(
-              //               child: Icon(
-              //                 Icons.settings,
-              //                 color: Colors.grey,
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-            ],
+                // Expanded(
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         child: Align(
+                //           alignment: Alignment.centerRight,
+                //           child: Container(
+                //             height: 40.sp,
+                //             width: 40.sp,
+                //             decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(8.sp),
+                //                 color: Colors.white,
+                //                 boxShadow: [
+                //                   BoxShadow(
+                //                       color: Colors.grey.withAlpha(100),
+                //                       blurRadius: 10)
+                //                 ]),
+                //             child: const Center(
+                //               child: Icon(
+                //                 CupertinoIcons.bell,
+                //                 color: Colors.grey,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //       Expanded(
+                //         child: Align(
+                //           alignment: Alignment.center,
+                //           child: Container(
+                //             height: 40.sp,
+                //             width: 40.sp,
+                //             decoration: BoxDecoration(
+                //               borderRadius: BorderRadius.circular(8.sp),
+                //               color: Colors.white,
+                //               boxShadow: [
+                //                 BoxShadow(
+                //                   color: Colors.grey.withAlpha(100),
+                //                   blurRadius: 10,
+                //                 )
+                //               ],
+                //             ),
+                //             child: const Center(
+                //               child: Icon(
+                //                 Icons.settings,
+                //                 color: Colors.grey,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: ListView(
-            // padding: EdgeInsets.symmetric(horizontal: 20.sp),
-            children: [
-              SizedBox(
-                height: 10.h,
-              ),
-              ListView(
-                padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
-                shrinkWrap: true,
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  Text(
-                    MySharedPrefs.getIsLoggedIn() ?? "User",
-                    style: GoogleFonts.cairo(
-                      fontSize: 26.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.greenColor,
+          Expanded(
+            child: ListView(
+              // padding: EdgeInsets.symmetric(horizontal: 20.sp),
+              children: [
+                SizedBox(
+                  height: 10.h,
+                ),
+                ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
+                  shrinkWrap: true,
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    Text(
+                      MySharedPrefs.getIsLoggedIn() ?? "User",
+                      style: GoogleFonts.cairo(
+                        fontSize: 26.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.greenColor,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Glad to see you here',
-                    style: GoogleFonts.cairo(
-                      fontSize: 14.sp,
+                    Text(
+                      'Glad to see you here',
+                      style: GoogleFonts.cairo(
+                        fontSize: 14.sp,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
 
-              Center(
-                child: Wrap(
-                  children: menuItem
-                      .map((e) => InkWell(
-                            onTap: () {
-                              context
-                                  .read<ChangeIndexCubit>()
-                                  .changeIndex(menuItem.indexOf(e));
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) {
-                                return e['page'];
-                              }));
-                            },
-                            child: BlocBuilder<ChangeIndexCubit, int>(
-                              builder: (context, state) {
-                                return Container(
-                                  margin: EdgeInsets.only(
-                                    left: 0.01.sw,
-                                    right: 0.01.sw,
-                                    bottom: 10.sp,
-                                  ),
-                                  width: 0.45.sw,
-                                  height: 122.h,
-                                  padding: EdgeInsets.only(left: 10.sp),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.withAlpha(100),
-                                          blurRadius: 5)
-                                    ],
-                                    borderRadius: BorderRadius.circular(20.sp),
-                                    color: menuItem.indexOf(e) == state
-                                        ? AppColors.greenColor
-                                        : Colors.white,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            e['title'],
-                                            style: GoogleFonts.cairo(
-                                              fontWeight: FontWeight.w800,
-                                              color:
-                                                  menuItem.indexOf(e) == state
-                                                      ? Colors.white
-                                                      : Colors.black,
-                                              fontSize: 15.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: SizedBox(
-                                          width: 1.sw,
+                Center(
+                  child: Wrap(
+                    children: menuItem
+                        .map((e) => InkWell(
+                              onTap: () {
+                                context
+                                    .read<ChangeIndexCubit>()
+                                    .changeIndex(menuItem.indexOf(e));
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (context) {
+                                  return e['page'];
+                                }));
+                              },
+                              child: BlocBuilder<ChangeIndexCubit, int>(
+                                builder: (context, state) {
+                                  return Container(
+                                    margin: EdgeInsets.only(
+                                      left: 0.01.sw,
+                                      right: 0.01.sw,
+                                      bottom: 10.sp,
+                                    ),
+                                    width: 0.45.sw,
+                                    height: 122.h,
+                                    padding: EdgeInsets.only(left: 10.sp),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.withAlpha(100),
+                                            blurRadius: 5)
+                                      ],
+                                      borderRadius: BorderRadius.circular(20.sp),
+                                      color: menuItem.indexOf(e) == state
+                                          ? AppColors.greenColor
+                                          : Colors.white,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
                                           child: Align(
                                             alignment: Alignment.centerLeft,
-                                            child: Container(
-                                              width: 55.w,
-                                              height: 55.h,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: AppColors.lightGreen),
-                                              child: Center(
-                                                child: SizedBox(
-                                                    width: 38.w,
-                                                    height: 38.h,
-                                                    child:menuItem.indexOf( e)== 7? Icon(CupertinoIcons.doc,   color:
-                                                    AppColors.greenColor,size: 30.sp,):  Image.asset(
-                                                      e['icon'],
-                                                      color:
-                                                     AppColors.greenColor,
-                                                    )),
+                                            child: Text(
+                                              e['title'],
+                                              style: GoogleFonts.cairo(
+                                                fontWeight: FontWeight.w800,
+                                                color:
+                                                    menuItem.indexOf(e) == state
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                fontSize: 15.sp,
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ))
-                      .toList(),
-                ),
-              )
-              // GridView.builder(
-              //   itemCount: menuItem.length,
-              //   shrinkWrap: true,
-              //   primary: false,
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //     mainAxisSpacing: 10.sp,
-              //     crossAxisSpacing: 10.sp,
-              //     crossAxisCount: 2,
-              //   ),
-              //   itemBuilder: (context, index) {
-              //     return InkWell(
-              //       onTap: () {
-              //         print(menuItem[index]['page']);
-              //         Navigator.of(context)
-              //             .push(MaterialPageRoute(builder: (context) {
-              //           return menuItem[index]['page'];
-              //         }));
-              //       },
-              //       child: Container(
-              //         width: 0.5.sw,
-              //         height: 179.sp,
-              //         padding: EdgeInsets.only(left: 10.sp),
-              //         decoration: BoxDecoration(
-              //           boxShadow: [
-              //             BoxShadow(
-              //                 color: Colors.grey.withAlpha(100), blurRadius: 5)
-              //           ],
-              //           borderRadius: BorderRadius.circular(20.sp),
-              //           color: index == 0 ? AppColors.greenColor : Colors.white,
-              //         ),
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             Expanded(
-              //               child: Align(
-              //                 alignment: Alignment.centerLeft,
-              //                 child: Text(
-              //                   menuItem[index]['title'],
-              //                   style: GoogleFonts.cairo(
-              //                     fontWeight: FontWeight.w800,
-              //                     color:
-              //                         index == 0 ? Colors.white : Colors.black,
-              //                     fontSize: 15.sp,
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //             Expanded(
-              //               child: SizedBox(
-              //                 width: 1.sw,
-              //                 child: Align(
-              //                   alignment: Alignment.topLeft,
-              //                   child: Container(
-              //                     width: 60.sp,
-              //                     height: 60.sp,
-              //                     decoration: BoxDecoration(
-              //                         shape: BoxShape.circle,
-              //                         color: AppColors.lightGreen),
-              //                     child: Center(
-              //                       child: SizedBox(
-              //                           width: 40.sp,
-              //                           height: 40.sp,
-              //                           child: Image.asset(
-              //                             menuItem[index]['icon'],
-              //                             color: AppColors.greenColor,
-              //                           )),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // )
-            ],
+                                        Expanded(
+                                       //   flex: 2,
+                                          child: SizedBox(
+                                            width: 1.sw,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Container(
+                                                width: 55.w,
+                                                height: 1.sh,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: AppColors.lightGreen),
+                                                child: Center(
+                                                  child: SizedBox(
+                                                      width: 38.w,
+                                                      height: 38.h,
+                                                      child:menuItem.indexOf( e)== 7? Icon(CupertinoIcons.doc,   color:
+                                                      AppColors.greenColor,size: 30.sp,):  Image.asset(
+                                                        e['icon'],
+                                                        color:
+                                                       AppColors.greenColor,
+                                                      )),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                )
+                // GridView.builder(
+                //   itemCount: menuItem.length,
+                //   shrinkWrap: true,
+                //   primary: false,
+                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //     mainAxisSpacing: 10.sp,
+                //     crossAxisSpacing: 10.sp,
+                //     crossAxisCount: 2,
+                //   ),
+                //   itemBuilder: (context, index) {
+                //     return InkWell(
+                //       onTap: () {
+                //         print(menuItem[index]['page']);
+                //         Navigator.of(context)
+                //             .push(MaterialPageRoute(builder: (context) {
+                //           return menuItem[index]['page'];
+                //         }));
+                //       },
+                //       child: Container(
+                //         width: 0.5.sw,
+                //         height: 179.sp,
+                //         padding: EdgeInsets.only(left: 10.sp),
+                //         decoration: BoxDecoration(
+                //           boxShadow: [
+                //             BoxShadow(
+                //                 color: Colors.grey.withAlpha(100), blurRadius: 5)
+                //           ],
+                //           borderRadius: BorderRadius.circular(20.sp),
+                //           color: index == 0 ? AppColors.greenColor : Colors.white,
+                //         ),
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Expanded(
+                //               child: Align(
+                //                 alignment: Alignment.centerLeft,
+                //                 child: Text(
+                //                   menuItem[index]['title'],
+                //                   style: GoogleFonts.cairo(
+                //                     fontWeight: FontWeight.w800,
+                //                     color:
+                //                         index == 0 ? Colors.white : Colors.black,
+                //                     fontSize: 15.sp,
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //             Expanded(
+                //               child: SizedBox(
+                //                 width: 1.sw,
+                //                 child: Align(
+                //                   alignment: Alignment.topLeft,
+                //                   child: Container(
+                //                     width: 60.sp,
+                //                     height: 60.sp,
+                //                     decoration: BoxDecoration(
+                //                         shape: BoxShape.circle,
+                //                         color: AppColors.lightGreen),
+                //                     child: Center(
+                //                       child: SizedBox(
+                //                           width: 40.sp,
+                //                           height: 40.sp,
+                //                           child: Image.asset(
+                //                             menuItem[index]['icon'],
+                //                             color: AppColors.greenColor,
+                //                           )),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

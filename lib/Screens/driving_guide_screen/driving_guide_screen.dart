@@ -12,6 +12,7 @@ import 'package:saudi_guide/Screens/document_upload_screen/upload_file_widget.da
 import '../../Cubits/document_base_chat/document_base_chat_cubit.dart';
 import '../../Cubits/driving_guide_cubit/driving_guide_cubit.dart';
 import '../../Repo/upload_document_repo/upload_document_repo.dart';
+import '../../Utils/colors.dart';
 import '../document_upload_screen/document_info_card.dart';
 
 class DrivingGuideScreen extends StatefulWidget {
@@ -53,8 +54,9 @@ class _DrivingGuideScreenState extends State<DrivingGuideScreen> {
             width: 31.sp,
             height: 31.sp,
             margin: EdgeInsets.only(left: 20.sp),
-            decoration: const BoxDecoration(
-                color: Color.fromRGBO(41, 158, 151, 1), shape: BoxShape.circle),
+            decoration:  BoxDecoration(
+                color:              AppColors.greenColor,
+                shape: BoxShape.circle),
             child: Icon(
               Icons.arrow_back_ios,
               size: 20.sp,
@@ -128,7 +130,7 @@ class _DrivingGuideScreenState extends State<DrivingGuideScreen> {
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.sp),
-                  color: const Color(0xff299E97),
+                  color:              AppColors.greenColor,
                 ),
                 child: Center(
                   child: Text(

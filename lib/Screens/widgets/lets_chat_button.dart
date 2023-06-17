@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Models/chat_model.dart';
+import '../../Utils/colors.dart';
 import '../chat_screen/chat_screen.dart';
 
 class LetsChatButton extends StatelessWidget {
@@ -27,7 +28,8 @@ class LetsChatButton extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.sp),
-            color: const Color(0xff299E97),
+            //color: const Color(0xff299E97),
+            color: AppColors.greenColor,
           ),
           child: Center(
             child: Text(

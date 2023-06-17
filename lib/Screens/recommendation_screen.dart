@@ -45,8 +45,9 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             width: 31.sp,
             height: 31.sp,
             margin: EdgeInsets.only(left: 20.sp),
-            decoration: const BoxDecoration(
-                color: Color.fromRGBO(41, 158, 151, 1), shape: BoxShape.circle),
+            decoration:  BoxDecoration(
+                color:              AppColors.greenColor,
+                 shape: BoxShape.circle),
             child: Icon(
               Icons.arrow_back_ios,
               size: 20.sp,

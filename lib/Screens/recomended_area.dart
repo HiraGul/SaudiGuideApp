@@ -45,8 +45,8 @@ class _RecomendedAreaState extends State<RecomendedArea> {
             width: 31.sp,
             height: 31.sp,
             margin: EdgeInsets.only(left: 20.sp),
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(41, 158, 151, 1),
+            decoration:  BoxDecoration(
+              color:              AppColors.greenColor,
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -113,7 +113,7 @@ class _RecomendedAreaState extends State<RecomendedArea> {
                           horizontal: 20.sp, vertical: 10.sp),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4.sp),
-                        color: const Color(0xff299E97),
+                        color:              AppColors.greenColor,
                       ),
                       child: Center(
                         child: Text(

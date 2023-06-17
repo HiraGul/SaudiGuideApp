@@ -51,7 +51,7 @@ class MyHomePage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10.sp, left: 20.sp, right: 20.sp),
                 children: [
                   Text(
-                    'Saudi Guide',
+                    'Tour',
                     style: GoogleFonts.cairo(
                       fontSize: 22.0.sp,
                       color: Colors.white,

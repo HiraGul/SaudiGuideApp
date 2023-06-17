@@ -13,6 +13,7 @@ import 'package:saudi_guide/Models/land_mark_controller.dart';
 import 'package:saudi_guide/Screens/widgets/lets_chat_button.dart';
 
 import '../Cubits/ScanCubit/scan_land_mark_cubit.dart';
+import '../Utils/colors.dart';
 
 class AugmentedRealityScreen extends StatefulWidget {
   const AugmentedRealityScreen({Key? key}) : super(key: key);
@@ -125,8 +126,9 @@ class _AugmentedRealityScreenState extends State<AugmentedRealityScreen> {
             width: 31.sp,
             height: 31.sp,
             margin: EdgeInsets.only(left: 20.sp),
-            decoration: const BoxDecoration(
-                color: Color.fromRGBO(41, 158, 151, 1), shape: BoxShape.circle),
+            decoration:  BoxDecoration(
+                color:              AppColors.greenColor,
+                 shape: BoxShape.circle),
             child: Icon(
               Icons.arrow_back_ios,
               size: 20.sp,
